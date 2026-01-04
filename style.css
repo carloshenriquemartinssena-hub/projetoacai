@@ -365,7 +365,7 @@ align-items: center;}
 
 .product-card {
   border: 5px solid #FF8902;
-    flex: 0 0 280px; /* Largura do card */
+    flex: 0 0 180px; /* Largura do card */
     min-height: 300px; /* Altura cumprida para destaque */
     background: #6E0083;
     border-radius: 15px;
@@ -581,5 +581,6 @@ font-size: 15px;
   position: relative;
   left: 25vw;
 }
+
 
 

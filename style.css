@@ -30,7 +30,7 @@ h1 {
     
     position:absolute;
     top: 2vh;
-    left: -0vw;
+    left: 5vw;
     max-width: 100px;
 }
    
@@ -582,7 +582,4 @@ font-size: 15px;
   position: relative;
   left: 25vw;
 }
-
-
-
 

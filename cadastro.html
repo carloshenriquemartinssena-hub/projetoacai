@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="confirmarpedidio.html">
+    <title>Cadastro</title>
+</head>
+
+<body>
+
+    <style>
+
+    body { 
+        overflow-x: hidden;
+        max-height: 100px;
+        overflow-y: auto;
+    }
+     #formPedido { 
+    position: relative;
+    top: -150vh; /* Ajustado de -150vh para 0 */
+    width: 30%;
+    margin: 0; /* Centraliza o formulário */
+    gap: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+        .entrega {
+            position: relative;
+            display: block;
+            top: 10vh;
+            font-size: 20px;
+            font-family: 'homanege',sans-serif;
+        }
+
+        input { 
+            border: 2px solid purple;
+            border-radius: 4px;
+            padding: 8px 2px 8px 0px;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+      
+
+        }
+
+        img { 
+            
+            border-left: 3px solid #FF8902;
+            top: -20vh;
+            height: 50% ;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            width: 50%;
+            position: relative;
+            margin-left: auto;
+            right: -2vw;
+        }
+
+        h3 {
+            color: #9B9B9B ;
+            margin-bottom: 0;
+            padding: 0;
+             font-size: 10px;
+            font-family: 'homanege',sans-serif;
+        }
+
+        #pagamento { 
+        margin-top: 10vh;
+            border-radius: 8px;
+            padding: 3px 3px 3px 3px;
+        }
+
+        
+        button { 
+            margin-top: 5vh;
+          background-color: #6E0083;
+color: white;
+border-radius: 11px;
+border: 3px solid #FF8902;
+padding: 15px 45px 15px 45px;
+        }
+    </style>
+
+   
+
+    <h1 class="entrega">INFORMAÇÕES PARA ENTREGA</h1>
+
+    <img src="fotopedido.png" alt="">
+    <div class="line"></div>
+    
+
+    
+ <form id="formPedido">
+    <h3>Nome & Sobrenome</h3>
+    <input type="text" id="nome" placeholder="Nome & Sobrenome" required>
+    <h3></h3>
+    <!-- <input type="text" id="sobrenome" placeholder="Sobrenome" required> -->
+    <h3>CPF</h3>
+    <input type="text" id="cpf" placeholder="CPF" required>
+    <h3>Cep</h3>
+    <input type="text" id="cep" placeholder="CEP" required>
+    <h3>Endereço</h3>
+    <input type="text" id="endereco" placeholder="Endereço" required>
+    <h3>Número</h3>
+    <input type="text" id="numero" placeholder="Número" required>
+    <h3>Complemento</h3>
+    <input type="text" id="complemento" placeholder="Complemento">
+    <h3>WhatsApp</h3>
+    <input type="text" id="whatsapp" placeholder="WhatsApp" required>
+
+    
+    <select id="pagamento">
+        <option value="Pix">Pix</option>
+        <option value="Cartão">Cartão</option>
+        <option value="Dinheiro">Dinheiro</option>
+    </select>
+
+   <button type="submit">Continuar para Confirmação</button>
+</form>
+
+<script>
+document.getElementById('formPedido').addEventListener('submit', function(e) {
+    e.preventDefault(); 
+
+    // Removido o campo 'sobrenome' que não existe no HTML
+    const dadosCliente = {
+        nome: document.getElementById('nome').value,
+        cpf: document.getElementById('cpf').value,
+        cep: document.getElementById('cep').value,
+        endereco: document.getElementById('endereco').value,
+        numero: document.getElementById('numero').value,
+        complemento: document.getElementById('complemento').value,
+        whatsapp: document.getElementById('whatsapp').value,
+        pagamento: document.getElementById('pagamento').value
+    };
+
+    localStorage.setItem('pedidoCliente', JSON.stringify(dadosCliente));
+
+    // Certifique-se de que o nome do arquivo abaixo é EXATAMENTE o mesmo da sua pasta
+    window.location.href = 'confirmarpedidio.html'; 
+});
+</script>
+</body>
+</html>

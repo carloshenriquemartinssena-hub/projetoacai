@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro.html">
+    <title>Confirmar Pedido</title>
+</head>
+<body>
+
+    <style>
+
+        .container-confirmacao {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide em 2 colunas iguais */
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+.card {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Estilo das Imagens */
+.produto-principal img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.outros-produtos {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.outros-produtos img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid #ddd;
+}
+
+/* Botões */
+.btn-confirmar {
+    width: 100%;
+    background: #28a745;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.btn-voltar {
+    background: none;
+    border: none;
+    color: #666;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#exibir-total { 
+    color: purple;
+}
+
+#exibir-info { 
+    color: purple;
+}
+
+strong {
+    color: black;
+}
+
+/* Responsividade (Celular) */
+@media (max-width: 800px) {
+    .container-confirmacao {
+        grid-template-columns: 1fr; /* Empilha as colunas no celular */
+    }
+}
+    </style>
+
+ <div class="container-confirmacao">
+    <section class="coluna-info">
+        <h2>Resumo do Pedido</h2>
+        
+        <div id="dados-cliente" class="card">
+            <h3>Seus Dados</h3>
+            <div id="exibir-info"></div> </div>
+
+        <div class="pagamento-total card">
+            <p><strong>Forma de Pagamento:</strong> <span id="exibir-pagamento"></span></p>
+            <div class="total-box">
+                <span>Total a pagar:</span>
+                <strong id="exibir-total">R$ 0,00</strong>
+            </div>
+        </div>
+
+        <button onclick="window.history.back()" class="btn-voltar">← Voltar e Corrigir</button>
+    </section>
+
+    <section class="coluna-produto">
+        <div id="display-produtos">
+            </div>
+        
+        <button id="finalizar-pedido" class="btn-confirmar">Confirmar Pedido</button>
+    </section>
+</div>
+
+
+<script>
+    // 1. Pega os dados que foram salvos nas páginas anteriores
+    const dadosDoCliente = JSON.parse(localStorage.getItem('pedidoCliente'));
+    const produtoEscolhido = JSON.parse(localStorage.getItem('produtoSessao'));
+
+    // 2. Preenche os dados do CLIENTE (Lado Esquerdo)
+    const containerCliente = document.getElementById('exibir-info');
+    if (dadosDoCliente && containerCliente) {
+        containerCliente.innerHTML = `
+            <p><strong>Nome:</strong> ${dadosDoCliente.nome}</p>
+            <p><strong>WhatsApp:</strong> ${dadosDoCliente.whatsapp}</p>
+            <p><strong>Endereço:</strong> ${dadosDoCliente.endereco}, nº ${dadosDoCliente.numero}</p>
+            <p><strong>Pagamento:</strong> ${dadosDoCliente.pagamento}</p>
+        `;
+        // Atualiza a forma de pagamento e o total nos campos específicos
+        if(document.getElementById('exibir-pagamento')) 
+            document.getElementById('exibir-pagamento').innerText = dadosDoCliente.pagamento;
+    }
+
+    // 3. Preenche o PRODUTO e a IMAGEM (Lado Direito)
+    const containerProduto = document.getElementById('display-produtos');
+    
+    if (produtoEscolhido && containerProduto) {
+        containerProduto.innerHTML = `
+            <div class="produto-principal">
+                <img src="${produtoEscolhido.foto}" alt="${produtoEscolhido.nome}" style="width: 100%; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <h3 style="margin-top:15px; font-size: 1.5rem;">${produtoEscolhido.nome}</h3>
+                <p>Delicioso e preparado na hora!</p>
+            </div>
+        `;
+        
+        // Atualiza o valor total
+        if(document.getElementById('exibir-total'))
+            document.getElementById('exibir-total').innerText = produtoEscolhido.valor;
+
+    } else {
+        // Se der erro, mostra este aviso
+        containerProduto.innerHTML = "<p style='color:red;'>⚠️ Erro: Nenhum produto foi selecionado. Volte à página inicial.</p>";
+    }
+</script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="confirmarpedidio.html">
+    <link rel="stylesheet" href="">
     <title>Cadastro</title>
 </head>
 
@@ -76,17 +76,90 @@
         
         button { 
             margin-top: 5vh;
-          background-color: #6E0083;
+          background-color: #6d0083;
 color: white;
 border-radius: 11px;
 border: 3px solid #FF8902;
 padding: 15px 45px 15px 45px;
         }
+    
+        @media (max-width: 425px) {
+            body { 
+             
+        overflow-x: hidden;
+        min-height: 100vh;
+        
+    }
+
+    .acailogooficial { 
+       display: flex;
+        height: auto;
+    }
+      #formPedido {
+        position: relative;
+        top: 20vh;
+        width: 92%;
+        max-width: none;
+        margin: 20px auto;
+    }
+
+    img {
+        display: none;
+        width: 50%;
+        margin: 5px auto;
+        display: none;
+        right: 0;
+        top: 0;
+        border: none;
+        margin-bottom: 0px;    }
+
+    .entrega {
+        text-align: center;
+        font-size: 18px;
+    }
+
+
+        input { 
+         
+            
+            padding: 8px 2px 8px 0px;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+      
+
+color: white;
+border-radius: 11px;
+border: 3px solid #af02ff;
+padding: 15px 45px 15px 45px;
+        }
+
+        #pagamento { 
+        margin-top: 10vh;
+            border-radius: 8px;
+            padding: 12px 3px 12px 3px;
+        }
+
+        button { 
+            margin-bottom: 10vh;
+            margin-top: 5vh;
+          background-color: #6d0083;
+color: white;
+border-radius: 11px;
+border: 3px solid #FF8902;
+padding: 15px 45px 15px 45px;
+        }
+    }
+    
+
+
     </style>
 
    
+<img class="acailogooficial" src="logoaçai.png" alt="açai zero grau cadastro">
 
     <h1 class="entrega">INFORMAÇÕES PARA ENTREGA</h1>
+    
 
     <img src="fotopedido.png" alt="">
     <div class="line"></div>

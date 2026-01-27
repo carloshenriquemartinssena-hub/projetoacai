@@ -1,4 +1,5 @@
 body { 
+    overflow-x: hidden;
     height: auto;
     width: 100% auto;
  
@@ -10,18 +11,39 @@ body {
     box-sizing: border-box; /* Faz com que padding e bordas não aumentem o tamanho total do elemento */
     margin: 0;
     padding: 0;
+} 
+
+@media (min-width: 1024px) and (max-width: 2560px){
+body { 
+  
+    height: auto;
+    width: 100% auto;
+ 
+    
+
 }
+
+* {
+    box-sizing: border-box; /* Faz com que padding e bordas não aumentem o tamanho total do elemento */
+    margin: 0;
+    padding: 0;
+} 
 
 h1 { 
     color: #6E0083;
       font-family: "Holtwood One SC", serif;
   font-weight: 400;
+  display: flex; 
+  left: -25vw;
+
 }
 
 .font1 { 
     position: relative;
+     
     top: 0vh;
     font-size: 120%;
+    left: 1vw;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -39,7 +61,7 @@ h1 {
 .header-loja {
    
   
-  background-color: #6E0084;
+  background-color: #6E0083;
   padding: 20px;
   position: relative;
   display: flex;
@@ -51,168 +73,7 @@ h1 {
 }
 
 /* Estilo do Botão Hambúrguer */
-.menu-hamburger {
-  position: relative;
-  right: 3vw;
-  width: 30px;
-  height: 25px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  z-index: 100; /* Garante que fique acima de tudo */
-}
 
-/* As 3 barrinhas roxas */
-.bar {
-  height: 4px;
-  width: 100%;
-  background-color: #ffffff; /* Roxo Açaí */
-  border-radius: 10px;
-  transition: 0.3s;
-}
-
-/* Menu que aparece/some */
-.navegacao {
-  position: absolute;
-  top: 100%; /* Aparece logo abaixo do header */
-  left: 0;
-  width: 100%;
-  background-color: white;
-  max-height: 0; /* Escondido por padrão */
-  overflow: hidden;
-  transition: max-height 0.4s ease-in-out;
-  box-shadow: 0px 8px 15px rgba(0,0,0,0.1);
-  z-index: 100;
-}
-
-/* Regra Mágica: Quando o hambúrguer está ativo, mostra a navegação */
-.menu-hamburger.active + .navegacao {
-  max-height: 500px; /* Altura máxima quando aberto */
-}
-
-/* Estilização da Lista Interna */
-.lista {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.lista li {
-  padding: 20px;
-  border-bottom: 1px solid #eee;
-  color: #333;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.lista li:hover {
-  background-color: #f1f1f1;
-}
-
-/* Item de Login com Ícone */
-.login-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #4B0082 !important;
-}
-
-.login-item img {
-  width: 20px;
-  height: 20px;
-}
-
-/* Animação das Barras transformando em X */
-.menu-hamburger.active .bar:nth-child(1) {
-  transform: translateY(10px) rotate(45deg);
-}
-.menu-hamburger.active .bar:nth-child(2) {
-  opacity: 0;
-}
-.menu-hamburger.active .bar:nth-child(3) {
-  transform: translateY(-11px) rotate(-45deg);
-}
-
-.carousel-section {
-    height: 110vh;
-  width: 100%;
-  overflow: hidden;
-  background-color: #fff;
-  padding: 40px 0;
-  font-family: sans-serif;
-}
-
-.carousel-container {
-    top: 12vh;
-  position: relative;
-  width: 90%;
-  max-width: 400px; /* Tamanho ideal para mobile */
-  margin: 0 auto;
-  height: 400px;
-}
-
-.carousel-item {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0; /* Começa invisível */
-  transform: translateX(50px); /* Começa um pouco à direita */
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  pointer-events: none;
-}
-
-/* Estado do Produto Visível */
-.carousel-item.active {
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
-}
-
-/* Estado de Saída (Saindo para a esquerda e sumindo) */
-.carousel-item.exit {
-  opacity: 0;
-  transform: translateX(-50px);
-}
-
-.carousel-item img {
-  width: 100%;
-  border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-.produto-info h3 {
-  color: #4B0082;
-  margin: 20px 0 10px;
-  font-size: 1.5rem;
-}
-
-.produto-info p {
-  color: #666;
-  line-height: 1.5;
-  padding: 0 10px;
-}
-/* Botão de navegação (Desktop) */
-.nav-btn {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    background: rgba(75, 0, 130, 0.7);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    z-index: 100;
-    display: none; /* Escondido por padrão */
-}
 
 
 
@@ -235,6 +96,13 @@ h1 {
 
 .espaço { 
   margin-bottom: 1em;
+  display: block;
+  position: relative;
+  left: 15vw;
+  
+
+  
+  
 }
 
 
@@ -332,7 +200,7 @@ gap: 15px;
 
 .acai::after { 
 
-  content: "açaí - açaí - açaí ";
+  content: "açaí - açaí - açaí - açaí - açaí - açaí - açaí - açaí - açaí - açaí - açaí - açaí - açaí - açaí - açaí - açaí - açaí - açaí -  ";
  
 }
 #frame2  {
@@ -368,7 +236,7 @@ font-size: 25px;}
 
 .product-card {
   border: 5px solid #FF8902;
-    flex: 0 0 180px; /* Largura do card */
+    flex: 0 0 250px; /* Largura do card */
     min-height: 300px; /* Altura cumprida para destaque */
     background: #6E0083;
     border-radius: 15px;
@@ -410,7 +278,9 @@ font-size: 25px;}
     height: 350px; /* Foto ganha a maior parte do espaço */
     object-fit: contain;
 }
-
+  .receita{ 
+    color: #54AE00;
+  }
 .product-info {
   display: flex;
   align-items: center;
@@ -424,7 +294,13 @@ font-size: 25px;}
 
 .product-info h4 { margin: 0; color: #ffffff; font-size: 1.2rem;    font-family: "Homenaje", sans-serif;}
 
-.descricao { 
+.descricaoo { 
+  top: -55vh;
+  left: 18vw;
+position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
   font-family: 'homenaje', sans-serif;
 }
@@ -465,9 +341,8 @@ font-size: 25px;}
 .fotoorigem  { display: flex;
   justify-content: center;
   align-items: center;
-margin-left: auto;
-  max-width: 95%;
-  right: 2vw;
+right: 25vw;
+margin-bottom: 15px;
   position: relative;
 }
 
@@ -475,13 +350,14 @@ margin-left: auto;
 
 .historia { 
   position: relative;
-  left: 2vw;
+left: 0.5vw;
   align-items: center;
   justify-content: center;
   width: 90%;
-  display: inline;
+  display: inline;  
   justify-content: center;
   align-items: center;
+  overflow-wrap: break-word; 
   font-family: ' homenage', sans-serif;
 }
 
@@ -498,7 +374,7 @@ margin-left: auto;
   
   margin-top: 45%;
   padding: auto 20%;
-  display: flexbox;
+  
   align-items: start;
   justify-content: center;
  
@@ -510,9 +386,14 @@ margin-left: auto;
 }
 
 .destacar { 
+  gap: 20px;  
+  display: block;
   background-color: #4B0082;
   color: #f1f1f1;
   font-weight: 800;
+  position: relative;
+  left: 8vw;
+  top: 8vh;
 }
 
 .documentos{
@@ -522,18 +403,28 @@ margin-left: auto;
 font-size: 15px;
   text-decoration: none;
   list-style: none;
-  display: block;
+  display: inline-flex;
 
 
   line-height: 5vh;
 }
 
 .list { 
-  padding-top: 5vh;
+  
+  position: relative;
+  left:2vw;
+  padding-top: 20vh;
   line-height: 12vh;
+  
 }
 
 .maps { 
+  display: flex;
+  position: relative;
+  justify-content: end;
+  align-items: end;
+  right: -50vw;
+  top: -50vh;
   height: auto;
   max-width: 99%;
 }
@@ -545,11 +436,16 @@ font-size: 15px;
   justify-content: center;
   font-family: 'homenage', sans-serif;
   font-size: 15px;
+  position: relative;
+  top: -50vh;
+  right: -19vw;
 }
 
 .descrimaps2 { 
+  position: relative;
+  top: -50vh;
+  right: -19vw;
   padding-top: 15px;
-  
   display: flex;
   justify-content: center;
   font-family: 'homenage', sans-serif;
@@ -557,6 +453,9 @@ font-size: 15px;
 }
 
 .Notas { 
+  position: relative;
+  top: -50vh;
+  right: -19vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -566,6 +465,9 @@ font-size: 15px;
 }
 
 .estrelas { 
+  position: relative;
+  top: -50vh;
+  right: -19vw;
    display: flex;
   align-items: center;
   justify-content: center;
@@ -578,6 +480,9 @@ font-size: 15px;
 }
 
 .iconeg { 
+  position: relative;
+  top: -50vh;
+  right: -19vw;
    display: flex;
   align-items: center;
   justify-content: center;
@@ -585,3 +490,4 @@ font-size: 15px;
   left: 25vw;
 }
 
+}

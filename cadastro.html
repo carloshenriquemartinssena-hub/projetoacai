@@ -26,7 +26,7 @@
     flex-direction: column;
 }
 
-        .acailogooficial { 
+ .acailogooficial { 
        display: none;
     }
 
@@ -133,7 +133,7 @@ padding: 15px 45px 15px 45px;
             align-items: center;
       
 
-color: black;
+color: white;
 border-radius: 11px;
 border: 3px solid #af02ff;
 padding: 15px 45px 15px 45px;
@@ -142,7 +142,7 @@ padding: 15px 45px 15px 45px;
         #pagamento { 
         margin-top: 10vh;
             border-radius: 8px;
-            padding: 12px 3px 12px 3px;
+            padding: 12px 3px px 3px;
         }
 
         button { 
@@ -201,28 +201,20 @@ padding: 15px 45px 15px 45px;
 
 <script>
 document.getElementById('formPedido').addEventListener('submit', function(e) {
-    e.preventDefault(); 
+    e.preventDefault();
 
-    // Removido o campo 'sobrenome' que não existe no HTML
     const dadosCliente = {
         nome: document.getElementById('nome').value,
-        cpf: document.getElementById('cpf').value,
-        cep: document.getElementById('cep').value,
+        whatsapp: document.getElementById('whatsapp').value,
         endereco: document.getElementById('endereco').value,
         numero: document.getElementById('numero').value,
-        complemento: document.getElementById('complemento').value,
-        whatsapp: document.getElementById('whatsapp').value,
+        complemento: document.getElementById('complemento').value || "Não informado",
         pagamento: document.getElementById('pagamento').value
     };
 
-    localStorage.setItem('pedidoCliente', JSON.stringify(dadosCliente));
-
-    // Certifique-se de que o nome do arquivo abaixo é EXATAMENTE o mesmo da sua pasta
-    window.location.href = 'confirmarpedidio.html'; 
+    localStorage.setItem('dadosCliente', JSON.stringify(dadosCliente));
+    window.location.href = 'confirmarpedidio.html';
 });
 </script>
 </body>
-
 </html>
-
-

@@ -119,44 +119,52 @@ strong {
 
 
 <script>
-    // 1. Pega os dados que foram salvos nas páginas anteriores
-    const dadosDoCliente = JSON.parse(localStorage.getItem('pedidoCliente'));
-    const produtoEscolhido = JSON.parse(localStorage.getItem('produtoSessao'));
+    // 1. Recupera os dados salvos
+    const cliente = JSON.parse(localStorage.getItem('dadosCliente'));
+    const produto = JSON.parse(localStorage.getItem('produtoSessao'));
 
-    // 2. Preenche os dados do CLIENTE (Lado Esquerdo)
-    const containerCliente = document.getElementById('exibir-info');
-    if (dadosDoCliente && containerCliente) {
-        containerCliente.innerHTML = `
-            <p><strong>Nome:</strong> ${dadosDoCliente.nome}</p>
-            <p><strong>WhatsApp:</strong> ${dadosDoCliente.whatsapp}</p>
-            <p><strong>Endereço:</strong> ${dadosDoCliente.endereco}, nº ${dadosDoCliente.numero}</p>
-            <p><strong>Pagamento:</strong> ${dadosDoCliente.pagamento}</p>
+    const displayInfo = document.getElementById('exibir-info');
+    const displayProduto = document.getElementById('display-produtos');
+
+    if (cliente && produto) {
+        // Exibe dados do Cliente
+        displayInfo.innerHTML = `
+            <p><strong>Nome:</strong> ${cliente.nome}</p>
+            <p><strong>WhatsApp:</strong> ${cliente.whatsapp}</p>
+            <p><strong>Endereço:</strong> ${cliente.endereco}, nº ${cliente.numero}</p>
+            <p><strong>Complemento:</strong> ${cliente.complemento}</p>
         `;
-        // Atualiza a forma de pagamento e o total nos campos específicos
-        if(document.getElementById('exibir-pagamento')) 
-            document.getElementById('exibir-pagamento').innerText = dadosDoCliente.pagamento;
-    }
+        document.getElementById('exibir-pagamento').innerText = cliente.pagamento;
+        document.getElementById('exibir-total').innerText = produto.valor;
 
-    // 3. Preenche o PRODUTO e a IMAGEM (Lado Direito)
-    const containerProduto = document.getElementById('display-produtos');
-    
-    if (produtoEscolhido && containerProduto) {
-        containerProduto.innerHTML = `
+        // Exibe o Produto Selecionado
+        displayProduto.innerHTML = `
             <div class="produto-principal">
-                <img src="${produtoEscolhido.foto}" alt="${produtoEscolhido.nome}" style="width: 100%; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                <h3 style="margin-top:15px; font-size: 1.5rem;">${produtoEscolhido.nome}</h3>
-                <p>Delicioso e preparado na hora!</p>
+                <img src="${produto.foto}" alt="${produto.nome}">
+                <h3>${produto.nome}</h3>
+                <p>Pedido preparado com açaí premium.</p>
             </div>
         `;
-        
-        // Atualiza o valor total
-        if(document.getElementById('exibir-total'))
-            document.getElementById('exibir-total').innerText = produtoEscolhido.valor;
-
     } else {
-        // Se der erro, mostra este aviso
-        containerProduto.innerHTML = "<p style='color:red;'>⚠️ Erro: Nenhum produto foi selecionado. Volte à página inicial.</p>";
+        displayProduto.innerHTML = "<h3 style='color:red'>Nenhum produto selecionado. Volte e escolha um!</h3>";
     }
+
+    // 2. Função para enviar para o WhatsApp
+    document.getElementById('finalizar-pedido').addEventListener('click', function() {
+        if(!cliente || !produto) return alert("Erro ao recuperar dados do pedido.");
+
+        const mensagem = `*Novo Pedido - Açaí da Mama*%0A%0A` +
+            `*PRODUTO:* ${produto.nome}%0A` +
+            `*VALOR:* ${produto.valor}%0A%0A` +
+            `*CLIENTE:* ${cliente.nome}%0A` +
+            `*WHATSAPP:* ${cliente.whatsapp}%0A` +
+            `*ENDEREÇO:* ${cliente.endereco}, ${cliente.numero}%0A` +
+            `*COMPLEMENTO:* ${cliente.complemento}%0A` +
+            `*PAGAMENTO:* ${cliente.pagamento}`;
+
+        const numeroWhats = "5511999999999"; // COLOQUE SEU NÚMERO AQUI (com DDD)
+        window.open(`https://wa.me/${numeroWhats}?text=${mensagem}`, '_blank');
+    });
 </script>
 
 </body>

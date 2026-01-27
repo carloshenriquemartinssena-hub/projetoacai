@@ -8,9 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
    <script src="script.js"></script>
+   
    <link rel="stylesheet" href="cadastro.html">
    <link rel="stylesheet" href="confirmarpedidio.html">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="desktop.css">
     <title>açai qualquer coisa</title>
 </head>
 <body>
@@ -51,7 +53,7 @@ O Clássico Refrescante</h1>
       <img class="espaço" src="fotoexemplo.png" alt="Açaí com Morango">
       <div class="produto-info">
         <a href="cadastro.html"><button class="enfeitebotao"> COMPRAR</button></a>
-          <p>Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão , quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino , oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
+          <p class="receita">Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão , quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino , oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
      
       </div>
     </div>
@@ -63,7 +65,7 @@ O Clássico Refrescante</h1>
       <div class="produto-info">
        <a href="cadastro.html"> <button class="enfeitebotao"> COMPRAR</button></a>
        
-        <p>texto do produto 2 ( dois ) vai aqui.</p>
+        <p class="receita">texto do produto 2 ( dois ) vai aqui.</p>
       </div>
     </div>
 
@@ -73,7 +75,7 @@ O Clássico Refrescante</h1>
       <img class="espaço"  src="fotoexemplo.png" alt="Açaí Turbinado">
       <div class="produto-info">
       <a href="cadastro.html">  <button class="enfeitebotao"> COMPRAR</button></a>
-        <p>Texto do produto 3 ( três ) vai aqui.</p>
+        <p class="receita">Texto do produto 3 ( três ) vai aqui.</p>
       </div>
       </div>
       </div>
@@ -297,7 +299,7 @@ O Clássico Refrescante</h1>
 
   <div class="googlemaps">
 
-    <h1 class="descricao">Venha nos Visitar</h1>
+    <h1 class="descricaoo">Venha nos Visitar</h1>
     <iframe class="maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58492.25646367886!2d-46.45321713935922!3d-23.612722617130526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce6f10f342c2b3%3A0xf14fb542f19c2734!2sCidade%20Tiradentes%2C%20S%C3%A3o%20Paulo%20-%20State%20of%20S%C3%A3o%20Paulo!5e0!3m2!1sen!2sbr!4v1767534107825!5m2!1sen!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
   <P class="descrimaps">Estamos Localizados Em São Paulo</P>
@@ -311,35 +313,23 @@ O Clássico Refrescante</h1>
 
 
 <script>
-  <script>
-// Adicione isso ao final do index.html ou no seu script.js
 document.addEventListener('click', function (e) {
-    // Verifica se o que foi clicado é um dos botões de compra
     if (e.target.classList.contains('buy-btn') || e.target.classList.contains('enfeitebotao')) {
-        
-        // Tenta achar o container do produto (pode ser .product-card ou .carousel-item)
-        const container = e.target.closest('.product-card') || e.target.closest('.carousel-item') || e.target.parentElement;
+        // Encontra o container (card ou carrossel)
+        const container = e.target.closest('.product-card') || e.target.closest('.carousel-item');
 
         if (container) {
-            // Busca os dados dentro do container
-            const img = container.querySelector('img');
-            const titulo = container.querySelector('h1, h2, h3, h4, .font1');
-            const preco = container.querySelector('.price, .preco, b');
-
             const produtoParaSalvar = {
-                nome: titulo ? titulo.innerText.trim() : "Açaí Selecionado",
-                // Captura o link completo da imagem (importante!)
-                foto: img ? img.src : "", 
-                valor: preco ? preco.innerText.trim() : "R$ 25,00"
+                nome: (container.querySelector('h4') || container.querySelector('.font1')).innerText.trim(),
+                foto: container.querySelector('img').src,
+                valor: (container.querySelector('.price') || {innerText: "R$ 25,00"}).innerText.trim()
             };
 
-            // SALVA COM O NOME 'produtoSessao'
+            // Usaremos nomes fixos para evitar erros: 'produtoSessao'
             localStorage.setItem('produtoSessao', JSON.stringify(produtoParaSalvar));
-            console.log("Produto guardado com sucesso!", produtoParaSalvar);
         }
     }
 });
-</script>
 </script>
 
 

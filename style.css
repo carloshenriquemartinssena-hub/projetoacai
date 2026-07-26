@@ -12,6 +12,12 @@ body {
     padding: 0;
 }
 
+
+.gpt { 
+  display: none;
+}
+
+a { text-decoration: none;}
 h1 { 
     color: #6E0083;
       font-family: "Holtwood One SC", serif;
@@ -96,6 +102,7 @@ h1 {
   list-style: none;
   padding: 0;
   margin: 0;
+  font-weight: bold;
 }
 
 .lista li {
@@ -132,6 +139,12 @@ h1 {
 }
 .menu-hamburger.active .bar:nth-child(3) {
   transform: translateY(-11px) rotate(-45deg);
+}
+
+picture img { 
+  width: 100%;
+  height: auto; 
+  display: block;
 }
 
 .carousel-section {
@@ -474,6 +487,7 @@ margin-left: auto;
 
 
 .historia { 
+  top: 2vh;
   position: relative;
   left: 2vw;
   align-items: center;
@@ -523,6 +537,7 @@ font-size: 15px;
   text-decoration: none;
   list-style: none;
   display: block;
+  text-align: center;
 
 
   line-height: 5vh;

@@ -2,8 +2,32 @@
 /* ANIMAÇÃO DE MOVIMENTO DE FOTOS DE PRODUTOS NO CABEÇALHO */
 document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.carousel-item');
+    const items = document.getElementById ('carousel');
+    const items = document.getElementById('prevBtn');
     let currentIndex = 0;
     let autoPlay;
+
+
+
+    function mostrarSlide(novoIndex, direcao = 'proximo') { 
+
+        // Remove todos os estados dos slides
+
+        items.forEach(item => { 
+            item.classList.remove('active', 'exit', 'return');
+                
+                //limpa estilos inline antigos 
+                
+                item.style.transform = '';
+                item.style.opacity = '';
+                 
+            });{
+                constructor(parameters) 
+                    
+                }
+            }
+        });
+    
 
     function iniciarTimer() {
         clearInterval(autoPlay);
@@ -40,6 +64,33 @@ document.addEventListener('DOMContentLoaded', () => {
         iniciarTimer(); // Reinicia os 5 segundos
     }
 
+    let touchStartX = 0;
+
+    if (carousel) { 
+        carousel.addEventListener ('touchstart', e => {
+            touchStartX = e.changedTouches [0]. screenX;
+
+        });
+
+        carousel.addEventListener ('touchend', e => { 
+            const touchEndX = e.changedTouches [0].screenX;
+
+            //Deslizar para a esquerda = próximo
+
+            if (touchStartX - touchEndX > 50) { 
+                mudarSlide();
+                iniciarTimer();
+                
+            }
+
+            //Deslizar para a direita =  anterior
+
+            if (touchEndX - touchStartX > 50) { 
+                voltarSlide();
+            }
+        });
+    }
+
     // --- DETECÇÃO DE DESLIZE (TOUCH) ---
     let touchStartX = 0;
     const carousel = document.getElementById('carousel');
@@ -56,12 +107,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    //Botão anterior 
+
+    if (prevBtn) { 
+        prevBtn.addEventListener('click', voltarSlide);
+    }
+
+    //inicia o primeiro slide
+    mostrarSlide(0);
+
+    //inicia o autoplay
+
+    iniciarTimer();
+
     // --- BOTÃO DESKTOP ---
     document.getElementById('prevBtn').addEventListener('click', voltarSlide);
 
     iniciarTimer(); // Inicia o carrossel
-});
-
+;
 
 
 /* CARROSEL DE PRODUTOS DA PÁGINA INICIAL */ 

@@ -153,7 +153,7 @@ strong {
     document.getElementById('finalizar-pedido').addEventListener('click', function() {
         if(!cliente || !produto) return alert("Erro ao recuperar dados do pedido.");
 
-        const mensagem = `*Novo Pedido - Açaí da Mama*%0A%0A` +
+        const mensagem = `*Novo Pedido - Açaí Zero Graus*%0A%0A` +
             `*PRODUTO:* ${produto.nome}%0A` +
             `*VALOR:* ${produto.valor}%0A%0A` +
             `*CLIENTE:* ${cliente.nome}%0A` +
@@ -162,7 +162,7 @@ strong {
             `*COMPLEMENTO:* ${cliente.complemento}%0A` +
             `*PAGAMENTO:* ${cliente.pagamento}`;
 
-        const numeroWhats = "5511999999999"; // COLOQUE SEU NÚMERO AQUI (com DDD)
+        const numeroWhats = "5511974665034"; // COLOQUE SEU NÚMERO AQUI (com DDD)
         window.open(`https://wa.me/${numeroWhats}?text=${mensagem}`, '_blank');
     });
 </script>

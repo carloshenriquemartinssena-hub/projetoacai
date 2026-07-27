@@ -23,7 +23,9 @@
     margin: 0; /* Centraliza o formulário */
     gap: 0px;
     display: flex;
+    justify-content: center;
     flex-direction: column;
+    
 }
 
  .acailogooficial { 
@@ -43,9 +45,9 @@
             border-radius: 4px;
             padding: 8px 2px 8px 0px;
             width: 45vw;
-            justify-content: center;
+            justify-content: left;
             display: flex;
-            align-items: center;
+            align-items: left;
       
 
         }
@@ -73,14 +75,27 @@
         }
 
         #pagamento { 
+           
         margin-top: 10vh;
             border-radius: 8px;
-            padding: 3px 3px 3px 3px;
+           padding: 3px 3px 3px 3px;
+          
+           display: block;
+           
+        }
+          .orientacao { 
+
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            color: purple;
+            font-size: 18px;
+
+
         }
 
         
         button { 
-            margin-top: 5vh;
+            display: flex;
+            margin-top: 10px;
           background-color: #6d0083;
 color: white;
 border-radius: 11px;
@@ -101,6 +116,7 @@ padding: 15px 45px 15px 45px;
         height: auto;
     }
       #formPedido {
+        left: 8vw;
         position: relative;
         top: 20vh;
         width: 92%;
@@ -125,8 +141,7 @@ padding: 15px 45px 15px 45px;
 
 
         input { 
-         
-            
+        
             padding: 8px 2px 8px 0px;
             justify-content: center;
             display: flex;
@@ -139,15 +154,29 @@ border: 3px solid #af02ff;
 padding: 15px 45px 15px 45px;
         }
 
-        #pagamento { 
-        margin-top: 10vh;
+      
+
+         #pagamento { 
+           position: relative;
+           left: -8vw;
+margin-top: 0;
             border-radius: 8px;
-            padding: 12px 3px px 3px;
+           padding: 3px 3px;
+           margin-bottom: 10px;
+           display: flex;
+          
         }
 
+        
         button { 
-            margin-bottom: 10vh;
-            margin-top: 5vh;
+            margin: 0 auto;
+            justify-content: flex-start;
+            display: flex;
+           font-weight: bold;
+          position:relative;
+          left:-8vw;
+           
+            
           background-color: #6d0083;
 color: white;
 border-radius: 11px;
@@ -189,7 +218,7 @@ padding: 15px 45px 15px 45px;
     <h3>WhatsApp</h3>
     <input type="text" id="whatsapp" placeholder="WhatsApp" required>
 
-    
+    <h2 class="orientacao"> Selecione a Forma de Pagamento! Aceitamos Dinhero, Cartão e Pix </h2>
     <select id="pagamento">
         <option value="Pix">Pix</option>
         <option value="Cartão">Cartão</option>

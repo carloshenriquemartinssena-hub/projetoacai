@@ -1,6 +1,8 @@
 body { 
     height: auto;
     width: 100% auto;
+    overflow-x: hidden;
+
  
     
 
@@ -10,11 +12,22 @@ body {
     box-sizing: border-box; /* Faz com que padding e bordas não aumentem o tamanho total do elemento */
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    
 }
 
 
 .gpt { 
   display: none;
+}
+.desktopp {
+  display: none;
+}
+
+#destaquemb { 
+gap : 25px;
+  height: 0 auto;
+  display: block;
 }
 
 a { text-decoration: none;}
@@ -24,36 +37,57 @@ h1 {
   font-weight: 400;
 }
 
+.dktitu { 
+  display: none;
+}
+
+.mbtitu { 
+  padding-bottom: 25px;
+  margin: auto;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6E0083;
+}
+
+.acao  { 
+  display: none;
+}
+
+main { display: none;}
+.descricao001 {display: none;}  .imagem-produto { display: none;}
 .font1 { 
-    position: relative;
-    top: 0vh;
+   margin: auto;
+    padding: 0;
     font-size: 120%;
-    align-items: center;
-    justify-content: center;
+  
+    justify-content: space-between;
     display: flex;
 }
 
 .logo1 { 
+ height: auto;
+   width: 100px;
+   position: relative;
+    left: 2vh;
     
-    position:absolute;
-    top: 2vh;
-    left: 5vw;
-    max-width: 100px;
+    z-index: 999;
 }
    
 /* Configuração básica para visualização */
 .header-loja {
-   
-  
+
+  z-index: 10;
   background-color: #6E0084;
-  padding: 20px;
-  position: relative;
+  
+  overflow: hidden;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #ffffff;
+ 
   font-family: sans-serif;
-  width: 100%
+  margin: auto;
 }
 
 /* Estilo do Botão Hambúrguer */
@@ -81,7 +115,7 @@ h1 {
 /* Menu que aparece/some */
 .navegacao {
   position: absolute;
-  top: 100%; /* Aparece logo abaixo do header */
+  top: 20%; /* Aparece logo abaixo do header */
   left: 0;
   width: 100%;
   background-color: white;
@@ -148,17 +182,17 @@ picture img {
 }
 
 .carousel-section {
-    height: 110vh;
-  width: 100%;
-  overflow: hidden;
+    
+z-index: 0;
+
   background-color: #fff;
   padding: 40px 0;
   font-family: sans-serif;
 }
 
 .carousel-container {
-    top: 12vh;
-  position: relative;
+    
+z-index: 0;
   width: 90%;
   max-width: 400px; /* Tamanho ideal para mobile */
   margin: 0 auto;
@@ -166,15 +200,14 @@ picture img {
 }
 
 .carousel-item {
-  position: absolute;
-  top: 0;
-  left: 0;
+
+ gap: 25px;
   width: 100%;
   opacity: 0; /* Começa invisível */
   transform: translateX(50px); /* Começa um pouco à direita */
   transition: opacity 0.8s ease, transform 0.8s ease;
-  display: flex;
-  flex-direction: column;
+  display: block;
+  justify-content: center;
   align-items: center;
   text-align: center;
   pointer-events: none;
@@ -246,30 +279,35 @@ picture img {
    
 }
 
-.espaço { 
-  margin-bottom: 1em;
+.mbtitiu {
+
+  display: flex;
+  justify-content: center;
+
 }
 
 
-.exemplo1 { 
-    right: 10vw;
-    margin-left: auto;
-    top: 10vh;
-    position: relative;
-    display: block;
+
+
+
+.espaço{ 
+margin: auto;
+width: 50%;
+height: auto;
+      display: block;
+  
 }
 
 button {
    font-family: "Homenaje", sans-serif;
   font-weight: 400;
-    margin-right: auto;
-    position: relative;
-    margin-left: auto;
-     display: flex;
-    text-align: center;
-    justify-content: center;}
+
+    padding-top: 15px;
+    }
 
 .enfeitebotao { 
+  margin-top: 10px;
+  margin-bottom: 10px;
     background-color: #6E0083;
 color: white;
 border-radius: 11px;
@@ -385,7 +423,7 @@ font-size: 25px;}
     min-height: 300px; /* Altura cumprida para destaque */
     background: #6E0083;
     border-radius: 15px;
-    position: relative;
+   
     scroll-snap-align: start;
     box-shadow: 0 10px 20px rgba(0,0,0,0.08);
     display: flex;
@@ -405,14 +443,18 @@ font-size: 25px;}
 .discount-badge {
   font-family: 'Homaneje', sans-serif;
   border: 2px solid white;
-    position: absolute;
-    top: 15px;
-    left: 15px;
+  display: flex;
+  justify-self: flex-start;
+  align-items: flex-start;
+  margin: auto;
+  padding: 5px;
+  
+     
     background: #FF8902;
     color: white;
-    padding: 5px 12px;
+   
     border-radius: 20px;
-    font-weight: bold;
+   
     font-size: 0.8rem;
     z-index: 10;
 }
@@ -471,8 +513,8 @@ font-size: 25px;}
 }
 
 #frame3 { 
-  margin-top: 10vh;
-  max-height: auto;
+width: auto;
+max-height: 100%;
 }
 
 .fotoorigem  { display: flex;
@@ -487,14 +529,11 @@ margin-left: auto;
 
 
 .historia { 
-  top: 2vh;
-  position: relative;
-  left: 2vw;
-  align-items: center;
-  justify-content: center;
-  width: 90%;
-  display: inline;
-  justify-content: center;
+  margin-top: 4vh;
+ display: block;
+ justify-content: center; 
+ align-items: center;
+ word-wrap: break-word;
   align-items: center;
   font-family: ' homenage', sans-serif;
 }

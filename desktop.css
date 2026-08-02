@@ -32,8 +32,12 @@ body {
 font-variant: var(--font-principal);
 color: #6E0083;
 font-size: 16px;
-position: relative; 
-top: -4vw;
+display: flex;
+justify-content: center;
+align-itemns: center; 
+
+ 
+
 }
 
 .produto { 
@@ -47,71 +51,55 @@ top: -4vw;
   display: flex;
 }
 
-.gpt { 
-  width:auto;
-display: grid;
-grid-template-columns: 500px 1fr 220px;
   
- 
 
+.gpt { 
+  width:100%;
+display: grid;
+grid-template-columns: 350px 1fr 40px;
+ gap: 40px;
+
+ max-width: 1200px;
+ 
+ padding: 40px;
 }
 
 .imagem-produto { 
- position: relative;
-right: 35vw;
-top: -2vw;
- 
- width: 100%;
-  
- gap: 10px;
+  margin: 0;
+  max-width: 100%;
+ display: block;
+}
+
+.descricao001 {
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  align-items: center;
+  font-family: ' homenage', sans-serif;
+  font-size: 12px;
+}
+
+.acao{ 
+display: flex;
+flex-direction: column; 
+justify-content: flex-end;
 
 }
  
-
-.imagem-produto img { 
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.botao1 { 
+  max-width: 100%;
+margin-right: 14vh;
+align-self: flex-end;  
+  color:white;
+ 
+background-color: #6E0083;
+color: white;
+border-radius: 11px;
+border: 3px solid #FF8902;
+padding: 15px 45px 15px 45px;
 }
 
-.descricao001 { 
- max-width: 500px;
- position: relative;
- display: flex;
- justify-content: center;
- right: 30vw;
- width: 450px;
- top: 25px;
-}
 
-.descricao01 {  
-  text-decoration: double;
-  color: black;
-  font-size: 15px;
-  text-align: left;
-}
-.acao  { 
-  display: flex; 
-
-
-
-}
-
-.botao1  {
-    top: 15vw;
-  left: -13vw;
-position:relative;
-  background-color: #4B0082;
-  color: white;
-  padding: 35px 70px;
-font-weight: bold;
-font-size: 16px;
-  box-shadow: none;
-  border-radius: 16px;
-  border-color: #FF8902;
-  border-width: 5px;
-  max-width: 500px
-}
 
 * {
     box-sizing: border-box; /* Faz com que padding e bordas não aumentem o tamanho total do elemento */
@@ -129,37 +117,35 @@ h1 {
 }
 
 .font1 { 
-    
-     
-    top: 0vh;
+    margin-bottom: 2vh;
     font-size: 120%;
-
+ color:purple;
     align-items: center;
     justify-content: center;
     display: flex;
 }
 
 .logo1 { 
-    
-    position:absolute;
-    top: 2vh;
-    left: 5vw;
-    max-width: 100px;
+    z-index: 10;
+    position: relative;
 }
    
 /* Configuração básica para visualização */
 .header-loja {
-   
-  
+   margin: 0 auto;
+  overflow: hidden;
   background-color: #6E0083;
-  padding: 20px;
-  position: relative;
+
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #ffffff;
   font-family: sans-serif;
-  width: 100%
+  max-width: 100%
+}
+
+#destaquemb { 
+  display: none;
 }
 
 /* Estilo do Botão Hambúrguer */
@@ -187,8 +173,7 @@ h1 {
 .espaço { 
   margin-bottom: 1em;
   display: block;
-  position: relative;
-  left: 15vw;
+ 
   
 
   
@@ -419,7 +404,7 @@ position: relative;
     cursor: pointer;
     padding: 10px;
     border-radius: 50%;
-    z-index: 20;
+    z-index: 8;
     color: #4B0082;
 }
 
@@ -439,14 +424,12 @@ margin-bottom: 15px;
 
 
 .historia { 
-  position: relative;
-left: 0.5vw;
+  padding: 15px 20px;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  display: inline;  
-  justify-content: center;
-  align-items: center;
+  display: block;  
+
+
   overflow-wrap: break-word; 
   font-family: ' homenage', sans-serif;
 }

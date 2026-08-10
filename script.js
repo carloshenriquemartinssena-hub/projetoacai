@@ -251,4 +251,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.includes('confirmarpedidio.html')) {
         renderizarConfirmacao();
     }
-})
+});

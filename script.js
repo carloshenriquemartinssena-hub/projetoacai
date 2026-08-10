@@ -194,8 +194,10 @@ function salvarDadosCliente(event) {
     };
 
     localStorage.setItem('dadosEntrega', JSON.stringify(dadosCliente));
-    window.location.href = 'confirmarpedidio.html'; // Redireciona
-}
+    window.location.href = 'confirmarpedidio.html'; // Redireciona (reativar em caso de erro)
+
+  
+    
 
 // =========================================================
 // 3. LÓGICA DA PÁGINA DE CONFIRMAÇÃO (CONFIRMARPEDIDIO.HTML)
@@ -249,4 +251,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.includes('confirmarpedidio.html')) {
         renderizarConfirmacao();
     }
-});
+})

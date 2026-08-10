@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="cadastro.html">
     <title>Confirmar Pedido</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
 </head>
 <body>
 
@@ -81,13 +83,6 @@
 strong {
     color: black;
 }
-
-/* Responsividade (Celular) */
-@media (max-width: 800px) {
-    .container-confirmacao {
-        grid-template-columns: 1fr; /* Empilha as colunas no celular */
-    }
-}
     </style>
 
  <div class="container-confirmacao">
@@ -119,53 +114,152 @@ strong {
 
 
 <script>
-    // 1. Recupera os dados salvos
-    const cliente = JSON.parse(localStorage.getItem('dadosCliente'));
-    const produto = JSON.parse(localStorage.getItem('produtoSessao'));
+ // Recupera dados do localStorage
+const cliente = JSON.parse(localStorage.getItem('dadosCliente'));
+const produto = JSON.parse(localStorage.getItem('produtoSessao'));
 
-    const displayInfo = document.getElementById('exibir-info');
-    const displayProduto = document.getElementById('display-produtos');
+const displayInfo = document.getElementById('exibir-info');
+const displayProduto = document.getElementById('display-produtos');
 
-    if (cliente && produto) {
-        // Exibe dados do Cliente
-        displayInfo.innerHTML = `
-            <p><strong>Nome:</strong> ${cliente.nome}</p>
-            <p><strong>WhatsApp:</strong> ${cliente.whatsapp}</p>
-            <p><strong>Endereço:</strong> ${cliente.endereco}, nº ${cliente.numero}</p>
-            <p><strong>Complemento:</strong> ${cliente.complemento}</p>
-        `;
-        document.getElementById('exibir-pagamento').innerText = cliente.pagamento;
-        document.getElementById('exibir-total').innerText = produto.valor;
+if (cliente && produto) {
+    displayInfo.innerHTML = `
+        <p><strong>Nome:</strong> ${cliente.nome}</p>
+        <p><strong>WhatsApp:</strong> ${cliente.whatsapp}</p>
+        <p><strong>Endereço:</strong> ${cliente.endereco}, nº ${cliente.numero}</p>
+        <p><strong>Complemento:</strong> ${cliente.complemento || ''}</p>
+    `;
+    document.getElementById('exibir-pagamento').innerText = cliente.pagamento;
+    document.getElementById('exibir-total').innerText = produto.valor;
 
-        // Exibe o Produto Selecionado
-        displayProduto.innerHTML = `
-            <div class="produto-principal">
-                <img src="${produto.foto}" alt="${produto.nome}">
-                <h3>${produto.nome}</h3>
-                <p>Pedido preparado com açaí premium.</p>
-            </div>
-        `;
-    } else {
-        displayProduto.innerHTML = "<h3 style='color:red'>Nenhum produto selecionado. Volte e escolha um!</h3>";
+    displayProduto.innerHTML = `
+        <div class="produto-principal">
+            <img src="${produto.foto}" alt="${produto.nome}">
+            <h3>${produto.nome}</h3>
+            <p>Pedido preparado com açaí premium.</p>
+        </div>
+    `;
+} else {
+    displayProduto.innerHTML = "<h3 style='color:red'>Nenhum produto selecionado. Volte e escolha um!</h3>";
+}
+
+// Envio para o Supabase e WhatsApp
+const formulario = document.getElementById('finalizar-pedido');
+
+formulario.addEventListener('click', async function(event) { 
+    event.preventDefault();
+
+    if (!cliente || !produto) {  
+        alert("Erro ao recuperar dados do pedido.");
+        return;
     }
 
-    // 2. Função para enviar para o WhatsApp
-    document.getElementById('finalizar-pedido').addEventListener('click', function() {
-        if(!cliente || !produto) return alert("Erro ao recuperar dados do pedido.");
+    // Trava botão contra duplo clique
+    formulario.disabled = true;
+    formulario.innerText = "Enviando Pedido...";
 
-        const mensagem = `*Novo Pedido - Açaí Zero Graus*%0A%0A` +
-            `*PRODUTO:* ${produto.nome}%0A` +
-            `*VALOR:* ${produto.valor}%0A%0A` +
-            `*CLIENTE:* ${cliente.nome}%0A` +
-            `*WHATSAPP:* ${cliente.whatsapp}%0A` +
-            `*ENDEREÇO:* ${cliente.endereco}, ${cliente.numero}%0A` +
-            `*COMPLEMENTO:* ${cliente.complemento}%0A` +
-            `*PAGAMENTO:* ${cliente.pagamento}`;
+    // Converte "R$ 25,00" para número (25.00)
+    const valorNumerico = Number(
+        String(produto.valor)
+            .replace("R$", "")
+            .replace(/\./g, "")
+            .replace(",", ".")
+            .trim()
+    );
 
-        const numeroWhats = "5511974665034"; // COLOQUE SEU NÚMERO AQUI (com DDD)
-        window.open(`https://wa.me/${numeroWhats}?text=${mensagem}`, '_blank');
-    });
+    // Envio para o Supabase
+    const { data, error } = await supabaseClient
+        .from('Banco de clientes')
+        .insert([
+            {
+                "Nome": cliente.nome,
+                "Telefone": cliente.whatsapp,
+                "Endereço": `${cliente.endereco}, nº ${cliente.numero}`,
+                "Itens": {
+                    produto: produto.nome,
+                    foto: produto.foto,
+                    valor: produto.valor
+                },
+                "Valor_total": valorNumerico,
+                "Forma_pagamento": cliente.pagamento,
+                "Status": "novo",
+                "Observação": cliente.complemento || ""
+            }
+        ])
+        
+
+    if (error) {
+        console.error("ERRO COMPLETO DO SUPABASE:", error);
+        alert(`Erro ao salvar no banco (${error.code}): ${error.message}`);
+        
+        formulario.disabled = false;
+        formulario.innerText = "Finalizar pedido";
+        return;
+    }
+
+  localStorage.removeItem('produtoSessao');
+
+    // 7. Oculta o botão e exibe a mensagem de sucesso na tela para o cliente
+    const containerFormulario = formulario.parentElement || document.body;
+    
+    // Substitui a área do botão ou exibe o aviso com destaque
+    formulario.style.display = 'none'; // Esconde o botão
+
+    const mensagemSucesso = document.createElement('div');
+    mensagemSucesso.style.backgroundColor = '#22c55e'; // Verde de sucesso
+    mensagemSucesso.style.color = '#ffffff';
+    mensagemSucesso.style.padding = '20px';
+    mensagemSucesso.style.borderRadius = '8px';
+    mensagemSucesso.style.textAlign = 'center';
+    mensagemSucesso.style.marginTop = '20px';
+    mensagemSucesso.style.fontWeight = 'bold';
+    mensagemSucesso.style.fontSize = '18px';
+    mensagemSucesso.innerHTML = `
+        <h2 style="margin: 0 0 10px 0; font-size: 22px;">PEDIDO REALIZADO!</h2>
+        <p style="margin: 0; font-weight: normal; font-size: 16px;">
+            Você será notificado pelo Whatsapp sobre o seu pedido em instantes.
+        </p>
+    `;
+
+    containerFormulario.appendChild(mensagemSucesso);
+});
+
+//  function salvarDadosCliente(event) {
+//     event.preventDefault(); // Impede o recarregamento da página
+
+//     console.log("Botão finalizar pedido foi acionado");
+//     const form = event.target;
+//     const dadosCliente = {
+//         nome: form.nome.value,
+//         sobrenome: form.sobrenome.value,
+//         cpf: form.cpf.value,
+//         cep: form.cep.value,
+//         endereco: form.endereco.value,
+//         numero: form.numero.value,
+//         complemento: form.complemento.value,
+//         whatsapp: form.whatsapp.value,
+//         pagamento: form.pagamento.value
+//     };
+
+//     console.log("Dados capturados:",
+//         dadosCliente);
+    
+//     localStorage.setItem('dadosEntrega', JSON.stringify(dadosCliente));
+//     window.location.href = 'confirmarpedidio.html'; // Redireciona (reativar em caso de erro)
+
+//     const produtoSalvo = localStorage.getItem('produtoSelecionado');
+
+//     let produto = null;
+
+//     if (produtoSalvo) { 
+//         produto = JSON.parse(produtoSalvo);
+
+//     };
+// }
+
+       
+
 </script>
 
 </body>
+
 </html>

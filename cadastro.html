@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="">
     <title>Cadastro</title>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
 
 <body>
 
@@ -229,21 +233,27 @@ padding: 15px 45px 15px 45px;
 </form>
 
 <script>
-document.getElementById('formPedido').addEventListener('submit', function(e) {
-    e.preventDefault();
 
-    const dadosCliente = {
-        nome: document.getElementById('nome').value,
-        whatsapp: document.getElementById('whatsapp').value,
-        endereco: document.getElementById('endereco').value,
-        numero: document.getElementById('numero').value,
+  
+ document.getElementById('formPedido').addEventListener('submit', function(e) {
+     e.preventDefault();
+
+     const dadosCliente = {
+         nome: document.getElementById('nome').value,
+         whatsapp: document.getElementById('whatsapp').value,
+         endereco: document.getElementById('endereco').value,
+         numero: document.getElementById('numero').value,
         complemento: document.getElementById('complemento').value || "Não informado",
         pagamento: document.getElementById('pagamento').value
-    };
+     };
 
-    localStorage.setItem('dadosCliente', JSON.stringify(dadosCliente));
-    window.location.href = 'confirmarpedidio.html';
-});
+     localStorage.setItem('dadosCliente', JSON.stringify(dadosCliente));
+     window.location.href = 'confirmarpedidio.html';
+ });
+
+
+
+
 </script>
 </body>
 </html>

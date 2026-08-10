@@ -193,7 +193,7 @@ function salvarDadosCliente(event) {
         pagamento: form.pagamento.value
     };
 
-    localStorage.setItem('dadosEntrega', JSON.stringify(dadosCliente));
+    localStorage.setItem('dadosCliente', JSON.stringify(dadosCliente));
     window.location.href = 'confirmarpedidio.html'; // Redireciona (reativar em caso de erro)
 
   
@@ -208,7 +208,7 @@ function renderizarConfirmacao() {
     const produtoContainer = document.getElementById('display-produtos'); // ID no seu HTML de confirmação
     
     const produto = JSON.parse(localStorage.getItem('produtoSelecionado'));
-    const cliente = JSON.parse(localStorage.getItem('dadosEntrega'));
+    const cliente = JSON.parse(localStorage.getItem('dadosCliente'));
 
     if (cliente && infoContainer) {
         infoContainer.innerHTML = `

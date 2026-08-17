@@ -7,6 +7,7 @@
     <title>Confirmar Pedido</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase.js"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
 <body>
 
@@ -109,6 +110,7 @@ strong {
             </div>
         
         <button id="finalizar-pedido" class="btn-confirmar">Confirmar Pedido</button>
+        <div id="walletBrick_container"></div>
     </section>
 </div>
 
@@ -117,6 +119,12 @@ strong {
  // Recupera dados do localStorage
 const cliente = JSON.parse(localStorage.getItem('dadosCliente'));
 const produto = JSON.parse(localStorage.getItem('produtoSessao'));
+
+console.log("PRODUTO RECUPERADO NA CONFIRMAÇÃO:");
+console.log(produto);
+
+console.log("UUID RECUPERADO:");
+console.log(produto?.id);
 
 const displayInfo = document.getElementById('exibir-info');
 const displayProduto = document.getElementById('display-produtos');
@@ -145,82 +153,83 @@ if (cliente && produto) {
 // Envio para o Supabase e WhatsApp
 const formulario = document.getElementById('finalizar-pedido');
 
-formulario.addEventListener('click', async function(event) { 
+formulario.addEventListener('click', async function(event) {
+
     event.preventDefault();
 
-    if (!cliente || !produto) {  
-        alert("Erro ao recuperar dados do pedido.");
+    if (!cliente || !produto) {
+        alert("Erro ao recuperar os dados do pedido.");
         return;
     }
 
-    // Trava botão contra duplo clique
     formulario.disabled = true;
-    formulario.innerText = "Enviando Pedido...";
+    formulario.innerText = "Preparando pagamento...";
 
-    // Converte "R$ 25,00" para número (25.00)
-    const valorNumerico = Number(
-        String(produto.valor)
-            .replace("R$", "")
-            .replace(/\./g, "")
-            .replace(",", ".")
-            .trim()
-    );
+    try {
 
-    // Envio para o Supabase
-    const { data, error } = await supabaseClient
-        .from('Banco de clientes')
-        .insert([
+        // UUID REAL do produto cadastrado na tabela products
+        const productId = produto.id;
+
+        const SUPABASE_ANON_KEY = "sb_publishable_I_e7Cz-IprP2wUsPp3Nfcg_7z7WWgoi";
+
+        const resposta = await fetch(
+            "https://rpupbfuglojzxbzcjkox.supabase.co/functions/v1/create-preference",
             {
-                "Nome": cliente.nome,
-                "Telefone": cliente.whatsapp,
-                "Endereço": `${cliente.endereco}, nº ${cliente.numero}`,
-                "Itens": {
-                    produto: produto.nome,
-                    foto: produto.foto,
-                    valor: produto.valor
-                },
-                "Valor_total": valorNumerico,
-                "Forma_pagamento": cliente.pagamento,
-                "Status": "novo",
-                "Observação": cliente.complemento || ""
-            }
-        ])
-        
+                method: "POST",
 
-    if (error) {
-        console.error("ERRO COMPLETO DO SUPABASE:", error);
-        alert(`Erro ao salvar no banco (${error.code}): ${error.message}`);
-        
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+                    "apikey": SUPABASE_ANON_KEY
+                },
+
+                body: JSON.stringify({
+                    productId: productId
+                })
+            }
+        );
+
+        const dados = await resposta.json();
+
+        console.log("Resposta do Supabase:", dados);
+
+        if (!resposta.ok) {
+            throw new Error(
+                dados.error || "Erro ao criar pagamento."
+            );
+        }
+
+        // Inicializa Mercado Pago
+        const mp = new MercadoPago(dados.publicKey);
+
+        const bricksBuilder = mp.bricks();
+
+        // Cria o checkout
+        await bricksBuilder.create(
+            "wallet",
+            "walletBrick_container",
+            {
+                initialization: {
+                    preferenceId: dados.preferenceId
+                }
+            }
+        );
+
+        formulario.innerText = "Pagamento disponível";
+
+    } catch (erro) {
+
+        console.error("Erro:", erro);
+
+        alert(
+            "Não foi possível iniciar o pagamento:\n\n" +
+            erro.message
+        );
+
         formulario.disabled = false;
         formulario.innerText = "Finalizar pedido";
-        return;
     }
 
-  localStorage.removeItem('produtoSessao');
-
-    // 7. Oculta o botão e exibe a mensagem de sucesso na tela para o cliente
-    const containerFormulario = formulario.parentElement || document.body;
-    
-    // Substitui a área do botão ou exibe o aviso com destaque
-    formulario.style.display = 'none'; // Esconde o botão
-
-    const mensagemSucesso = document.createElement('div');
-    mensagemSucesso.style.backgroundColor = '#22c55e'; // Verde de sucesso
-    mensagemSucesso.style.color = '#ffffff';
-    mensagemSucesso.style.padding = '20px';
-    mensagemSucesso.style.borderRadius = '8px';
-    mensagemSucesso.style.textAlign = 'center';
-    mensagemSucesso.style.marginTop = '20px';
-    mensagemSucesso.style.fontWeight = 'bold';
-    mensagemSucesso.style.fontSize = '18px';
-    mensagemSucesso.innerHTML = `
-        <h2 style="margin: 0 0 10px 0; font-size: 22px;">PEDIDO REALIZADO!</h2>
-        <p style="margin: 0; font-weight: normal; font-size: 16px;">
-            Você será notificado pelo Whatsapp sobre o seu pedido em instantes.
-        </p>
-    `;
-
-    containerFormulario.appendChild(mensagemSucesso);
 });
 
 //  function salvarDadosCliente(event) {
@@ -256,7 +265,16 @@ formulario.addEventListener('click', async function(event) {
 //     };
 // }
 
-       
+       // Teste cirúrgico:
+window.addEventListener('load', () => {
+    if (typeof MercadoPago === 'undefined') {
+        console.error("O SDK do Mercado Pago não foi carregado!");
+    } else {
+        console.log("SDK do Mercado Pago carregado com sucesso!");
+        // Aqui você inicializará o seu objeto:
+        // const mp = new MercadoPago('SUA_PUBLIC_KEY_AQUI');
+    }
+});
 
 </script>
 

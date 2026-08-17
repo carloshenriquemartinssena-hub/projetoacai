@@ -14,9 +14,11 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="desktop.css">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <script> AOS.init();</script>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 
@@ -94,7 +96,7 @@ O Clássico Refrescante</h1></div>
 
 
 <div class="acao">
-     <a href="cadastro.html"><button class="botao1"> Comprar Agora</button></a>
+    <button class="enfeitebotao" type="button"> Comprar Agora</button>
   </div>
 <section id="destaquemb">
 <div class="carousel-item active"> 
@@ -104,7 +106,7 @@ O Clássico Refrescante</h1>
               <img class="espaço" src="fotoexemplo.png" alt="Açaí com Morango">
 
       <div class="produto-info">
-        <a href="cadastro.html"><button class="enfeitebotao"> COMPRAR</button></a>
+      <button class="enfeitebotao" type="button"> COMPRAR</button>
           <p class="receita">Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão , quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino , oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
      
       </div>
@@ -115,7 +117,7 @@ O Clássico Refrescante</h1>
 O Clássico Refrescante</h1>
       <img class="espaço"  src="fotoexemplo.png" alt="Açaí com Morango">
       <div class="produto-info">
-       <a href="cadastro.html"> <button class="enfeitebotao"> COMPRAR</button></a>
+       <button class="enfeitebotao" type="button"> COMPRAR</button>
        
         <p class="receita">texto do produto 2 ( dois ) vai aqui.</p>
       </div>
@@ -126,7 +128,7 @@ O Clássico Refrescante</h1>
 O Clássico Refrescante</h1>
       <img class="espaço"  src="fotoexemplo.png" alt="Açaí Turbinado">
       <div class="produto-info">
-      <a href="cadastro.html">  <button class="enfeitebotao"> COMPRAR</button></a>
+      <button class="enfeitebotao" type="button"> COMPRAR</button>
         <p class="receita">Texto do produto 3 ( três ) vai aqui.</p>
       </div>
       </div>
@@ -175,63 +177,142 @@ O Clássico Refrescante</h1>
 <section>
         <!-- produto 1 -->
         <div class="product-slider" id="productSlider" >
-            <div class="product-card">
+            <div class="product-card" 
+            data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097">
                 <div class="discount-badge">15% OFF</div>
-                <img class="aprender" src="2fotoexemplo.png" alt="Açaí Completo" class="product-img">
+                <img class="aprender" src="2fotoexemplo.png" alt="Açaí Completo" >
                 <div class="product-info">
-                    <h4>Açaí do Clã</h4>
+                    <h4>Açaí de teste 500ml</h4>
                     <p class="descricao">Açaí premium com morango fresco e leite em pó ou condensado: energia gelada e porcelana.</p>
                     <p class="price">R$ 25,90</p>
-                    <a href="cadastro.html"><button class="buy-btn">Comprar Agora</button>:</a>
+                  <button class="buy-btn" type="button">Comprar Agora</button>
                 </div>
             </div>
 
              <!-- produto 2 -->
 
-            <div class="product-card">
-              <div class="discount-badge">15% OFF</div>
-                <img class="aprender" src="logoaçai.png" alt="Açaí Simples" class="product-img">
-                <div class="product-info">
-                    <h4>Copo da Mama</h4>
-                    <p class="price">R$ 18,00</p>
-                    <a href="cadastro.html"><button class="buy-btn">Comprar Agora</button></a>
-                </div>
-            </div>
+           <div
+    class="product-card"
+    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
+>
 
+    <div class="discount-badge">
+        15% OFF
+    </div>
+
+    <img
+        class="aprender"
+        src="2fotoexemplo.png"
+        alt="Açaí Completo"
+    >
+
+    <div class="product-info">
+
+        <h4>
+            Açaí de teste 500ml
+        </h4>
+
+        <p class="descricao">
+            Açaí premium com morango fresco e leite em pó ou condensado.
+        </p>
+
+        <p class="price">
+            R$ 25,90
+        </p>
+
+        <button
+            class="buy-btn"
+            type="button"
+        >
+            Comprar Agora
+        </button>
+
+    </div>
+
+</div>
              <!-- produto 3 -->
 
-               <div class="product-card">
-                <img class="aprender" src="logoaçai.png" alt="Açaí Simples" class="product-img">
-                <div class="product-info">
-                    <h4>Copo da Mama</h4>
-                    <p class="price">R$ 18,00</p>
-                    <a href="cadastro.html"><button class="buy-btn">Comprar Agora</button></a>
-                </div>
-            </div>
+               <div
+    class="product-card"
+    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
+>
 
-             <!-- produto 4 -->
+    <div class="discount-badge">
+        15% OFF
+    </div>
 
-               <div class="product-card">
-                <img class="aprender" src="logoaçai.png" alt="Açaí Simples" class="product-img">
-                <div class="product-info">
-                    <h4>Copo da Mama</h4>
-                    <p class="price">R$ 18,00</p>
-                    <a href="cadastro.html"><button class="buy-btn">Comprar Agora</button></a>
-                </div>
-            </div>
+    <img
+        class="aprender"
+        src="2fotoexemplo.png"
+        alt="Açaí Completo"
+    >
+
+    <div class="product-info">
+
+        <h4>
+            Açaí de teste 500ml
+        </h4>
+
+        <p class="descricao">
+            Açaí premium com morango fresco e leite em pó ou condensado.
+        </p>
+
+        <p class="price">
+            R$ 25,90
+        </p>
+
+        <button
+            class="buy-btn"
+            type="button"
+        >
+            Comprar Agora
+        </button>
+
+    </div>
+
+</div>
 
              <!-- produto 5 -->
 
-               <div class="product-card">
-                <img class="aprender" src="logoaçai.png"Açaí Simples" class="product-img">
-                <div class="product-info">
-                    <h4>Copo da Mama</h4>
-                    <p class="price">R$ 18,00</p>
-                    <a href="cadastro.html"><button class="buy-btn">Comprar Agora</button></a>
-                </div>
-            </div>
+             <div
+    class="product-card"
+    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
+>
 
-            </div>
+    <div class="discount-badge">
+        15% OFF
+    </div>
+
+    <img
+        class="aprender"
+        src="2fotoexemplo.png"
+        alt="Açaí Completo"
+    >
+
+    <div class="product-info">
+
+        <h4>
+            Açaí de teste 500ml
+        </h4>
+
+        <p class="descricao">
+            Açaí premium com morango fresco e leite em pó ou condensado.
+        </p>
+
+        <p class="price">
+            R$ 25,90
+        </p>
+
+        <button
+            class="buy-btn"
+            type="button"
+        >
+            Comprar Agora
+        </button>
+
+    </div>
+
+</div>
 
             <!-- Carrossell 2 - Primeiro Pedido? Comece com Estes: -->
 
@@ -246,60 +327,210 @@ O Clássico Refrescante</h1>
         <div class="product-slider" id="productSlider">
 
            <!-- produto 1 -->
-            <div class="product-card">
-                <div class="discount-badge">15% OFF</div>
-                <img class="aprender" src="2fotoexemplo.png" alt="Açaí Completo" class="product-img">
-                <div class="product-info">
-                    <h4>Açaí do Clã</h4>
-                    <p class="price">R$ 25,90</p>
-                    <a href="cadastro.html"><button class="buy-btn">Comprar Agora</button></a>
-                </div>
-            </div>
+            <div
+    class="product-card"
+    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
+>
 
+    <div class="discount-badge">
+        15% OFF
+    </div>
+
+    <img
+        class="aprender"
+        src="2fotoexemplo.png"
+        alt="Açaí Completo"
+    >
+
+    <div class="product-info">
+
+        <h4>
+            Açaí de teste 500ml
+        </h4>
+
+        <p class="descricao">
+            Açaí premium com morango fresco e leite em pó ou condensado.
+        </p>
+
+        <p class="price">
+            R$ 25,90
+        </p>
+
+        <button
+            class="buy-btn"
+            type="button"
+        >
+            Comprar Agora
+        </button>
+
+    </div>
+
+</div>
              <!-- produto 2 -->
 
-            <div class="product-card">
-              <div class="discount-badge">15% OFF</div>
-                <img class="aprender" src="logoaçai.png" alt="Açaí Simples" class="product-img">
-                <div class="product-info">
-                    <h4>Copo da Mama</h4>
-                    <p class="price">R$ 18,00</p>
-                    <a href="cadastro.html"><button class="buy-btn">Comprar Agora</button></a>
-                </div>
-            </div>
+           <div
+    class="product-card"
+    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
+>
+
+    <div class="discount-badge">
+        15% OFF
+    </div>
+
+    <img
+        class="aprender"
+        src="2fotoexemplo.png"
+        alt="Açaí Completo"
+    >
+
+    <div class="product-info">
+
+        <h4>
+            Açaí de teste 500ml
+        </h4>
+
+        <p class="descricao">
+            Açaí premium com morango fresco e leite em pó ou condensado.
+        </p>
+
+        <p class="price">
+            R$ 25,90
+        </p>
+
+        <button
+            class="buy-btn"
+            type="button"
+        >
+            Comprar Agora
+        </button>
+
+    </div>
+
+</div>
 
              <!-- produto 3 -->
 
-               <div class="product-card">
-                <img class="aprender" src="logoaçai.png" alt="Açaí Simples" class="product-img">
-                <div class="product-info">
-                    <h4>Copo da Mama</h4>
-                    <p class="price">R$ 18,00</p>
-                    <a href="cadastro.html"><button class="buy-btn">Comprar Agora</button></a>
-                </div>
-            </div>
+               <div
+    class="product-card"
+    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
+>
+
+    <div class="discount-badge">
+        15% OFF
+    </div>
+
+    <img
+        class="aprender"
+        src="2fotoexemplo.png"
+        alt="Açaí Completo"
+    >
+
+    <div class="product-info">
+
+        <h4>
+            Açaí de teste 500ml
+        </h4>
+
+        <p class="descricao">
+            Açaí premium com morango fresco e leite em pó ou condensado.
+        </p>
+
+        <p class="price">
+            R$ 25,90
+        </p>
+
+        <button
+            class="buy-btn"
+            type="button"
+        >
+            Comprar Agora
+        </button>
+
+    </div>
+
+</div>
 
              <!-- produto 4 -->
+<div
+    class="product-card"
+    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
+>
 
-               <div class="product-card">
-                <img class="aprender" src="logoaçai.png" alt="Açaí Simples" class="product-img">
-                <div class="product-info">
-                    <h4>Copo da Mama</h4>
-                    <p class="price">R$ 18,00</p>
-                    <a href="cadastro.html"><button class="buy-btn">Comprar Agora</button></a>
-                </div>
-            </div>
+    <div class="discount-badge">
+        15% OFF
+    </div>
 
+    <img
+        class="aprender"
+        src="2fotoexemplo.png"
+        alt="Açaí Completo"
+    >
+
+    <div class="product-info">
+
+        <h4>
+            Açaí de teste 500ml
+        </h4>
+
+        <p class="descricao">
+            Açaí premium com morango fresco e leite em pó ou condensado.
+        </p>
+
+        <p class="price">
+            R$ 25,90
+        </p>
+
+        <button
+            class="buy-btn"
+            type="button"
+        >
+            Comprar Agora
+        </button>
+
+    </div>
+
+</div>
              <!-- produto 5 -->
 
-               <div class="product-card">
-                <img class="aprender" src="logoaçai.png" alt="Açaí Simples" class="product-img">
-                <div class="product-info">
-                    <h4>Copo da Mama</h4>
-                    <p class="price">R$ 18,00</p>
-                    <a href="cadastro.html"><button class="buy-btn">Comprar Agora</button></a>
-                </div>
-            </div>
+               <div
+    class="product-card"
+    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
+>
+
+    <div class="discount-badge">
+        15% OFF
+    </div>
+
+    <img
+        class="aprender"
+        src="2fotoexemplo.png"
+        alt="Açaí Completo"
+    >
+
+    <div class="product-info">
+
+        <h4>
+            Açaí de teste 500ml
+        </h4>
+
+        <p class="descricao">
+            Açaí premium com morango fresco e leite em pó ou condensado.
+        </p>
+
+        <p class="price">
+            R$ 25,90
+        </p>
+
+        <button
+            class="buy-btn"
+            type="button"
+        >
+            Comprar Agora
+        </button>
+
+    </div>
+
+</div>
 
             </div>
 
@@ -372,23 +603,6 @@ O Clássico Refrescante</h1>
 
 
 <script>
-document.addEventListener('click', function (e) {
-    if (e.target.classList.contains('buy-btn') || e.target.classList.contains('enfeitebotao')) {
-        // Encontra o container (card ou carrossel)
-        const container = e.target.closest('.product-card') || e.target.closest('.carousel-item');
-
-        if (container) {
-            const produtoParaSalvar = {
-                nome: (container.querySelector('h4') || container.querySelector('.font1')).innerText.trim(),
-                foto: container.querySelector('img').src,
-                valor: (container.querySelector('.price') || {innerText: "R$ 25,00"}).innerText.trim()
-            };
-
-            // Usaremos nomes fixos para evitar erros: 'produtoSessao'
-            localStorage.setItem('produtoSessao', JSON.stringify(produtoParaSalvar));
-        }
-    }
-});
 
 
 </script>

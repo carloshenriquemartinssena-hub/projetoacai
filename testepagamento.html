@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Teste Mercado Pago</title>
+</head>
+
+<body>
+
+<button id="teste">Testar pagamento</button>
+
+<script>
+
+document.getElementById("teste").addEventListener("click", async () => {
+
+    const productId = "8a4b37d4-eb90-4c40-b346-0bc5a9e4d097";
+
+    // Sua chave ANON PUBLIC do Supabase
+    const SUPABASE_ANON_KEY = "sb_publishable_I_e7Cz-IprP2wUsPp3Nfcg_7z7WWgoi";
+
+    console.log("UUID enviado:", productId);
+
+    try {
+
+        const resposta = await fetch(
+            "https://rpupbfuglojzxbzcjkox.supabase.co/functions/v1/create-preference",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+                    "apikey": SUPABASE_ANON_KEY
+                },
+
+                body: JSON.stringify({
+                    productId: productId
+                })
+            }
+        );
+
+        console.log("Status HTTP:", resposta.status);
+
+        const texto = await resposta.text();
+
+        console.log("Resposta:", texto);
+
+        alert(
+            "STATUS: " +
+            resposta.status +
+            "\n\nRESPOSTA:\n" +
+            texto
+        );
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert(
+            "Erro de conexão:\n\n" +
+            erro.message
+        );
+    }
+
+});
+
+</script>
+
+</body>
+</html>

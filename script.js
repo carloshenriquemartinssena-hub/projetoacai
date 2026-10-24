@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         itemAtual.classList.remove('exit');
 
         itemAtual.style.transform = "translateX(50px)";
-        itemAtual.style.opacity = "0";
+        itemAtual.style.opacity = "";
 
         currentIndex =
             (currentIndex - 1 + items.length) % items.length;
@@ -142,6 +142,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+/*=========================================================
+MINHA TENTATIVA DE SCROLL AUTOMÁTICO PARA O CARROSSEL DE DESTAQUES
+=================================================================*/
+
+const productSlider = document.querySelectorAll('.carousel-item');
+let autoscrollInterval;
+
+function startAutoScroll() {
+    autoScrollInterval = setInterval(() => {
+        const maxScrollLeft = container.scrollWidth - container.clientWidht;
+
+        /*se chegar no final, volta para o início*/
+        if (container.scrollLeft >= maxScrollLeft - 1){
+            container.scrollLeft = 0;
+        } else {
+            container.ScrollLeft += container.clientWidth;
+        }
+    }, 3000); /*tempo em milissegundos (3 segundos) */
+}
+        //início automático*/
+        startAutoScroll();
 
 
 /* =========================================================

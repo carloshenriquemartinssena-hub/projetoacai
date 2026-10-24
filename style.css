@@ -20,6 +20,11 @@ body {
 .gpt { 
   display: none;
 }
+
+.videodestaque {
+
+display: none;
+}
 .desktopp {
   display: none;
 }
@@ -37,6 +42,10 @@ h1 {
   font-weight: 400;
 }
 
+.receita {
+  padding-top: 14px;
+}
+
 .dktitu { 
   display: none;
 }
@@ -52,7 +61,7 @@ h1 {
 }
 
 .acao  { 
-  display: none;
+  display: flex;
 }
 
 main { display: none;}
@@ -156,12 +165,13 @@ main { display: none;}
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #4B0082 !important;
+  color: #fcfcfc !important;
 }
 
 .login-item img {
   width: 20px;
   height: 20px;
+  color:white;
 }
 
 /* Animação das Barras transformando em X */
@@ -201,30 +211,71 @@ z-index: 0;
 
 .carousel-item {
 
- gap: 25px;
+ /*gap: 25px;
   width: 100%;
   opacity: 0; /* Começa invisível */
-  transform: translateX(50px); /* Começa um pouco à direita */
-  transition: opacity 0.8s ease, transform 0.8s ease;
+ /* transform: translateX(50px); /* Começa um pouco à direita */
+ /* transition: opacity 0.8s ease, transform 0.8s ease;
   display: block;
   justify-content: center;
   align-items: center;
   text-align: center;
   pointer-events: none;
-}
 
 /* Estado do Produto Visível */
-.carousel-item.active {
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
+gap: 300px;
+width: 100%;
+display: grid;
+justify-content: start;
+
+}
+ul {
+ width: 100vw;
+  height: 650px;
+  padding: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+scroll-behavior: smooth;
+  columns: 1;
+  text-align: center;
+  scrollbar-width: none;
+--webkit-overflow-scrolling: touch;
+animation: scrollDestaques 8s ease-in-out infinite alternate;
+
 }
 
-/* Estado de Saída (Saindo para a esquerda e sumindo) */
-.carousel-item.exit {
-  opacity: 0;
-  transform: translateX(-50px);
+li {
+display: inline-block;
+height: 0 auto;
+width: 0 auto;
+text-align: left;
+flex-shrink: 0;
+
+
 }
+
+@keyframes scrollDestaques {
+  0%, 10% {
+    transform: translateX(0);
+  
+  }
+
+90%, 100% {
+transform: transalateX(calc(-100% + 100vw));
+}
+}
+
+.carousel-item.active { 
+  opacity: 100;
+  transform: translateX(0);
+  pointer-events: auto; 
+
+ }
+/* Estado de Saída (Saindo para a esquerda e sumindo) */
+/* .carousel-item.exit { */
+  /* opacity: 100;
+  transform: translateX(-100px); */
+
 
 .carousel-item img {
   width: 100%;
@@ -292,9 +343,10 @@ z-index: 0;
 
 .espaço{ 
 margin: auto;
-width: 50%;
+width: auto;
 height: auto;
-      display: block;
+display: block;
+padding-bottom: 14px;
   
 }
 

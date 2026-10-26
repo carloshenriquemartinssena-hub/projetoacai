@@ -133,6 +133,7 @@ text-decoration: none;}
   width: 100%;
   overflow: hidden;
   position: relative;
+  
 }
 
 .carousel-track {
@@ -161,6 +162,7 @@ text-decoration: none;}
   height: auto;
   display: block;
   object-fit: cover; /* Preenche o espaço sem distorcer */
+  border-radius: 0% !important;
 }
 
 

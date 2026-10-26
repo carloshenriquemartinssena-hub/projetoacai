@@ -240,6 +240,15 @@ function configurarBotoesCompra() {
 
             const productId =
                 card.dataset.productId;
+                const productSlug = card.dataset.productSlug;
+
+               if (productSlug) {
+                window.location.href =
+                 `produtopage.html?produto=${encodeURIComponent(productSlug)}`;
+                 return;
+                }
+
+                
 
 
             console.log(

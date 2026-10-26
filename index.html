@@ -11,6 +11,7 @@
    
    <link rel="stylesheet" href="cadastro.html">
    <link rel="stylesheet" href="confirmarpedidio.html">
+   <link rel="stylesheet" href="produtopage.html">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="desktop.css">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -31,7 +32,11 @@
 <body>
 
 <header class="header-loja">
+
+    
     <img class="logo1" src="logoaçai.png" alt="açaidobom">
+
+    
   
   <div class="menu-hamburger" onclick="this.classList.toggle('active')">
     <div class="bar"></div>
@@ -40,7 +45,16 @@
   </div>
 
   <nav class="navegacao">
+     
     <ul class="lista">
+        <div class="input-container">
+        <div class="input">
+     <img class="icon" src="icon-pesquisar.png" alt="pesquisar">   
+<input class="campo" type="text" id="campo-pesquisa" placeholder="Pesquisar Açaí" autocomplete="off"> 
+ </div> 
+    </div>
+
+
       <li>Mais pedidos</li>
       <li>Combos</li>
       <li>Épocas</li>
@@ -48,25 +62,54 @@
         Login 
         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Icone Login">
       </li>
+       <li><a href="carrinho.html">
+    <img src="carrinho-icon.png" alt="adicionar-ao-carrinho" class="carrinho-icon">
+</a></li>
     </ul>
+    
   </nav>
+  
 
  
 </header>
 
 
 
-
 <!-- carrosel do cabeçalho -->
+<!-- Carrossel do Cabeçalho -->
 <section class="carousel-section">
-  <picture >
+  <div class="carousel-track">
+    
+    <!-- BANNER 1 (Imagem Dinâmica Desktop/Mobile) -->
+    <div class="carousel-item">
+      <picture>
+        <source media="(max-width: 425px)" srcset="bannerMB.png">
+        <img src="banner.DK.png" alt="acaizerograus">
+      </picture>
+    </div>
 
-    <!-- banner promocional-->
+    <!-- BANNER 2 (Exemplo de Vídeo) -->
+    <!-- <div class="carousel-item">
+      <video src="video-promocional.mp4" autoplay loop muted playsinline></video>
+    </div> -->
 
-  <source media="(max-width: 425px)" srcset="bannerMB.png">
-    <img src="banner.DK.png" alt="acaizerograus"></picture>       
-                
-    </section>
+    <!-- BANNER 3 (Outra Imagem) -->
+    <div class="carousel-item">
+      <picture>
+        <source media="(max-width: 425px)" srcset="banner PROMOCIONAL_ sextou novos lançamentos.png">
+        <img src="banner PROMOCIONAL_ sextou novos lançamentos.png" alt="promocao acai">
+      </picture>
+    </div>
+    <div class="carousel-item">
+      <picture>
+        <source media="(max-width: 425px)" srcset="banner PROMOCIONAL_ sextou novos lançamentos.png">
+        <img src="banner PROMOCIONAL_ novos seguidores ganham desconto!.png" alt="promocao acai">
+      </picture>
+    </div>
+
+  </div>
+</section>
+
 
     <section id="descktopp">
       <!-- Produtos em destaques rotativos-->
@@ -208,13 +251,14 @@ O Clássico Refrescante</h1>
         <!-- produto 1 -->
         <div class="product-slider" id="productSlider" >
             <div class="product-card" 
-            data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097">
+            data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
+             data-product-slug="acai-teste-500ml">
                 <div class="discount-badge">15% OFF</div>
-                <img class="aprender" src="2fotoexemplo.png" alt="Açaí Completo" >
-                <div class="product-info">
+                <img class="aprender" src="2fotoexemplo.png" alt="Açaí Completo" ><a href="produtopage.html?produto=acai-teste-500ml">
+                <div class="product-info" id="produto-titulo">
                     <h4>Açaí de teste 500ml</h4>
-                    <p class="descricao">Açaí premium com morango fresco e leite em pó ou condensado: energia gelada e porcelana.</p>
-                    <p class="price">R$ 25,90</p>
+                    <p class="descricao" id="produto-descricao">Açaí premium com morango fresco e leite em pó ou condensado: energia gelada e porcelana.</p>
+                    <p class="price" id="produto-preco">R$ 25,90</a></p>
                   <button class="buy-btn" type="button">Comprar Agora</button>
                 </div>
             </div>
@@ -234,7 +278,7 @@ O Clássico Refrescante</h1>
         class="aprender"
         src="2fotoexemplo.png"
         alt="Açaí Completo"
-    >
+    ><a href=produtopage.html>
 
     <div class="product-info">
 
@@ -248,7 +292,7 @@ O Clássico Refrescante</h1>
 
         <p class="price">
             R$ 25,90
-        </p>
+        </a></p>
 
         <button
             class="buy-btn"
@@ -275,7 +319,7 @@ O Clássico Refrescante</h1>
         class="aprender"
         src="2fotoexemplo.png"
         alt="Açaí Completo"
-    >
+    ><a href=produtopage.html>
 
     <div class="product-info">
 
@@ -289,7 +333,7 @@ O Clássico Refrescante</h1>
 
         <p class="price">
             R$ 25,90
-        </p>
+        </a></p>
 
         <button
             class="buy-btn"
@@ -317,7 +361,7 @@ O Clássico Refrescante</h1>
         class="aprender"
         src="2fotoexemplo.png"
         alt="Açaí Completo"
-    >
+    ><a href=produtopage.html>
 
     <div class="product-info">
 
@@ -331,7 +375,7 @@ O Clássico Refrescante</h1>
 
         <p class="price">
             R$ 25,90
-        </p>
+        </a></p>
 
         <button
             class="buy-btn"
@@ -370,7 +414,7 @@ O Clássico Refrescante</h1>
         class="aprender"
         src="2fotoexemplo.png"
         alt="Açaí Completo"
-    >
+    ><a href=produtopage.html>
 
     <div class="product-info">
 
@@ -384,7 +428,7 @@ O Clássico Refrescante</h1>
 
         <p class="price">
             R$ 25,90
-        </p>
+        </a></p>
 
         <button
             class="buy-btn"
@@ -411,7 +455,7 @@ O Clássico Refrescante</h1>
         class="aprender"
         src="2fotoexemplo.png"
         alt="Açaí Completo"
-    >
+    ><a href=produtopage.html>
 
     <div class="product-info">
 
@@ -425,7 +469,7 @@ O Clássico Refrescante</h1>
 
         <p class="price">
             R$ 25,90
-        </p>
+        </a></p>
 
         <button
             class="buy-btn"
@@ -453,7 +497,7 @@ O Clássico Refrescante</h1>
         class="aprender"
         src="2fotoexemplo.png"
         alt="Açaí Completo"
-    >
+    ><a href=produtopage.html>
 
     <div class="product-info">
 
@@ -467,7 +511,7 @@ O Clássico Refrescante</h1>
 
         <p class="price">
             R$ 25,90
-        </p>
+        </a></p>
 
         <button
             class="buy-btn"
@@ -494,7 +538,7 @@ O Clássico Refrescante</h1>
         class="aprender"
         src="2fotoexemplo.png"
         alt="Açaí Completo"
-    >
+    ><a href=produtopage.html>
 
     <div class="product-info">
 
@@ -508,7 +552,7 @@ O Clássico Refrescante</h1>
 
         <p class="price">
             R$ 25,90
-        </p>
+       </a> </p>
 
         <button
             class="buy-btn"
@@ -535,7 +579,7 @@ O Clássico Refrescante</h1>
         class="aprender"
         src="2fotoexemplo.png"
         alt="Açaí Completo"
-    >
+    ><a href=produtopage.html>
 
     <div class="product-info">
 
@@ -549,7 +593,7 @@ O Clássico Refrescante</h1>
 
         <p class="price">
             R$ 25,90
-        </p>
+        </a></p>
 
         <button
             class="buy-btn"
@@ -594,28 +638,36 @@ O Clássico Refrescante</h1>
   <!-- Informações -->
 
   <!-- <h1 class="descricao"><mark class="destacar">Informações</mark></h1> -->
-  <div class="documentos">
-   <h1 class="descricao"> <mark class="destacar">Informações</mark></h1>
-<div class="list">
+  <div class="area">
+
+
+    <div class="conteudo">
+        
+    <h1 class="descricao"> <mark class="destacar">Informações</mark></h1>
+    <ul class="list">
     <li>Termos de Uso / Privacidade</li>
     <li>Políticas de Entrega & Reembolso</li>
     <li> Razão Social & CNPJ</li>
     <li>Formas De Pagamento</li>
   </ul>
-  </div>
-  </div>
 
+</div>
+<div >
   <!-- contato -->
-   <div class="documentos">
    <h1 class="descricao"> <mark class="destacar">Contato</mark></h1>
-<div class="list">
-    <li>WhatsApp: 11 97466-5034</li>
-    <li>Instagram: @Acaizerograus</li>
+
+   
+    <ul class="list">
+    <li><a href="https://wa.me/5511974665034">WhatsApp: 11 97466-5034</a></li>
+    <li><a href="https://www.instagram.com/acaizg/">Instagram: @Acaizerograus</a></li>
     <!-- <li> Facebook: a definir</li> -->
-    <li>Email: acaizerograusoficial@gmail.com</li>
+    <li>Email: <a href="mailto:acaizerograusoficial@gmail.com">acaizerograusoficial@gmail.com</a></li>
+    <li>TikTok: </li>
   </ul>
-  </div>
-  </div>
+</div>
+     </div> 
+        
+
 <!-- 
   <div class="googlemaps">
 
@@ -631,14 +683,163 @@ O Clássico Refrescante</h1>
 
 </section>
 
+<footer>Todos os direitos foram reservados - AÇAÍ ZERO GRAU</footer>
+
+<!-- CORRIGIDO: Removida a classe antiga que conflitava com o script -->
+<div id="resultados-pesquisa"></div>
 
 <script>
+const meusProdutos = [
+  { id: 1, nome: "Açaí Tradicional com Banana", link: "produto.html?id=1" },
+  { id: 2, nome: "Açaí Turbinado com Nutella", link: "produto.html?id=2" },
+  { id: 3, nome: "Cupuaçu e Açaí Casadinho", link: "produto.html?id=3" },
+  { id: 4, nome: "Barca de Açaí Completa", link: "produto.html?id=4" },
+  { id: 5, nome: "Açaí Especial Supremo", link: "produto.html?id=5" },
+  { id: 6, nome: "Açaí com Morango e Leite Ninho", link: "produto.html?id=6" }
+];
+
+const inputPesquisa = document.getElementById("campo-pesquisa");
+const caixaResultados = document.getElementById("resultados-pesquisa");
+
+inputPesquisa.addEventListener("input", function() {
+  const textoDigitado = inputPesquisa.value.toLowerCase().trim();
+
+  // CORRIGIDO: Se estiver vazio, removemos a classe para ESCONDER a caixa
+  if (textoDigitado === "") {
+    caixaResultados.classList.remove("mostrar-resultados");
+    caixaResultados.innerHTML = "";
+    return;
+  }
+
+  // Descobre a posição exata do input na tela
+  const posicaoInput = inputPesquisa.getBoundingClientRect();
+  
+  // Posiciona a caixinha flutuante perfeitamente embaixo do campo
+  caixaResultados.style.top = (posicaoInput.bottom + window.scrollY + 5) + "px";
+  caixaResultados.style.left = (posicaoInput.left + window.scrollX) + "px";
+  caixaResultados.style.width = posicaoInput.width + "px"; 
+
+  const produtosFiltrados = meusProdutos.filter(produto => {
+    return produto.nome.toLowerCase().includes(textoDigitado);
+  });
+
+  // Limpa os resultados anteriores antes de checar os novos
+  caixaResultados.innerHTML = "";
+
+  if (produtosFiltrados.length > 0) {
+    caixaResultados.classList.add("mostrar-resultados");
+
+    produtosFiltrados.forEach(produto => {
+      const itemLink = document.createElement("a");
+      itemLink.classList.add("resultado-item");
+      itemLink.href = produto.link;
+      itemLink.textContent = produto.nome;
+      caixaResultados.appendChild(itemLink);
+    });
+  } else {
+    caixaResultados.classList.add("mostrar-resultados");
+    caixaResultados.innerHTML = `<div class="resultado-item" style="cursor:default; color:#999;">Nenhum açaí encontrado...</div>`;
+  }
+});
+
+// CORRIGIDO: Fecha a caixa se clicar fora (remove a classe de exibição)
+document.addEventListener("click", function(evento) {
+  if (!inputPesquisa.contains(evento.target) && !caixaResultados.contains(evento.target)) {
+    caixaResultados.classList.remove("mostrar-resultados");
+  }
+});
+
+/*BANNER ROTATIVO INDEX.HMTML*/
+
+// --- LÓGICA DO CARROSSEL DE DESLIZAMENTO SUAVE ---
+const track = document.querySelector('.carousel-track');
+const slides = document.querySelectorAll('.carousel-item');
+let indexAtual = 0;
+let tempoTroca = 4000; // 4 segundos
+let carrosselIntervalo;
+
+// Variáveis para o arrasto manual
+let isDragging = false;
+let startX = 0;
+let currentTranslate = 0;
+let prevTranslate = 0;
+
+function atualizarPosicao() {
+  track.style.transform = `translateX(-${indexAtual * 100}%)`;
+}
+
+function iniciarAutomato() {
+  carrosselIntervalo = setInterval(() => {
+    indexAtual++;
+    if (indexAtual >= slides.length) {
+      indexAtual = 0;
+    }
+    atualizarPosicao();
+  }, tempoTroca);
+}
+
+// Inicia o carrossel automático
+iniciarAutomato();
+
+// --- EVENTOS PARA ARRASTAR MANUALMENTE ---
+
+// Início do toque / clique
+function dragStart(e) {
+  isDragging = true;
+  clearInterval(carrosselIntervalo); // Para o automático ao tocar
+  startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+  track.style.transition = 'none'; // Tira a animação enquanto o usuário arrasta com o dedo
+}
+
+// Movimento do arrasto
+function dragMove(e) {
+  if (!isDragging) return;
+  const currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+  const deslocamento = currentX - startX;
+  
+  // Faz o cálculo visual do arrasto na tela
+  const larguraSlide = track.clientWidth;
+  const posicaoMover = (-indexAtual * larguraSlide) + deslocamento;
+  track.style.transform = `translateX(${posicaoMover}px)`;
+}
+
+// Fim do toque / clique
+function dragEnd() {
+  if (!isDragging) return;
+  isDragging = false;
+  
+  // Devolve a transição suave ao soltar
+  track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+  
+  const larguraSlide = track.clientWidth;
+  // Pega a posição final do transform em pixels
+  const matriz = new WebKitCSSMatrix(track.style.transform);
+  const xFinal = matriz.m41;
+  
+  // Calcula para qual slide o usuário tentou arrastar
+  const mudouParaSlide = Math.round(-xFinal / larguraSlide);
+  
+  // Garante que o index não passe do total de slides
+  indexAtual = Math.max(0, Math.min(mudouParaSlide, slides.length - 1));
+  
+  atualizarPosicao();
+  
+  // Reinicia o carrossel automático
+  iniciarAutomato();
+}
+
+// Ouvintes para Mouse
+track.addEventListener('mousedown', dragStart);
+track.addEventListener('mousemove', dragMove);
+window.addEventListener('mouseup', dragEnd);
+
+// Ouvintes para Celular (Touch)
+track.addEventListener('touchstart', dragStart);
+track.addEventListener('touchmove', dragMove);
+window.addEventListener('touchend', dragEnd);
 
 
 </script>
-
-
-
 </body>
 
 </html>

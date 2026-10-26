@@ -1,4 +1,4 @@
-body { 
+body html{ 
     height: auto;
     width: 100% auto;
     overflow-x: hidden;
@@ -12,9 +12,46 @@ body {
     box-sizing: border-box; /* Faz com que padding e bordas não aumentem o tamanho total do elemento */
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    overflow-x:hidden;
     
 }
+
+.carousel-section {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  touch-action: pan-y;
+  background-color: #fff; /* Adicionado para garantir o fundo */
+  padding: 0; /* Zerado para não criar faixas brancas acima/abaixo do banner */
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow-x: visible !important;
+  will-change: transform;
+}
+
+
+.carousel-item {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%; /* Mantém as imagens lado a lado na pista */
+  user-select: none;
+  opacity: 1 !important; /* Força a visibilidade total */
+  display: block !important; /* Força a estrutura correta em linha */
+}
+
+.carousel-item img, 
+.carousel-item video {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  object-fit: cover;
+}
+
 
 
 .gpt { 
@@ -99,6 +136,26 @@ main { display: none;}
   margin: auto;
 }
 
+.input{ 
+padding: 24px;
+border-radius: 8px;
+border: 1px solid blueviolet;
+}
+
+input {
+  all: unset;
+}
+
+.icon{
+  width: 10px;
+  height:auto;
+}
+.carrinho-icon {
+    width: 30px;
+    margin:0;
+    height:auto;
+}
+
 /* Estilo do Botão Hambúrguer */
 .menu-hamburger {
   position: relative;
@@ -123,13 +180,12 @@ main { display: none;}
 
 /* Menu que aparece/some */
 .navegacao {
-  position: absolute;
+  position:absolute;
   top: 20%; /* Aparece logo abaixo do header */
   left: 0;
   width: 100%;
   background-color: white;
   max-height: 0; /* Escondido por padrão */
-  overflow: hidden;
   transition: max-height 0.4s ease-in-out;
   box-shadow: 0px 8px 15px rgba(0,0,0,0.1);
   z-index: 100;
@@ -142,38 +198,48 @@ main { display: none;}
 
 /* Estilização da Lista Interna */
 .lista {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-weight: bold;
+ display: flex;
+ justify-content: center;
+ flex-direction: column;
+ margin: auto;
+ height: auto;
 }
 
 .lista li {
+  margin: auto;
   padding: 20px;
+  gap: 1px;
   border-bottom: 1px solid #eee;
   color: #333;
   font-weight: bold;
   cursor: pointer;
+  flex-direction: column;
 }
 
 .lista li:hover {
-  background-color: #f1f1f1;
+  background-color: #7f038f;
+  color: white;
 }
 
 /* Item de Login com Ícone */
 .login-item {
-  display: flex;
-  align-items: center;
+  display: block;
+  align-items: start;
+  justify-content: start;
   gap: 10px;
-  color: #fcfcfc !important;
+  color: #000000;
 }
 
 .login-item img {
   width: 20px;
   height: 20px;
   color:white;
+
 }
 
+.login-item:hover{
+  color:white;
+}
 /* Animação das Barras transformando em X */
 .menu-hamburger.active .bar:nth-child(1) {
   transform: translateY(10px) rotate(45deg);
@@ -191,14 +257,6 @@ picture img {
   display: block;
 }
 
-.carousel-section {
-    
-z-index: 0;
-
-  background-color: #fff;
-  padding: 40px 0;
-  font-family: sans-serif;
-}
 
 .carousel-container {
     
@@ -207,27 +265,6 @@ z-index: 0;
   max-width: 400px; /* Tamanho ideal para mobile */
   margin: 0 auto;
   height: 400px;
-}
-
-.carousel-item {
-
- /*gap: 25px;
-  width: 100%;
-  opacity: 0; /* Começa invisível */
- /* transform: translateX(50px); /* Começa um pouco à direita */
- /* transition: opacity 0.8s ease, transform 0.8s ease;
-  display: block;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  pointer-events: none;
-
-/* Estado do Produto Visível */
-gap: 300px;
-width: 100%;
-display: grid;
-justify-content: start;
-
 }
 ul {
  width: 100vw;
@@ -265,12 +302,12 @@ transform: transalateX(calc(-100% + 100vw));
 }
 }
 
-.carousel-item.active { 
+/* .carousel-item.active { 
   opacity: 100;
   transform: translateX(0);
   pointer-events: auto; 
 
- }
+ } */
 /* Estado de Saída (Saindo para a esquerda e sumindo) */
 /* .carousel-item.exit { */
   /* opacity: 100;
@@ -599,44 +636,55 @@ margin-left: auto;
 }
 
 #frame5 { 
-  
-  
-  margin-top: 45%;
-  padding: auto 20%;
-  display: flexbox;
-  align-items: start;
-  justify-content: center;
- 
+overflow: hidden;
+height: auto;
+max-width: 100%; 
   font-size: 10px;
   color: white;
- 
  background-color: #4B0082;
-  height: auto;
 }
 
 .destacar { 
   background-color: #4B0082;
   color: #f1f1f1;
   font-weight: 800;
+  display: flex;
+  justify-content: center;
 }
 
-.documentos{
-  padding-top: 0%;
-  position: relative; 
-  font-family: 'homenage', sans-serif;
-font-size: 15px;
-  text-decoration: none;
-  list-style: none;
+.area{ 
   display: block;
-  text-align: center;
-
-
-  line-height: 5vh;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.list { 
-  padding-top: 5vh;
-  line-height: 12vh;
+.conteudo {
+  display: block;
+ margin: 24px;
+ justify-content:center;
+ align-items: center;
+}
+
+
+
+.list {
+  display:inline-flex; 
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  gap: 30px;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  font-size: 16px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+margin-bottom: 12px;
+}
+
+.list li{
+  padding: 10px;
+  margin: 0;
 }
 
 .maps { 
@@ -690,4 +738,62 @@ font-size: 15px;
   position: relative;
   left: 25vw;
 }
+
+li a {
+  color:white;
+  text-decoration:none;
+}
+
+/*INPUT COM RESULTADOS DE PESQUISA */
+/* Container que segura o input e a lista juntos */
+.input-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 400px; /* Ajuste o tamanho máximo como preferir */
+}
+
+/* Caixa com a lista de resultados */
+#resultados-pesquisa {
+  position: absolute;
+  top: 100%;
+  left: 25px; /* Alinha com a margem que você já tinha no .input */
+  right: 25px;
+  background-color: white;
+  border: 2px solid blueviolet;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  max-height: 250px;
+  overflow-y: auto; /* Adiciona barra de rolagem se houver muitos resultados */
+  z-index: 999; /* Garante que fique por cima de banners ou fotos */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Cada linha de resultado da pesquisa */
+.resultado-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  display: block;
+  color: #333;
+  font-family: sans-serif;
+  text-decoration: none;
+  transition: background 0.2s;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.resultado-item:last-child {
+  border-bottom: none;
+}
+
+/* Efeito ao passar o mouse ou focar no resultado */
+.resultado-item:hover {
+  background-color: #f3e5f5; /* Roxo bem clarinho */
+  color: #6E0083;
+}
+
+/* Classe utilitária para sumir com a caixa quando não houver pesquisa */
+.resultados-ocultos {
+  display: none !important;
+}
+
 

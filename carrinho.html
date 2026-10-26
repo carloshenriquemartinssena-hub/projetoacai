@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Carrinho de Compras | Açaí Zero Grau</title>
+
+    <link rel="stylesheet" href="produtopage.css">
+    <link rel="stylesheet" href="carrinho.css">
+
+    <script src="carrinho.js" defer></script>
+</head>
+
+<body>
+
+    <header class="carrinho-cabecalho">
+        <a href="index.html" class="carrinho-logo">
+            <img src="logoaçai.png" alt="Açaí Zero Grau">
+        </a>
+
+        <nav class="carrinho-navegacao">
+            <a href="index.html">Início</a>
+            <a href="produtopage.html?produto=acai-especial">
+                Produtos
+            </a>
+            <a href="carrinho.html" aria-current="page">
+                Carrinho
+                <span id="contador-carrinho">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <main class="pagina-carrinho">
+
+        <section class="carrinho-introducao">
+            <p class="carrinho-etiqueta">AÇAÍ ZERO GRAU</p>
+            <h1>Seu carrinho</h1>
+            <p>Confira seus produtos antes de finalizar o pedido.</p>
+        </section>
+
+        <div id="mensagem-carrinho" class="mensagem-carrinho"
+             role="status" aria-live="polite"></div>
+
+        <div class="carrinho-layout">
+
+            <section class="carrinho-lista-secao">
+                <div class="carrinho-lista-cabecalho">
+                    <h2>Seus produtos</h2>
+
+                    <button
+                        type="button"
+                        id="btn-esvaziar-carrinho"
+                        class="btn-texto"
+                    >
+                        Esvaziar carrinho
+                    </button>
+                </div>
+
+                <div id="lista-carrinho"></div>
+
+                <div id="carrinho-vazio" class="carrinho-vazio" hidden>
+                    <div class="carrinho-vazio-icone">🛒</div>
+                    <h2>Seu carrinho está vazio</h2>
+                    <p>Escolha seus produtos favoritos para começar.</p>
+
+                    <a
+                        href="produtopage.html?produto=acai-especial"
+                        class="btn-continuar"
+                    >
+                        Conhecer produtos
+                    </a>
+                </div>
+
+                <a
+                    href="produtopage.html?produto=acai-especial"
+                    class="link-continuar-comprando"
+                >
+                    ← Continuar comprando
+                </a>
+            </section>
+
+            <aside class="resumo-pedido">
+                <h2>Resumo do pedido</h2>
+
+                <div class="resumo-linha">
+                    <span>Itens</span>
+                    <span id="resumo-quantidade">0</span>
+                </div>
+
+                <div class="resumo-linha">
+                    <span>Subtotal</span>
+                    <span id="resumo-subtotal">R$ 0,00</span>
+                </div>
+
+                <div class="resumo-linha">
+                    <span>Entrega</span>
+                    <span id="resumo-entrega">A combinar</span>
+                </div>
+
+                <div class="resumo-linha resumo-total">
+                    <span>Total dos produtos</span>
+                    <span id="resumo-total">R$ 0,00</span>
+                </div>
+
+                <p class="resumo-aviso">
+                    O valor da entrega será confirmado antes da conclusão
+                    do pedido.
+                </p>
+
+              
+<button
+    type="button"
+    id="btn-finalizar-pedido"
+    class="btn-finalizar"
+    disabled
+>
+    Continuar para finalizar pedido
+    <span aria-hidden="true"> →</span>
+</button>
+
+                <p class="resumo-seguranca">
+                    Você poderá revisar a mensagem antes de enviá-la.
+                </p>
+            </aside>
+
+        </div>
+
+    </main>
+
+    <footer class="carrinho-rodape">
+        <p>© Açaí Zero Grau — Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

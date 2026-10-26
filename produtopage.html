@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Confira nosso cardápio de açaí e monte seu pedido.">
+    <title>Produto | Açaí Zero Grau</title>
+
+    <!-- Seu CSS original -->
+    <link rel="stylesheet" href="produtopage.css">
+
+    <!-- Fontes originais -->
+    <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="header-loja">
+
+    <a href="index.html" aria-label="Página inicial">
+        <img class="logo1" src="logoaçai.png" alt="Açaí Zero Grau">
+    </a>
+
+    <div class="menu-hamburger" aria-label="Menu" role="button" tabindex="0">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <nav class="navegacao">
+        <ul class="lista">
+            <li class="item-pesquisa">
+                <div class="input">
+                    <img class="icon" src="icon-pesquisar.png" alt="">
+                    <input
+                        class="campo"
+                        id="pesquisa-produtos"
+                        type="search"
+                        placeholder="Pesquisar Açaí"
+                        aria-label="Pesquisar produtos">
+                </div>
+            </li>
+
+            <li><a href="index.html#mais-pedidos">Mais pedidos</a></li>
+            <li><a href="index.html#combos">Combos</a></li>
+            <li><a href="index.html#epocas">Épocas</a></li>
+
+            <li class="login-item">
+                <a href="login.html">Login</a>
+                <img
+                    src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+                    alt="Ícone de login">
+                    <li><a href="carrinho.html">
+    <img src="carrinho-icon.png" alt="adicionar-ao-carrinho" class="carrinho-icon">
+</a></li>
+            </li>
+
+        </ul>
+    </nav>
+
+</header>
+
+<!-- Banner promocional -->
+<section class="carousel-section">
+    <picture>
+        <source media="(max-width: 425px)" srcset="bannerMB.png">
+        <img src="banner.DK.png" alt="Promoções da Açaí Zero Grau">
+    </picture>
+</section>
+
+<main class="produto-container">
+
+    <p id="mensagem-produto" role="status" aria-live="polite"></p>
+
+    <!-- PRODUTO: estrutura reutilizada para todos os itens -->
+    <section class="produto-detalhes" id="produto-detalhes">
+
+        <!-- Galeria -->
+        <div class="produto-galeria">
+
+            <div class="imagem-principal">
+                <img
+                    id="imagem-produto-principal"
+                    src="fotoexemplo.png"
+                    alt="Foto do açaí">
+            </div>
+
+            <div
+                class="imagens-miniaturas"
+                id="imagens-miniaturas"
+                aria-label="Fotos do produto">
+            </div>
+
+        </div>
+
+        <!-- Informações e compra -->
+        <div class="produto-info-compra">
+
+            <h1 class="produto-titulo" id="produto-titulo">
+                Carregando produto...
+            </h1>
+
+            <p class="produto-preco" id="produto-preco"></p>
+
+            <p class="produto-descricao" id="produto-descricao"></p>
+
+            <form class="produto-opcoes" id="form-produto">
+
+                <!-- Tamanhos -->
+                <div class="opcao-grupo">
+
+                    <span class="opcao-label">Escolha o tamanho:</span>
+
+                    <div
+                        class="tamanhos-botoes"
+                        id="tamanhos-botoes">
+                    </div>
+
+                </div>
+
+                <!-- Adicionais -->
+                <div class="opcao-grupo">
+
+                    <span class="opcao-label">
+                        Adicionais (opcional):
+                    </span>
+
+                    <div id="adicionais-produto"></div>
+
+                </div>
+
+                <!-- Quantidade e botões -->
+                <div class="compra-acoes">
+
+                    <label class="opcao-label" for="quantidade">
+                        Quantidade:
+                    </label>
+
+                    <div class="seletor-quantidade">
+
+                        <button
+                            type="button"
+                            class="qtd-btn"
+                            id="btn-menos"
+                            aria-label="Diminuir quantidade">
+                            −
+                        </button>
+
+                        <input
+                            type="number"
+                            id="quantidade"
+                            value="1"
+                            min="1"
+                            max="10"
+                            step="1"
+                            inputmode="numeric"
+                            aria-label="Quantidade de unidades">
+
+                        <button
+                            type="button"
+                            class="qtd-btn"
+                            id="btn-mais"
+                            aria-label="Aumentar quantidade">
+                            +
+                        </button>
+
+                    </div>
+
+                    <div class="botoes-principais">
+
+                        <button
+                            type="button"
+                            class="btn-carrinho"
+                            id="btn-carrinho">
+                            Adicionar ao Carrinho
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="btn-comprar">
+                            Continuar para pagamento
+                        </button>
+
+                    </div>
+
+                    <p id="mensagem-carrinho" role="status" aria-live="polite"></p>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <!-- Produtos semelhantes -->
+    <section
+        class="produtos-semelhantes"
+        aria-labelledby="titulo-semelhantes">
+
+        <h2 class="card-preco" id="titulo-semelhantes">
+            Você também pode gostar:
+        </h2>
+
+        <div class="grid-semelhantes" id="grid-semelhantes"></div>
+
+    </section>
+
+</main>
+
+<!-- Rodapé -->
+<section id="frame5">
+
+    <div class="area">
+
+        <div class="conteudo">
+
+            <h2 class="descricao">
+                <mark class="destacar">Informações</mark>
+            </h2>
+
+            <ul class="list">
+                <li><a href="privacidade.html">Termos de Uso / Privacidade</a></li>
+                <li><a href="entrega.html">Políticas de Entrega &amp; Reembolso</a></li>
+                <li>Razão Social &amp; CNPJ</li>
+                <li>Formas de Pagamento</li>
+            </ul>
+
+        </div>
+
+        <div>
+
+            <h2 class="descricao">
+                <mark class="destacar">Contato</mark>
+            </h2>
+
+            <ul class="list">
+                <li>
+                    <a href="https://wa.me/5511974665034" target="_blank" rel="noopener">
+                        WhatsApp: 11 97466-5034
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://www.instagram.com/acaizg/" target="_blank" rel="noopener">
+                        Instagram: @Acaizerograus
+                    </a>
+                </li>
+
+                <li>
+                    <a href="mailto:acaizerograuoficial@gmail.com">
+                        E-mail da loja
+                    </a>
+                </li>
+
+                <li>TikTok: a definir</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    Todos os direitos reservados — AÇAÍ ZERO GRAU
+</footer>
+
+<!-- Os dados são carregados antes da lógica da página -->
+<script src="produtos.js" defer></script>
+<script src="produtopage.js" defer></script>
+
+</body>
+</html>

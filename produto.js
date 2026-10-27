@@ -12,6 +12,7 @@
 window.CATALOGO_PRODUTOS = {
     "acai-teste-500ml": {
     id: "8a4b37d4-eb90-4c40-b346-0bc5a9e4d097",
+    combo: false,
     nome: "Açaí de teste",
     descricao: "Açaí premium com morango fresco e leite em pó ou condensado.",
     imagens: ["2fotoexemplo.png"],
@@ -37,6 +38,7 @@ window.CATALOGO_PRODUTOS = {
 
     "acai-especial": {
         id: "acai-especial",
+        combo: false,
 
         nome: "Açaí Especial Supremo",
 
@@ -73,6 +75,7 @@ window.CATALOGO_PRODUTOS = {
 
     "acai-nutella": {
         id: "acai-nutella",
+        combo: false,
 
         nome: "Açaí com Nutella",
 
@@ -108,6 +111,7 @@ window.CATALOGO_PRODUTOS = {
 
     "cupuacu-cascata": {
         id: "cupuacu-cascata",
+        combo: false,
 
         nome: "Copo de Cupuaçu",
 
@@ -142,6 +146,7 @@ window.CATALOGO_PRODUTOS = {
 
     "barca-acai": {
         id: "barca-acai",
+        combo: false,
 
         nome: "Barca de Açaí Completa",
 

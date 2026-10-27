@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Épocas | Açaí Zero Grau</title>
+  <link rel="stylesheet" href="vitrine.css">
+  <link rel="stylesheet" href="auth.css">
+  <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="supabase.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="produto.js" defer></script>
+  <script src="vitrine.js" defer></script>
+</head>
+<body data-vitrine="epocas">
+  <header class="site-header">
+    <a class="site-logo" href="index.html" aria-label="Página inicial">
+      <img src="logoaçai.png" alt="Açaí Zero Grau">
+    </a>
+    <button class="site-menu-toggle" type="button" aria-label="Abrir menu"
+      aria-expanded="false" aria-controls="menu-principal">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="menu-principal" aria-label="Navegação principal">
+      <a href="mais-pedidos.html">Mais pedidos</a>
+      <a href="combos.html">Combos</a>
+      <a href="epocas.html" aria-current="page">Épocas</a>
+      <a href="carrinho.html">Carrinho</a>
+    </nav>
+  </header>
+  <main class="site-main">
+    <section class="site-intro">
+      <p class="site-eyebrow">INSPIRAÇÃO</p>
+      <h1>Melhores para cada época</h1>
+      <p>Descubra sugestões sazonais escolhidas aleatoriamente entre os produtos disponíveis.</p>
+    </section>
+    <section class="season-section" data-estacao="verao">
+      <h2>Melhores para: Verão</h2>
+      <div class="product-grid" aria-label="Sugestões para o verão"></div>
+    </section>
+    <section class="season-section" data-estacao="outono">
+      <h2>Melhores para: Outono</h2>
+      <div class="product-grid" aria-label="Sugestões para o outono"></div>
+    </section>
+    <section class="season-section" data-estacao="inverno">
+      <h2>Melhores para: Inverno</h2>
+      <div class="product-grid" aria-label="Sugestões para o inverno"></div>
+    </section>
+    <section class="season-section" data-estacao="primavera">
+      <h2>Melhores para: Primavera</h2>
+      <div class="product-grid" aria-label="Sugestões para a primavera"></div>
+    </section>
+  </main>
+  <footer class="site-footer">© Açaí Zero Grau — Todos os direitos reservados.</footer>
+</body>
+</html>

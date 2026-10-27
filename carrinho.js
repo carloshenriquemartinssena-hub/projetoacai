@@ -155,6 +155,7 @@
             const nome = textoSeguro(item.nome || "Produto");
             const tamanho = textoSeguro(item.tamanho || "Tamanho não informado");
             const adicionais = textoSeguro(adicionaisTexto(item));
+            const observacao = textoSeguro(item.observacao || "");
             const imagem = textoSeguro(item.imagem || IMAGEM_RESERVA);
             const quantidade = Number(item.quantidade);
             const subtotal = precoUnitario(item) * quantidade;
@@ -180,6 +181,8 @@
                     <p class="item-detalhe">
                         Adicionais: ${adicionais}
                     </p>
+
+                    ${observacao ? `<p class="item-detalhe">Observação: ${observacao}</p>` : ""}
 
                     <p class="item-preco">
                         ${dinheiro(subtotal)}
@@ -319,7 +322,21 @@ function finalizarPedido() {
         return;
     }
 
-    window.location.href = "confirmarpedidio.html";
+    window.AuthLoja.exigirLogin(() => {
+        try {
+            localStorage.setItem("produtoSessao", JSON.stringify({
+                itens,
+                valor: total
+            }));
+        } catch (error) {
+            console.error("Não foi possível preparar o pedido do carrinho.", error);
+            mostrarMensagem(
+                "Não foi possível preparar o pedido neste navegador."
+            );
+            return;
+        }
+        window.location.href = "cadastro.html";
+    });
 }
 
 
@@ -354,5 +371,3 @@ function finalizarPedido() {
 
     renderizarCarrinho();
 })();
-
-

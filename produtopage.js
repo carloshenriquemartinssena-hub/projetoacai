@@ -25,10 +25,23 @@
         const parametros =
             new URLSearchParams(window.location.search);
 
-        const slug =
+        const identificador =
             parametros.get("produto") || "acai-especial";
 
-        return catalogo[slug] || null;
+        if (catalogo[identificador]) {
+            return {
+                slug: identificador,
+                produto: catalogo[identificador]
+            };
+        }
+
+        const entrada = Object.entries(catalogo).find(
+            ([, produto]) => String(produto.id) === identificador
+        );
+
+        return entrada
+            ? { slug: entrada[0], produto: entrada[1] }
+            : null;
     }
 
 
@@ -43,15 +56,14 @@
 
 
     // Carrega os dados do produto na página
-    function carregarProduto(produto) {
+    function carregarProduto(produto, slug) {
         document.title =
             `${produto.nome} | Açaí Zero Grau`;
 
-        elemento("produto-titulo").textContent =
-            produto.nome;
+        elemento("produto-titulo").textContent = produto.nome;
 
         elemento("produto-descricao").textContent =
-            produto.descricao;
+            produto.descricao || "Confira os detalhes deste produto.";
 
         const imagemPrincipal =
             elemento("imagem-produto-principal");
@@ -64,7 +76,7 @@
         renderizarMiniaturas(produto);
         renderizarTamanhos(produto);
         renderizarAdicionais(produto);
-        renderizarRelacionados(produto);
+        renderizarRelacionados(slug);
         atualizarPreco(produto);
     }
 
@@ -76,10 +88,9 @@
 
         container.replaceChildren();
 
-        const imagens =
-            produto.imagens?.length
-                ? produto.imagens
-                : [IMAGEM_RESERVA];
+        const imagens = produto.imagens?.length
+            ? produto.imagens
+            : [IMAGEM_RESERVA];
 
         imagens.forEach((src, indice) => {
             const img = document.createElement("img");
@@ -237,67 +248,61 @@
 
 
     // Exibe os produtos semelhantes automaticamente
-    function renderizarRelacionados(produto) {
+    function renderizarRelacionados(slugAtual) {
         const container =
             elemento("grid-semelhantes");
 
         container.replaceChildren();
 
-        (produto.relacionados || [])
-            .map((id) => catalogo[id])
-            .filter(Boolean)
-            .forEach((relacionado) => {
+        const produtosDisponiveis = Object.entries(catalogo)
+            .filter(([slug]) => slug !== slugAtual);
 
-                const card =
-                    document.createElement("article");
+        for (let indice = produtosDisponiveis.length - 1; indice > 0; indice -= 1) {
+            const indiceAleatorio = Math.floor(
+                Math.random() * (indice + 1)
+            );
+            [produtosDisponiveis[indice], produtosDisponiveis[indiceAleatorio]] =
+                [produtosDisponiveis[indiceAleatorio], produtosDisponiveis[indice]];
+        }
 
-                card.className = "card-produto";
+        const recomendados = produtosDisponiveis.slice(0, 15);
 
-                const img =
-                    document.createElement("img");
+        container.closest(".produtos-semelhantes").hidden =
+            recomendados.length === 0;
 
-                img.src =
-                    relacionado.imagens?.[0] ||
-                    IMAGEM_RESERVA;
+        recomendados.forEach(([slug, relacionado]) => {
+            const card = document.createElement("article");
+            card.className = "card-produto";
 
-                img.alt = relacionado.nome;
-                img.loading = "lazy";
+            const img = document.createElement("img");
+            img.src = relacionado.imagens?.[0] || IMAGEM_RESERVA;
+            img.alt = relacionado.nome;
+            img.loading = "lazy";
 
-                const titulo =
-                    document.createElement("h3");
+            const titulo = document.createElement("h3");
+            titulo.textContent = relacionado.nome;
 
-                titulo.textContent = relacionado.nome;
+            const preco = document.createElement("p");
+            preco.className = "card-preco";
 
-                const preco =
-                    document.createElement("p");
+            const precos = (relacionado.tamanhos || [])
+                .map((tamanho) => Number(tamanho.valor))
+                .filter((valor) => Number.isFinite(valor));
 
-                preco.className = "card-preco";
+            preco.textContent = precos.length
+                ? `A partir de ${dinheiro(Math.min(...precos))}`
+                : "Consulte o preço";
 
-                const menorPreco = Math.min(
-                    ...relacionado.tamanhos.map(
-                        (tamanho) => tamanho.valor
-                    )
-                );
+            const link = document.createElement("a");
+            link.className = "btn-ver-produto";
+            link.href =
+                `produtopage.html?produto=${encodeURIComponent(slug)}`;
+            link.textContent = "Ver produto";
 
-                preco.textContent =
-                    `A partir de ${dinheiro(menorPreco)}`;
-
-                const link =
-                    document.createElement("a");
-
-                link.className = "btn-ver-produto";
-
-                link.href =
-                    `produtopage.html?produto=${encodeURIComponent(relacionado.id)}`;
-
-                link.textContent = "Ver produto";
-
-                card.append(img, titulo, preco, link);
-
-                container.appendChild(card);
-            });
+            card.append(img, titulo, preco, link);
+            container.appendChild(card);
+        });
     }
-
 
     // Monta o pedido com todas as escolhas do cliente
     function montarPedido(produto) {
@@ -311,10 +316,7 @@
 
         const quantidade = Math.max(
             1,
-            Math.min(
-                10,
-                Number.parseInt(campoQuantidade.value, 10) || 1
-            )
+            Math.min(99, Number.parseInt(campoQuantidade.value, 10) || 1)
         );
 
         campoQuantidade.value = String(quantidade);
@@ -338,6 +340,8 @@
                 ? tamanho.value
                 : produto.tamanhos[0].nome,
             adicionais,
+            observacao: elemento("observacao-produto").value.trim(),
+            imagem: produto.imagens?.[0] || IMAGEM_RESERVA,
             quantidade,
             precoUnitario,
             subtotal: precoUnitario * quantidade
@@ -347,20 +351,26 @@
 
     // Adiciona o pedido ao carrinho local do navegador
     function adicionarAoCarrinho(pedido) {
-        let carrinho = [];
-
+        let carrinho;
         try {
             carrinho = JSON.parse(
                 localStorage.getItem(
                     "acaiZeroGrauCarrinho"
                 ) || "[]"
             );
+        } catch (erro) {
+            console.error("Não foi possível ler o carrinho salvo.", erro);
+            definirMensagem(
+                "Não foi possível ler o carrinho salvo. Atualize a página e tente novamente."
+            );
+            return;
+        }
 
-            if (!Array.isArray(carrinho)) {
-                carrinho = [];
-            }
-        } catch {
-            carrinho = [];
+        if (!Array.isArray(carrinho)) {
+            definirMensagem(
+                "O carrinho salvo está inválido. Remova os dados locais e tente novamente."
+            );
+            return;
         }
 
         carrinho.push({
@@ -421,9 +431,24 @@
 
     // Inicializa os eventos e a página
     function iniciar() {
-        const produto = produtoAtual();
+        const botaoMenu = document.querySelector(".menu-hamburger");
+        const navegacao = elemento("navegacao-principal");
 
-        if (!produto) {
+        botaoMenu.addEventListener("click", () => {
+            const aberto =
+                botaoMenu.getAttribute("aria-expanded") !== "true";
+
+            botaoMenu.setAttribute("aria-expanded", String(aberto));
+            botaoMenu.setAttribute(
+                "aria-label",
+                aberto ? "Fechar menu" : "Abrir menu"
+            );
+            navegacao.classList.toggle("menu-aberto", aberto);
+        });
+
+        const itemAtual = produtoAtual();
+
+        if (!itemAtual) {
             elemento("produto-titulo").textContent =
                 "Produto não encontrado";
 
@@ -442,7 +467,8 @@
             return;
         }
 
-        carregarProduto(produto);
+        const { slug, produto } = itemAtual;
+        carregarProduto(produto, slug);
 
 
         // Diminuir quantidade
@@ -474,10 +500,10 @@
         // Validar quantidade digitada
         elemento("quantidade").addEventListener("change", () => {
             const campo = elemento("quantidade");
-             const valor = Number.parseInt(campo.value, 10);
+            const valor = Number.parseInt(campo.value, 10);
             campo.value = String(
                 Number.isFinite(valor)
-                ? matchMedia.max(1, Math.min(10, valor))
+                ? Math.max(1, Math.min(99, valor))
                 : 1
             );
         });
@@ -485,79 +511,38 @@
 
         // Adicionar ao carrinho
         elemento("btn-carrinho").addEventListener("click", () => {
-            const pedido = montarPedido(produto);
-
-            adicionarAoCarrinho(pedido);
+            window.AuthLoja.exigirLogin(() => {
+                adicionarAoCarrinho(montarPedido(produto));
+            });
         });
 
 
-        // Continuar para a finalização do pedido
-elemento("form-produto").addEventListener("submit", (evento) => {
-    evento.preventDefault();
+        // Salva o pedido selecionado e abre o formulário de entrega.
+        elemento("form-produto").addEventListener("submit", (evento) => {
+            evento.preventDefault();
+            window.AuthLoja.exigirLogin(() => {
+                const pedido = montarPedido(produto);
+                const produtoSessao = {
+                    itens: [pedido],
+                    valor: pedido.subtotal
+                };
 
-    const pedido = montarPedido(produto);
-
-    // Mantém os dados do produto no formato
-    // esperado pela página de finalização existente.
-    const produtoSessao = {
-        id: pedido.id,
-        nome: pedido.nome,
-        valor: pedido.precoUnitario,
-        foto: produto.imagens?.[0] || IMAGEM_RESERVA,
-        quantidade: pedido.quantidade,
-        tamanho: pedido.tamanho,
-        adicionais: pedido.adicionais,
-        subtotal: pedido.subtotal
-    };
-
-    try {
-        localStorage.setItem(
-            "produtoSessao",
-            JSON.stringify(produtoSessao)
-        );
-
-        window.location.href = "confirmarpedidio.html";
-    } catch (erro) {
-        definirMensagem(
-            "Não foi possível preparar seu pedido. Tente novamente."
-        );
-    }
-});
-
-
-        // Pesquisar produtos pelo nome
-        elemento("pesquisa-produtos").addEventListener(
-            "keydown",
-            (evento) => {
-                if (evento.key !== "Enter") {
-                    return;
-                }
-
-                evento.preventDefault();
-
-                const termo = elemento("pesquisa-produtos")
-                    .value
-                    .trim()
-                    .toLocaleLowerCase("pt-BR");
-
-                const encontrado =
-                    Object.values(catalogo).find((item) =>
-                        item.nome
-                            .toLocaleLowerCase("pt-BR")
-                            .includes(termo)
+                try {
+                    localStorage.setItem(
+                        "produtoSessao",
+                        JSON.stringify(produtoSessao)
                     );
 
-                if (encontrado) {
-                    window.location.href =
-                        `produtopage.html?produto=${encodeURIComponent(encontrado.id)}`;
-                } else if (termo) {
+                    window.location.href = "cadastro.html";
+                } catch {
                     definirMensagem(
-                        "Nenhum produto encontrado com esse nome.",
-                        "mensagem-produto"
+                        "Não foi possível preparar seu pedido. Tente novamente."
                     );
                 }
-            }
-        );
+            });
+        });
+
+
     }
 
 

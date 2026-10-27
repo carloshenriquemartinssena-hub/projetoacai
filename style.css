@@ -1,4 +1,4 @@
-body html{ 
+  body html{ 
     height: auto;
     width: 100% auto;
     overflow-x: hidden;
@@ -140,15 +140,17 @@ main { display: none;}
   margin: auto;
 }
 
-.input{ 
-padding: 24px;
+/* .input{ 
+padding: 12px;
 border-radius: 8px;
 border: 1px solid blueviolet;
 }
 
 input {
   all: unset;
-}
+} */
+
+
 
 .icon{
   width: 10px;
@@ -355,7 +357,7 @@ transform: transalateX(calc(-100% + 100vw));
 
 
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .nav-btn { display: block; } /* Aparece só no Desktop */
 }
 
@@ -714,6 +716,96 @@ margin-bottom: 12px;
   font-size: 15px;
 }
 
+#destaquemb {
+  width: 100%;
+  padding: 16px 0 24px;
+}
+
+#destaquemb .imagem-produtos {
+  width: 100%;
+}
+
+#destaquemb ul {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  width: 100%;
+  height: auto;
+  padding: 8px 16px 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  columns: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  animation: none;
+}
+
+#destaquemb ul::-webkit-scrollbar {
+  display: none;
+}
+
+#destaquemb li {
+  display: flex;
+  flex: 0 0 min(82vw, 320px);
+  flex-direction: column;
+  width: auto;
+  height: auto;
+  padding: 14px;
+  overflow: hidden;
+  text-align: center;
+  background: #fff;
+  border: 2px solid #ff8902;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  scroll-snap-align: start;
+}
+
+#destaquemb .mbtitu {
+  min-height: 48px;
+  padding: 0 0 10px;
+  font-size: clamp(14px, 4vw, 17px);
+  line-height: 1.35;
+  text-align: center;
+}
+
+#destaquemb .produto-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 0;
+}
+
+#destaquemb .espaço {
+  width: 100%;
+  height: 150px;
+  margin: 0;
+  padding: 0;
+  object-fit: contain;
+}
+
+#destaquemb .receita {
+  display: -webkit-box;
+  overflow: hidden;
+  padding: 0;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+#destaquemb .enfeitebotao {
+  align-self: center;
+  margin: auto auto 0;
+  padding: 9px 24px;
+  font-size: 15px;
+}
+
 .Notas { 
   display: flex;
   align-items: center;
@@ -748,56 +840,21 @@ li a {
   text-decoration:none;
 }
 
-/*INPUT COM RESULTADOS DE PESQUISA */
-/* Container que segura o input e a lista juntos */
 .input-container {
+  display:block !important;
+ min-height: auto;
+ max-height: 100px;
+}
+
+.input-container .input {
   position: relative;
-  display: inline-block;
+  display: flex !important;
+  align-items: center;
   width: 100%;
-  max-width: 400px; /* Ajuste o tamanho máximo como preferir */
-}
-
-/* Caixa com a lista de resultados */
-#resultados-pesquisa {
-  position: absolute;
-  top: 100%;
-  left: 25px; /* Alinha com a margem que você já tinha no .input */
-  right: 25px;
-  background-color: white;
+  min-width: 0;
+  margin: 0;
+  padding: 10px 12px;
   border: 2px solid blueviolet;
-  border-top: none;
-  border-radius: 0 0 8px 8px;
-  max-height: 250px;
-  overflow-y: auto; /* Adiciona barra de rolagem se houver muitos resultados */
-  z-index: 999; /* Garante que fique por cima de banners ou fotos */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  background: white;
 }
-
-/* Cada linha de resultado da pesquisa */
-.resultado-item {
-  padding: 12px 20px;
-  cursor: pointer;
-  display: block;
-  color: #333;
-  font-family: sans-serif;
-  text-decoration: none;
-  transition: background 0.2s;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.resultado-item:last-child {
-  border-bottom: none;
-}
-
-/* Efeito ao passar o mouse ou focar no resultado */
-.resultado-item:hover {
-  background-color: #f3e5f5; /* Roxo bem clarinho */
-  color: #6E0083;
-}
-
-/* Classe utilitária para sumir com a caixa quando não houver pesquisa */
-.resultados-ocultos {
-  display: none !important;
-}
-
-

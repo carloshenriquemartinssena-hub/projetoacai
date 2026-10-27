@@ -7,27 +7,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
-   <script src="script.js"></script>
+    <link rel="stylesheet" href="auth.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="supabase.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="produto.js" defer></script>
+    <script src="script.js" defer></script>
    
-   <link rel="stylesheet" href="cadastro.html">
-   <link rel="stylesheet" href="confirmarpedidio.html">
-   <link rel="stylesheet" href="produtopage.html">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="desktop.css">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
 
-<script> AOS.init();</script>
+<script>document.addEventListener("DOMContentLoaded", () => window.AOS?.init());</script>
 <script src="https://sdk.mercadopago.com/js/v2"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
+<link rel="shortcut icon" href="fivecon.png" type="image/x-icon">
 
 
 
 
-
-    <title>AÇAÍ ZERO GRAUS</title>
+    <title>Açaí Zero Grau</title>
 </head>
 <body>
 
@@ -55,13 +55,9 @@
     </div>
 
 
-      <li>Mais pedidos</li>
-      <li>Combos</li>
-      <li>Épocas</li>
-      <li class="login-item">
-        Login 
-        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Icone Login">
-      </li>
+      <li><a href="mais-pedidos.html">Mais pedidos</a></li>
+      <li><a href="combos.html">Combos</a></li>
+      <li><a href="epocas.html">Épocas</a></li>
        <li><a href="carrinho.html">
     <img src="carrinho-icon.png" alt="adicionar-ao-carrinho" class="carrinho-icon">
 </a></li>
@@ -150,68 +146,38 @@ O Clássico Refrescante</h1>
 <div class="imagem-produtos"> 
   
   
-    <ul>
+    <ul aria-label="Produtos em destaque">
         <li>
-
-      <h1 class="mbtitu">Açaí com Morango:<br> 
-        O Clássico Refrescante</h1>
-    
-         
+          <h1 class="mbtitu">Açaí com Morango:<br>O Clássico Refrescante</h1>
           <div class="produto-info">
-             
-    
-            
-            
             <img class="espaço" src="fotoexemplo.png" alt="Açaí com Morango">
-            <p class="receita">MOBILER Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão , quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino , oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
-           <button class="enfeitebotao" type="button"> COMPRAR</button>
+            <p class="receita">Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão, quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino, oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
+            <button class="enfeitebotao" type="button">COMPRAR</button>
+          </div>
         </li>
-            
-            <li>
-
-      <h1 class="mbtitu">NOVIDADE NO CARDÁPIO:<br>Conheça a 7 maravilha da terra</h1>
-    
-         
+        <li>
+          <h1 class="mbtitu">NOVIDADE NO CARDÁPIO:<br>Conheça a 7 maravilha da terra</h1>
           <div class="produto-info">
-             
-    
-            
-            
             <img class="espaço" src="fotoexemplo.png" alt="Açaí com Morango">
-            <p class="receita">MOBILER Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão , quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino , oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
-            <button class="enfeitebotao" type="button"> COMPRAR</button>
+            <p class="receita">Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão, quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino, oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
+            <button class="enfeitebotao" type="button">COMPRAR</button>
+          </div>
         </li>
-        <h1 class="mbtitu">COMBINHO PERFEITO:<br>Estilo Ultravioleta
-        </h1>
-    
-         
+        <li>
+          <h1 class="mbtitu">COMBINHO PERFEITO:<br>Estilo Ultravioleta</h1>
           <div class="produto-info">
-             
-    
-            
-            
             <img class="espaço" src="fotoexemplo.png" alt="Açaí com Morango">
-            <p class="receita">MOBILER Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão , quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino , oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
-            <button class="enfeitebotao" type="button"> COMPRAR</button>
+            <p class="receita">Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão, quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino, oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
+            <button class="enfeitebotao" type="button">COMPRAR</button>
+          </div>
         </li>
-            
-        </ul>
-      </div>
-    </div>  
-
-        <!-- <h1 class="font1">Açaí com Morango:<br> 
-O Clássico Refrescante</h1>
-      <img class="espaço"  src="fotoexemplo.png" alt="Açaí Turbinado">
-      <div class="produto-info">
-      <button class="enfeitebotao" type="button"> COMPRAR</button>
-        <p class="receita">Texto do produto 3 ( três ) vai aqui.</p> -->
-      </div>
+    </ul>
+  </div>
+</section>
 
      
 
 
-</section>
-      
    
 
 
@@ -685,69 +651,112 @@ O Clássico Refrescante</h1>
 
 <footer>Todos os direitos foram reservados - AÇAÍ ZERO GRAU</footer>
 
-<!-- CORRIGIDO: Removida a classe antiga que conflitava com o script -->
-<div id="resultados-pesquisa"></div>
+<div id="resultados-pesquisa" role="listbox" aria-label="Resultados da pesquisa"></div>
 
 <script>
-const meusProdutos = [
-  { id: 1, nome: "Açaí Tradicional com Banana", link: "produto.html?id=1" },
-  { id: 2, nome: "Açaí Turbinado com Nutella", link: "produto.html?id=2" },
-  { id: 3, nome: "Cupuaçu e Açaí Casadinho", link: "produto.html?id=3" },
-  { id: 4, nome: "Barca de Açaí Completa", link: "produto.html?id=4" },
-  { id: 5, nome: "Açaí Especial Supremo", link: "produto.html?id=5" },
-  { id: 6, nome: "Açaí com Morango e Leite Ninho", link: "produto.html?id=6" }
-];
-
 const inputPesquisa = document.getElementById("campo-pesquisa");
 const caixaResultados = document.getElementById("resultados-pesquisa");
+const campoPesquisa = document.querySelector(".input");
+const containerPesquisa = document.querySelector(".input-container");
+let temporizadorPesquisa;
 
-inputPesquisa.addEventListener("input", function() {
-  const textoDigitado = inputPesquisa.value.toLowerCase().trim();
+inputPesquisa.setAttribute("aria-controls", "resultados-pesquisa");
+inputPesquisa.setAttribute("aria-expanded", "false");
+inputPesquisa.setAttribute("role", "combobox");
 
-  // CORRIGIDO: Se estiver vazio, removemos a classe para ESCONDER a caixa
-  if (textoDigitado === "") {
-    caixaResultados.classList.remove("mostrar-resultados");
-    caixaResultados.innerHTML = "";
+function fecharResultados() {
+  caixaResultados.classList.remove("mostrar-resultados");
+  caixaResultados.replaceChildren();
+  inputPesquisa.setAttribute("aria-expanded", "false");
+}
+
+function posicionarResultados() {
+  if (!caixaResultados.classList.contains("mostrar-resultados") || !campoPesquisa) {
     return;
   }
 
-  // Descobre a posição exata do input na tela
-  const posicaoInput = inputPesquisa.getBoundingClientRect();
-  
-  // Posiciona a caixinha flutuante perfeitamente embaixo do campo
-  caixaResultados.style.top = (posicaoInput.bottom + window.scrollY + 5) + "px";
-  caixaResultados.style.left = (posicaoInput.left + window.scrollX) + "px";
-  caixaResultados.style.width = posicaoInput.width + "px"; 
+  const posicao = campoPesquisa.getBoundingClientRect();
+  caixaResultados.style.top = `${posicao.bottom + 4}px`;
+  caixaResultados.style.left = `${posicao.left}px`;
+  caixaResultados.style.width = `${posicao.width}px`;
+}
 
-  const produtosFiltrados = meusProdutos.filter(produto => {
-    return produto.nome.toLowerCase().includes(textoDigitado);
+function normalizarBusca(texto) {
+  return texto
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("pt-BR");
+}
+
+function mostrarResultados(consulta) {
+  const termo = normalizarBusca(consulta);
+  const produtos = Object.entries(window.CATALOGO_PRODUTOS || {}).filter(([, produto]) => {
+    const textoProduto = normalizarBusca(`${produto.nome} ${produto.descricao || ""}`);
+    return textoProduto.includes(termo);
   });
 
-  // Limpa os resultados anteriores antes de checar os novos
-  caixaResultados.innerHTML = "";
+  caixaResultados.replaceChildren();
 
-  if (produtosFiltrados.length > 0) {
-    caixaResultados.classList.add("mostrar-resultados");
-
-    produtosFiltrados.forEach(produto => {
-      const itemLink = document.createElement("a");
-      itemLink.classList.add("resultado-item");
-      itemLink.href = produto.link;
-      itemLink.textContent = produto.nome;
-      caixaResultados.appendChild(itemLink);
-    });
+  if (produtos.length === 0) {
+    const mensagem = document.createElement("div");
+    mensagem.className = "resultado-item resultado-vazio";
+    mensagem.textContent = "Nenhum produto encontrado.";
+    caixaResultados.appendChild(mensagem);
   } else {
-    caixaResultados.classList.add("mostrar-resultados");
-    caixaResultados.innerHTML = `<div class="resultado-item" style="cursor:default; color:#999;">Nenhum açaí encontrado...</div>`;
+    produtos.forEach(([slug, produto]) => {
+      const item = document.createElement("a");
+      item.className = "resultado-item";
+      item.href = `produtopage.html?produto=${encodeURIComponent(slug)}`;
+      item.textContent = produto.nome;
+      item.setAttribute("role", "option");
+      caixaResultados.appendChild(item);
+    });
+  }
+
+  caixaResultados.classList.add("mostrar-resultados");
+  inputPesquisa.setAttribute("aria-expanded", "true");
+  posicionarResultados();
+}
+
+inputPesquisa.addEventListener("input", () => {
+  window.clearTimeout(temporizadorPesquisa);
+
+  const consulta = inputPesquisa.value.trim();
+  if (!consulta) {
+    fecharResultados();
+    return;
+  }
+
+  fecharResultados();
+  temporizadorPesquisa = window.setTimeout(() => {
+    mostrarResultados(consulta);
+  }, 180);
+});
+
+inputPesquisa.addEventListener("focus", () => {
+  if (inputPesquisa.value.trim()) {
+    window.clearTimeout(temporizadorPesquisa);
+    mostrarResultados(inputPesquisa.value.trim());
   }
 });
 
-// CORRIGIDO: Fecha a caixa se clicar fora (remove a classe de exibição)
-document.addEventListener("click", function(evento) {
-  if (!inputPesquisa.contains(evento.target) && !caixaResultados.contains(evento.target)) {
-    caixaResultados.classList.remove("mostrar-resultados");
+document.addEventListener("click", (evento) => {
+  if (!containerPesquisa.contains(evento.target) && !caixaResultados.contains(evento.target)) {
+    window.clearTimeout(temporizadorPesquisa);
+    fecharResultados();
   }
 });
+
+document.addEventListener("keydown", (evento) => {
+  if (evento.key === "Escape") {
+    window.clearTimeout(temporizadorPesquisa);
+    fecharResultados();
+    inputPesquisa.blur();
+  }
+});
+
+window.addEventListener("resize", posicionarResultados);
+window.addEventListener("scroll", posicionarResultados, true);
 
 /*BANNER ROTATIVO INDEX.HMTML*/
 

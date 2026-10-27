@@ -1,259 +1,79 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="">
-    <title>Cadastro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Informe seus dados para entrega do pedido.">
+    <title>Dados para entrega | Açaí Zero Grau</title>
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="checkout.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="supabase.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="checkout.js" defer></script>
 </head>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<body class="checkout-page" data-checkout-page="customer">
+    <header class="checkout-header">
+        <a href="index.html" aria-label="Página inicial">
+            <img class="checkout-brand" src="logoaçai.png" alt="Açaí Zero Grau">
+        </a>
+        <a href="carrinho.html">Voltar ao carrinho</a>
+    </header>
 
-<script src="supabase.js"></script>
+    <main class="checkout-main">
+        <div class="checkout-heading">
+            <h1>Informações para entrega</h1>
+            <p>Revise ou complete seus dados. Eles ficarão salvos no seu perfil para facilitar próximos pedidos.</p>
+        </div>
 
-
-<body>
-
-    <style>
-
-    body { 
-        overflow-x: hidden;
-        max-height: 100px;
-        overflow-y: auto;
-    }
-     #formPedido { 
-    position: relative;
-    top: -150vh; /* Ajustado de -150vh para 0 */
-    width: 30%;
-    margin: 0; /* Centraliza o formulário */
-    gap: 0px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    
-}
-
- .acailogooficial { 
-       display: none;
-    }
-
-        .entrega {
-            position: relative;
-            display: block;
-            top: 10vh;
-            font-size: 20px;
-            font-family: 'homanege',sans-serif;
-        }
-
-        input { 
-            border: 2px solid purple;
-            border-radius: 4px;
-            padding: 8px 2px 8px 0px;
-            width: 45vw;
-            justify-content: left;
-            display: flex;
-            align-items: left;
-      
-
-        }
-
-        img { 
-            
-            border-left: 3px solid #FF8902;
-            top: -20vh;
-            height: 50% ;
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-end;
-            width: 50%;
-            position: relative;
-            margin-left: auto;
-            right: -2vw;
-        }
-
-        h3 {
-            color: #9B9B9B ;
-            margin-bottom: 0;
-            padding: 0;
-             font-size: 10px;
-            font-family: 'homanege',sans-serif;
-        }
-
-        #pagamento { 
-           
-        margin-top: 10vh;
-            border-radius: 8px;
-           padding: 3px 3px 3px 3px;
-          
-           display: block;
-           
-        }
-          .orientacao { 
-
-            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            color: purple;
-            font-size: 18px;
-
-
-        }
-
-        
-        button { 
-            display: flex;
-            margin-top: 10px;
-          background-color: #6d0083;
-color: white;
-border-radius: 11px;
-border: 3px solid #FF8902;
-padding: 15px 45px 15px 45px;
-        }
-    
-        @media (max-width: 425px) {
-            body { 
-             
-        overflow-x: hidden;
-        min-height: 100vh;
-        
-    }
-
-    .acailogooficial { 
-       display: flex;
-        height: auto;
-    }
-      #formPedido {
-        left: 8vw;
-        position: relative;
-        top: 20vh;
-        width: 92%;
-        max-width: none;
-        margin: 20px auto;
-    }
-
-    img {
-        display: none;
-        width: 50%;
-        margin: 5px auto;
-        display: none;
-        right: 0;
-        top: 0;
-        border: none;
-        margin-bottom: 0px;    }
-
-    .entrega {
-        text-align: center;
-        font-size: 18px;
-    }
-
-
-        input { 
-        
-            padding: 8px 2px 8px 0px;
-            justify-content: center;
-            display: flex;
-            align-items: center;
-      
-
-color: black;
-border-radius: 11px;
-border: 3px solid #af02ff;
-padding: 15px 45px 15px 45px;
-        }
-
-      
-
-         #pagamento { 
-           position: relative;
-           left: -8vw;
-margin-top: 0;
-            border-radius: 8px;
-           padding: 3px 3px;
-           margin-bottom: 10px;
-           display: flex;
-          
-        }
-
-        
-        button { 
-            margin: 0 auto;
-            justify-content: flex-start;
-            display: flex;
-           font-weight: bold;
-          position:relative;
-          left:-8vw;
-           
-            
-          background-color: #6d0083;
-color: white;
-border-radius: 11px;
-border: 3px solid #FF8902;
-padding: 15px 45px 15px 45px;
-        }
-    }
-    
-
-
-    </style>
-
-   
-<img class="acailogooficial" src="logoaçai.png" alt="açai zero grau cadastro">
-
-    <h1 class="entrega">INFORMAÇÕES PARA ENTREGA</h1>
-    
-
-    <img src="fotopedido.png" alt="">
-    <div class="line"></div>
-    
-
-    
- <form id="formPedido">
-    <h3>Nome & Sobrenome</h3>
-    <input type="text" id="nome" placeholder="Nome & Sobrenome" required>
-    <h3></h3>
-    <!-- <input type="text" id="sobrenome" placeholder="Sobrenome" required> -->
-    <h3>CPF</h3>
-    <input type="text" id="cpf" placeholder="CPF" required>
-    <h3>Cep</h3>
-    <input type="text" id="cep" placeholder="CEP" required>
-    <h3>Endereço</h3>
-    <input type="text" id="endereco" placeholder="Endereço" required>
-    <h3>Número</h3>
-    <input type="text" id="numero" placeholder="Número" required>
-    <h3>Complemento</h3>
-    <input type="text" id="complemento" placeholder="Complemento">
-    <h3>WhatsApp</h3>
-    <input type="text" id="whatsapp" placeholder="WhatsApp" required>
-
-    <h2 class="orientacao"> Selecione a Forma de Pagamento! Aceitamos Dinhero, Cartão e Pix </h2>
-    <select id="pagamento">
-        <option value="Pix">Pix</option>
-        <option value="Cartão">Cartão</option>
-        <option value="Dinheiro">Dinheiro</option>
-    </select>
-
-   <button type="submit">Continuar para Confirmação</button>
-</form>
-
-<script>
-
-  
- document.getElementById('formPedido').addEventListener('submit', function(e) {
-     e.preventDefault();
-
-     const dadosCliente = {
-         nome: document.getElementById('nome').value,
-         whatsapp: document.getElementById('whatsapp').value,
-         endereco: document.getElementById('endereco').value,
-         numero: document.getElementById('numero').value,
-        complemento: document.getElementById('complemento').value || "Não informado",
-        pagamento: document.getElementById('pagamento').value
-     };
-
-     localStorage.setItem('dadosCliente', JSON.stringify(dadosCliente));
-     window.location.href = 'confirmarpedidio.html';
- });
-
-
-
-
-</script>
+        <section class="checkout-card">
+            <form class="checkout-form" id="form-cliente">
+                <div class="checkout-field checkout-field-wide">
+                    <label for="nome">Nome completo</label>
+                    <input id="nome" name="nome" autocomplete="name" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="email">E-mail</label>
+                    <input id="email" name="email" type="email" autocomplete="email" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="whatsapp">WhatsApp com DDD</label>
+                    <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="cpf">CPF</label>
+                    <input id="cpf" name="cpf" inputmode="numeric" autocomplete="off" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="cep">CEP</label>
+                    <input id="cep" name="cep" inputmode="numeric" autocomplete="postal-code" required>
+                </div>
+                <div class="checkout-field checkout-field-wide">
+                    <label for="endereco">Endereço</label>
+                    <input id="endereco" name="endereco" autocomplete="street-address" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="numero">Número</label>
+                    <input id="numero" name="numero" autocomplete="address-line2" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="complemento">Complemento (opcional)</label>
+                    <input id="complemento" name="complemento" autocomplete="off">
+                </div>
+                <div class="checkout-field checkout-field-wide">
+                    <label for="pagamento">Forma de pagamento</label>
+                    <select id="pagamento" name="pagamento" required>
+                        <option value="Pix">Pix</option>
+                        <option value="Cartão">Cartão</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                    </select>
+                </div>
+                <p class="checkout-message checkout-field-wide" id="checkout-message" role="status" aria-live="polite"></p>
+                <div class="checkout-actions checkout-field-wide">
+                    <button class="checkout-button" type="submit">Revisar pedido</button>
+                </div>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

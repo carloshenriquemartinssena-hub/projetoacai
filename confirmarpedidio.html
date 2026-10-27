@@ -1,283 +1,53 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="cadastro.html">
-    <title>Confirmar Pedido</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase.js"></script>
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Revise seu pedido antes de enviá-lo à Açaí Zero Grau.">
+    <title>Revisar pedido | Açaí Zero Grau</title>
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="checkout.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="supabase.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="checkout.js" defer></script>
 </head>
-<body>
+<body class="checkout-page" data-checkout-page="confirmation">
+    <header class="checkout-header">
+        <a href="index.html" aria-label="Página inicial">
+            <img class="checkout-brand" src="logoaçai.png" alt="Açaí Zero Grau">
+        </a>
+        <a href="mais-pedidos.html">Continuar comprando</a>
+    </header>
 
-    <style>
-
-        .container-confirmacao {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Divide em 2 colunas iguais */
-    gap: 40px;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: sans-serif;
-}
-
-.card {
-    background: #f9f9f9;
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-/* Estilo das Imagens */
-.produto-principal img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-.outros-produtos {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.outros-produtos img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 2px solid #ddd;
-}
-
-/* Botões */
-.btn-confirmar {
-    width: 100%;
-    background: #28a745;
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-.btn-voltar {
-    background: none;
-    border: none;
-    color: #666;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-#exibir-total { 
-    color: purple;
-}
-
-#exibir-info { 
-    color: purple;
-}
-
-strong {
-    color: black;
-}
-    </style>
-
- <div class="container-confirmacao">
-    <section class="coluna-info">
-        <h2>Resumo do Pedido</h2>
-        
-        <div id="dados-cliente" class="card">
-            <h3>Seus Dados</h3>
-            <div id="exibir-info"></div> </div>
-
-        <div class="pagamento-total card">
-            <p><strong>Forma de Pagamento:</strong> <span id="exibir-pagamento"></span></p>
-            <div class="total-box">
-                <span>Total a pagar:</span>
-                <strong id="exibir-total">R$ 0,00</strong>
-            </div>
+    <main class="checkout-main">
+        <div class="checkout-heading">
+            <h1>Revise seu pedido</h1>
+            <p>Confira os produtos, seus dados e a forma de pagamento antes de enviar.</p>
         </div>
 
-        <button onclick="window.history.back()" class="btn-voltar">← Voltar e Corrigir</button>
-    </section>
+        <div class="checkout-grid">
+            <section class="checkout-card" aria-labelledby="pedido-heading">
+                <h2 id="pedido-heading">Produtos selecionados</h2>
+                <div class="checkout-products" id="checkout-products"></div>
+            </section>
 
-    <section class="coluna-produto">
-        <div id="display-produtos">
-            </div>
-        
-        <button id="finalizar-pedido" class="btn-confirmar">Confirmar Pedido</button>
-        <div id="walletBrick_container"></div>
-    </section>
-</div>
-
-
-<script>
- // Recupera dados do localStorage
-const cliente = JSON.parse(localStorage.getItem('dadosCliente'));
-const produto = JSON.parse(localStorage.getItem('produtoSessao'));
-
-console.log("PRODUTO RECUPERADO NA CONFIRMAÇÃO:");
-console.log(produto);
-
-console.log("UUID RECUPERADO:");
-console.log(produto?.id);
-
-const displayInfo = document.getElementById('exibir-info');
-const displayProduto = document.getElementById('display-produtos');
-
-if (cliente && produto) {
-    displayInfo.innerHTML = `
-        <p><strong>Nome:</strong> ${cliente.nome}</p>
-        <p><strong>WhatsApp:</strong> ${cliente.whatsapp}</p>
-        <p><strong>Endereço:</strong> ${cliente.endereco}, nº ${cliente.numero}</p>
-        <p><strong>Complemento:</strong> ${cliente.complemento || ''}</p>
-    `;
-    document.getElementById('exibir-pagamento').innerText = cliente.pagamento;
-    document.getElementById('exibir-total').innerText = produto.valor;
-
-    displayProduto.innerHTML = `
-        <div class="produto-principal">
-            <img src="${produto.foto}" alt="${produto.nome}">
-            <h3>${produto.nome}</h3>
-            <p>Pedido preparado com açaí premium.</p>
+            <aside class="checkout-card checkout-summary">
+                <h2>Seus dados</h2>
+                <div id="dados-cliente" class="checkout-muted"></div>
+                <div class="checkout-total">
+                    <span>Total</span>
+                    <strong id="resumo-total">R$ 0,00</strong>
+                </div>
+                <p class="checkout-muted">A entrega será combinada com a loja; o total acima considera os produtos.</p>
+                <p id="checkout-message" class="checkout-message" role="status" aria-live="polite"></p>
+                <div class="checkout-actions">
+                    <a class="checkout-back" href="cadastro.html">Corrigir dados</a>
+                    <button class="checkout-button" id="finalizar-pedido" type="button">Enviar pedido pelo WhatsApp</button>
+                </div>
+                <p class="checkout-muted">O pedido só será enviado após a confirmação pelo WhatsApp da loja.</p>
+            </aside>
         </div>
-    `;
-} else {
-    displayProduto.innerHTML = "<h3 style='color:red'>Nenhum produto selecionado. Volte e escolha um!</h3>";
-}
-
-// Envio para o Supabase e WhatsApp
-const formulario = document.getElementById('finalizar-pedido');
-
-formulario.addEventListener('click', async function(event) {
-
-    event.preventDefault();
-
-    if (!cliente || !produto) {
-        alert("Erro ao recuperar os dados do pedido.");
-        return;
-    }
-
-    formulario.disabled = true;
-    formulario.innerText = "Preparando pagamento...";
-
-    try {
-
-        // UUID REAL do produto cadastrado na tabela products
-        const productId = produto.id;
-
-        const SUPABASE_ANON_KEY = "sb_publishable_I_e7Cz-IprP2wUsPp3Nfcg_7z7WWgoi";
-
-        const resposta = await fetch(
-            "https://rpupbfuglojzxbzcjkox.supabase.co/functions/v1/create-preference",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-                    "apikey": SUPABASE_ANON_KEY
-                },
-
-                body: JSON.stringify({
-                    productId: productId
-                })
-            }
-        );
-
-        const dados = await resposta.json();
-
-        console.log("Resposta do Supabase:", dados);
-
-        if (!resposta.ok) {
-            throw new Error(
-                dados.error || "Erro ao criar pagamento."
-            );
-        }
-
-        // Inicializa Mercado Pago
-        const mp = new MercadoPago(dados.publicKey);
-
-        const bricksBuilder = mp.bricks();
-
-        // Cria o checkout
-        await bricksBuilder.create(
-            "wallet",
-            "walletBrick_container",
-            {
-                initialization: {
-                    preferenceId: dados.preferenceId
-                }
-            }
-        );
-
-        formulario.innerText = "Pagamento disponível";
-
-    } catch (erro) {
-
-        console.error("Erro:", erro);
-
-        alert(
-            "Não foi possível iniciar o pagamento:\n\n" +
-            erro.message
-        );
-
-        formulario.disabled = false;
-        formulario.innerText = "Finalizar pedido";
-    }
-
-});
-
-//  function salvarDadosCliente(event) {
-//     event.preventDefault(); // Impede o recarregamento da página
-
-//     console.log("Botão finalizar pedido foi acionado");
-//     const form = event.target;
-//     const dadosCliente = {
-//         nome: form.nome.value,
-//         sobrenome: form.sobrenome.value,
-//         cpf: form.cpf.value,
-//         cep: form.cep.value,
-//         endereco: form.endereco.value,
-//         numero: form.numero.value,
-//         complemento: form.complemento.value,
-//         whatsapp: form.whatsapp.value,
-//         pagamento: form.pagamento.value
-//     };
-
-//     console.log("Dados capturados:",
-//         dadosCliente);
-    
-//     localStorage.setItem('dadosEntrega', JSON.stringify(dadosCliente));
-//     window.location.href = 'confirmarpedidio.html'; // Redireciona (reativar em caso de erro)
-
-//     const produtoSalvo = localStorage.getItem('produtoSelecionado');
-
-//     let produto = null;
-
-//     if (produtoSalvo) { 
-//         produto = JSON.parse(produtoSalvo);
-
-//     };
-// }
-
-       // Teste cirúrgico:
-window.addEventListener('load', () => {
-    if (typeof MercadoPago === 'undefined') {
-        console.error("O SDK do Mercado Pago não foi carregado!");
-    } else {
-        console.log("SDK do Mercado Pago carregado com sucesso!");
-        // Aqui você inicializará o seu objeto:
-        // const mp = new MercadoPago('SUA_PUBLIC_KEY_AQUI');
-    }
-});
-
-</script>
-
+    </main>
 </body>
-
 </html>

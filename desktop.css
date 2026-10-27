@@ -742,63 +742,92 @@ li a {
   left: 25vw;
 }
 
-/*INPUT RESULTADO DE PESQUISA*/
-/* Container que segura o input e a lista juntos */
+}
+
 .input-container {
   position: relative;
   display: inline-flex;
-  width: 100%;
+  flex: 0 1 400px;
+  width: min(400px, calc(100vw - 20px));
   max-width: 400px;
   height: auto;
+  min-width: 0;
 }
 
-/* Caixa com a lista de resultados */
-#resultados-pesquisa {
-  position: fixed; /* Mantém flutuando fora do cabeçalho */
-  background-color: white;
+.input-container .input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  margin: 0;
+  padding: 10px 12px;
   border: 2px solid blueviolet;
   border-radius: 8px;
-  max-height: 250px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  z-index: 999999999 !important; /* Força ficar por cima do carrossel e dos banners */
-  display: none; /* Começa totalmente escondida */
+  background: white;
 }
 
-/* Quando houver texto e resultados, o JavaScript ativa esta classe */
-#resultados-pesquisa.mostrar-resultados {
-  display: block !important;
+.input-container .icon {
+  position: static;
+  flex: 0 0 20px;
+  width: 20px;
+  height: auto;
+  margin-right: 10px;
 }
-/* Cada linha de resultado da pesquisa */
-.resultado-item {
-  padding: 12px 20px;
-  cursor: pointer;
+
+.input-container #campo-pesquisa {
+  all: unset;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  color: #333;
+  font-family: sans-serif;
+}
+
+#resultados-pesquisa {
+  position: fixed;
+  display: none;
+  max-height: min(250px, 50vh);
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 2px solid blueviolet;
+  border-radius: 0 0 8px 8px;
+  background-color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  z-index: 999999999;
+}
+
+#resultados-pesquisa.mostrar-resultados {
   display: block;
+}
+
+#resultados-pesquisa .resultado-item {
+  display: block;
+  overflow: hidden;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
   color: #333;
   font-family: sans-serif;
   text-decoration: none;
-  transition: background 0.2s;
-  border-bottom: 1px solid #f0f0f0;
-  white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.resultado-item:last-child {
+#resultados-pesquisa .resultado-item:last-child {
   border-bottom: none;
 }
 
-/* Efeito ao passar o mouse ou focar no resultado */
-.resultado-item:hover {
+#resultados-pesquisa .resultado-item:hover,
+#resultados-pesquisa .resultado-item:focus {
   background-color: #f3e5f5;
-  color: #6E0083;
+  color: #6e0083;
 }
 
-/* Classe utilitária para sumir com a caixa quando não houver pesquisa */
-.resultados-ocultos {
-  display: none !important;
-  z-index:999;
-}
-
+#resultados-pesquisa .resultado-vazio {
+  color: #999;
+  cursor: default;
 }

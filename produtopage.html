@@ -7,8 +7,8 @@
     <meta name="description" content="Confira nosso cardápio de açaí e monte seu pedido.">
     <title>Produto | Açaí Zero Grau</title>
 
-    <!-- Seu CSS original -->
     <link rel="stylesheet" href="produtopage.css">
+    <link rel="stylesheet" href="auth.css">
 
     <!-- Fontes originais -->
     <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&display=swap" rel="stylesheet">
@@ -20,48 +20,42 @@
 
 <header class="header-loja">
 
-    <a href="index.html" aria-label="Página inicial">
-        <img class="logo1" src="logoaçai.png" alt="Açaí Zero Grau">
-    </a>
+    
+    <img class="logo1" src="logoaçai.png" alt="açaidobom"><a href="index.html"></a>
 
-    <div class="menu-hamburger" aria-label="Menu" role="button" tabindex="0">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
+    
+  
+  <div class="menu-hamburger" onclick="this.classList.toggle('active')">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+
+  <nav class="navegacao" id="navegacao-principal">
+     
+    <ul class="lista">
+        <div class="input-container">
+        <div class="input">
+     <img class="icon" src="icon-pesquisar.png" alt="pesquisar">   
+<input class="campo" type="text" id="campo-pesquisa" placeholder="Pesquisar Açaí" autocomplete="off"> 
+ </div> 
     </div>
 
-    <nav class="navegacao">
-        <ul class="lista">
-            <li class="item-pesquisa">
-                <div class="input">
-                    <img class="icon" src="icon-pesquisar.png" alt="">
-                    <input
-                        class="campo"
-                        id="pesquisa-produtos"
-                        type="search"
-                        placeholder="Pesquisar Açaí"
-                        aria-label="Pesquisar produtos">
-                </div>
-            </li>
 
-            <li><a href="index.html#mais-pedidos">Mais pedidos</a></li>
-            <li><a href="index.html#combos">Combos</a></li>
-            <li><a href="index.html#epocas">Épocas</a></li>
-
-            <li class="login-item">
-                <a href="login.html">Login</a>
-                <img
-                    src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
-                    alt="Ícone de login">
-                    <li><a href="carrinho.html">
+      <li><a href="mais-pedidos.html">Mais pedidos</a></li>
+      <li><a href="combos.html">Combos</a></li>
+      <li><a href="epocas.html">Épocas</a></li>
+       <li><a href="carrinho.html">
     <img src="carrinho-icon.png" alt="adicionar-ao-carrinho" class="carrinho-icon">
 </a></li>
-            </li>
+    </ul>
+    
+  </nav>
+  
 
-        </ul>
-    </nav>
-
+ 
 </header>
+
 
 <!-- Banner promocional -->
 <section class="carousel-section">
@@ -77,6 +71,11 @@
 
     <!-- PRODUTO: estrutura reutilizada para todos os itens -->
     <section class="produto-detalhes" id="produto-detalhes">
+        
+ <h1 class="produto-titulo" id="produto-titulo">
+            Carregando produto...
+        </h1>
+        
 
         <!-- Galeria -->
         <div class="produto-galeria">
@@ -95,52 +94,19 @@
             </div>
 
         </div>
+       
 
         <!-- Informações e compra -->
-        <div class="produto-info-compra">
-
-            <h1 class="produto-titulo" id="produto-titulo">
-                Carregando produto...
-            </h1>
-
-            <p class="produto-preco" id="produto-preco"></p>
-
-            <p class="produto-descricao" id="produto-descricao"></p>
+       
 
             <form class="produto-opcoes" id="form-produto">
 
-                <!-- Tamanhos -->
                 <div class="opcao-grupo">
-
-                    <span class="opcao-label">Escolha o tamanho:</span>
-
-                    <div
-                        class="tamanhos-botoes"
-                        id="tamanhos-botoes">
-                    </div>
-
-                </div>
-
-                <!-- Adicionais -->
-                <div class="opcao-grupo">
-
-                    <span class="opcao-label">
-                        Adicionais (opcional):
-                    </span>
-
-                    <div id="adicionais-produto"></div>
-
-                </div>
-
-                <!-- Quantidade e botões -->
-                <div class="compra-acoes">
-
                     <label class="opcao-label" for="quantidade">
                         Quantidade:
                     </label>
 
                     <div class="seletor-quantidade">
-
                         <button
                             type="button"
                             class="qtd-btn"
@@ -154,7 +120,7 @@
                             id="quantidade"
                             value="1"
                             min="1"
-                            max="10"
+                            max="99"
                             step="1"
                             inputmode="numeric"
                             aria-label="Quantidade de unidades">
@@ -166,9 +132,38 @@
                             aria-label="Aumentar quantidade">
                             +
                         </button>
-
                     </div>
+                </div>
 
+                <div class="opcao-grupo">
+                    <span class="opcao-label">Escolha o tamanho:</span>
+
+                    <div class="tamanhos-botoes" id="tamanhos-botoes"></div>
+                </div>
+
+                <p class="produto-preco" id="produto-preco"></p>
+
+                <p class="produto-descricao" id="produto-descricao"></p>
+
+                <div class="opcao-grupo">
+                    <span class="opcao-label">Adicionais (opcional):</span>
+                    <div id="adicionais-produto"></div>
+                </div>
+
+                <div class="opcao-grupo">
+                    <label class="opcao-label" for="observacao-produto">
+                        Observação (opcional):
+                    </label>
+                    <textarea
+                        id="observacao-produto"
+                        name="observacao"
+                        rows="3"
+                        maxlength="300"
+                        placeholder="Ex.: sem granola ou pouco leite condensado"></textarea>
+                </div>
+
+                <div class="opcao-grupo">
+                    <span class="opcao-label">Adicione ao carrinho ou finalize:</span>
                     <div class="botoes-principais">
 
                         <button
@@ -181,14 +176,13 @@
                         <button
                             type="submit"
                             class="btn-comprar">
-                            Continuar para pagamento
+                            Finalizar compra
                         </button>
 
                     </div>
-
-                    <p id="mensagem-carrinho" role="status" aria-live="polite"></p>
-
                 </div>
+
+                <p id="mensagem-carrinho" role="status" aria-live="polite"></p>
 
             </form>
 
@@ -269,8 +263,14 @@
     Todos os direitos reservados — AÇAÍ ZERO GRAU
 </footer>
 
-<!-- Os dados são carregados antes da lógica da página -->
-<script src="produtos.js" defer></script>
+                <div id="resultados-pesquisa" role="listbox" aria-label="Resultados da pesquisa"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="supabase.js" defer></script>
+<script src="auth.js" defer></script>
+<script src="produto.js" defer></script>
+<script src="busca-produtos.js" defer></script>
 <script src="produtopage.js" defer></script>
 
 </body>

@@ -143,29 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-/*=========================================================
-MINHA TENTATIVA DE SCROLL AUTOMÁTICO PARA O CARROSSEL DE DESTAQUES
-=================================================================*/
-
-const productSlider = document.querySelectorAll('.carousel-item');
-let autoscrollInterval;
-
-function startAutoScroll() {
-    autoScrollInterval = setInterval(() => {
-        const maxScrollLeft = container.scrollWidth - container.clientWidht;
-
-        /*se chegar no final, volta para o início*/
-        if (container.scrollLeft >= maxScrollLeft - 1){
-            container.scrollLeft = 0;
-        } else {
-            container.ScrollLeft += container.clientWidth;
-        }
-    }, 3000); /*tempo em milissegundos (3 segundos) */
-}
-        //início automático*/
-        startAutoScroll();
-
-
 /* =========================================================
    2. CARROSSEL DE PRODUTOS
    ========================================================= */
@@ -195,166 +172,37 @@ function scrollSlider(direction) {
    ========================================================= */
 
 function configurarBotoesCompra() {
-
-    console.log("configurarBotoesCompra() FOI EXECUTADA");
-
     const botoes = document.querySelectorAll(
         '.buy-btn, .enfeitebotao'
     );
 
-    console.log(
-        "BOTÕES ENCONTRADOS:",
-        botoes.length
-    );
+    botoes.forEach(botao => {
+        botao.addEventListener('click', evento => {
+            evento.preventDefault();
+            const card = evento.currentTarget.closest(
+                '.product-card, .carousel-item'
+            );
+            if (!card) return;
 
-
-    botoes.forEach((botao, index) => {
-
-        botao.addEventListener('click', function(e) {
-
-            console.log(
-                "BOTÃO CLICADO:",
-                index
+            const produtoId = card.dataset.productId;
+            const produto = Object.entries(
+                window.CATALOGO_PRODUTOS || {}
+            ).find(([slug, item]) =>
+                slug === card.dataset.productSlug ||
+                String(item.id) === String(produtoId)
             );
 
-
-            /* Localiza o card */
-
-            const card =
-                e.currentTarget.closest('.product-card') ||
-                e.currentTarget.closest('.carousel-item');
-
-
-            if (!card) {
-
-                console.error(
-                    "Card do produto não encontrado."
-                );
-
+            if (!produto) {
+                console.error("O card clicado não corresponde a um produto do catálogo.");
                 return;
-
             }
 
-
-            /* Pega UUID */
-
-            const productId =
-                card.dataset.productId;
-                const productSlug = card.dataset.productSlug;
-
-               if (productSlug) {
+            window.AuthLoja.exigirLogin(() => {
                 window.location.href =
-                 `produtopage.html?produto=${encodeURIComponent(productSlug)}`;
-                 return;
-                }
-
-                
-
-
-            console.log(
-                "UUID DO PRODUTO:",
-                productId
-            );
-
-
-            if (!productId) {
-
-                alert(
-                    "Erro: este produto não possui um ID cadastrado."
-                );
-
-                return;
-
-            }
-
-
-            /* Informações do produto */
-
-            const nomeElemento =
-                card.querySelector('h4, .font1');
-
-            const precoElemento =
-                card.querySelector('.price');
-
-            const imagemElemento =
-                card.querySelector('img');
-
-
-            const nome =
-                nomeElemento
-                    ? nomeElemento.innerText
-                        .replace(':', '')
-                        .trim()
-                    : "Produto";
-
-
-            const valor =
-                precoElemento
-                    ? precoElemento.innerText.trim()
-                    : "R$ 25,00";
-
-
-            const foto =
-                imagemElemento
-                    ? imagemElemento.src
-                    : "";
-
-
-            /* Monta produto */
-
-            const produto = {
-
-                id: productId,
-
-                nome: nome,
-
-                valor: valor,
-
-                foto: foto,
-
-                quantidade: 1,
-
-                tamanho: "Padrão"
-
-            };
-
-
-            console.log(
-                "PRODUTO QUE SERÁ SALVO:",
-                produto
-            );
-
-
-            /* Salva */
-
-            localStorage.setItem(
-                'produtoSessao',
-                JSON.stringify(produto)
-            );
-
-
-            console.log(
-                "PRODUTO SALVO NO LOCALSTORAGE"
-            );
-
-
-            console.log(
-                "LOCALSTORAGE:",
-                localStorage.getItem(
-                    'produtoSessao'
-                )
-            );
-
-
-            /* Vai para cadastro */
-
-            window.location.href =
-                'cadastro.html';
-
+                    `produtopage.html?produto=${encodeURIComponent(produto[0])}`;
+            });
         });
-
     });
-
 }
 
 

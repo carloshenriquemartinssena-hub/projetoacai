@@ -7,6 +7,4 @@ const supabaseClient = supabase.createClient(
     SUPABASE_KEY
 );
 
-
-console.log("URL:", SUPABASE_URL);
-console.log("Cliente criado:", !!supabaseClient);
+window.supabaseClient = supabaseClient;

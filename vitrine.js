@@ -81,15 +81,6 @@
     }
 
     function iniciar() {
-        document.querySelectorAll(".site-menu-toggle").forEach(botao => {
-            botao.addEventListener("click", () => {
-                const menu = document.getElementById(botao.getAttribute("aria-controls"));
-                const aberto = botao.getAttribute("aria-expanded") !== "true";
-                botao.setAttribute("aria-expanded", String(aberto));
-                menu.classList.toggle("site-nav-open", aberto);
-            });
-        });
-
         const todosProdutos = Object.entries(catalogo);
         const modo = document.body.dataset.vitrine;
 

@@ -305,7 +305,7 @@
     }
 
     // Monta o pedido com todas as escolhas do cliente
-    function montarPedido(produto) {
+    function montarPedido(produto, slug) {
         const tamanho =
             document.querySelector(
                 'input[name="tamanho"]:checked'
@@ -334,6 +334,7 @@
             precoSelecionado(produto);
 
         return {
+            slug,
             id: produto.id,
             nome: produto.nome,
             tamanho: tamanho
@@ -383,6 +384,7 @@
                 "acaiZeroGrauCarrinho",
                 JSON.stringify(carrinho)
             );
+            window.dispatchEvent(new Event("cart:updated"));
 
             definirMensagem(
                 `Adicionado ao carrinho! ${pedido.quantidade} × ` +
@@ -431,21 +433,6 @@
 
     // Inicializa os eventos e a página
     function iniciar() {
-        const botaoMenu = document.querySelector(".menu-hamburger");
-        const navegacao = elemento("navegacao-principal");
-
-        botaoMenu.addEventListener("click", () => {
-            const aberto =
-                botaoMenu.getAttribute("aria-expanded") !== "true";
-
-            botaoMenu.setAttribute("aria-expanded", String(aberto));
-            botaoMenu.setAttribute(
-                "aria-label",
-                aberto ? "Fechar menu" : "Abrir menu"
-            );
-            navegacao.classList.toggle("menu-aberto", aberto);
-        });
-
         const itemAtual = produtoAtual();
 
         if (!itemAtual) {
@@ -511,35 +498,31 @@
 
         // Adicionar ao carrinho
         elemento("btn-carrinho").addEventListener("click", () => {
-            window.AuthLoja.exigirLogin(() => {
-                adicionarAoCarrinho(montarPedido(produto));
-            });
+            adicionarAoCarrinho(montarPedido(produto, slug));
         });
 
 
         // Salva o pedido selecionado e abre o formulário de entrega.
         elemento("form-produto").addEventListener("submit", (evento) => {
             evento.preventDefault();
-            window.AuthLoja.exigirLogin(() => {
-                const pedido = montarPedido(produto);
-                const produtoSessao = {
-                    itens: [pedido],
-                    valor: pedido.subtotal
-                };
+            const pedido = montarPedido(produto, slug);
+            const produtoSessao = {
+                itens: [pedido],
+                valor: pedido.subtotal
+            };
 
-                try {
-                    localStorage.setItem(
-                        "produtoSessao",
-                        JSON.stringify(produtoSessao)
-                    );
-
-                    window.location.href = "cadastro.html";
-                } catch {
-                    definirMensagem(
-                        "Não foi possível preparar seu pedido. Tente novamente."
-                    );
-                }
-            });
+            try {
+                localStorage.setItem(
+                    "produtoSessao",
+                    JSON.stringify(produtoSessao)
+                );
+                window.location.href = "dados-entrega.html";
+            } catch (error) {
+                console.error("Não foi possível preparar seu pedido.", error);
+                definirMensagem(
+                    "Não foi possível preparar seu pedido. Tente novamente."
+                );
+            }
         });
 
 

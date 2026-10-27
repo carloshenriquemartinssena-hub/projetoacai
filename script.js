@@ -197,10 +197,8 @@ function configurarBotoesCompra() {
                 return;
             }
 
-            window.AuthLoja.exigirLogin(() => {
-                window.location.href =
-                    `produtopage.html?produto=${encodeURIComponent(produto[0])}`;
-            });
+            window.location.href =
+                `produtopage.html?produto=${encodeURIComponent(produto[0])}`;
         });
     });
 }

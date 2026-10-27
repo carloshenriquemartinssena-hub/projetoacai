@@ -7,21 +7,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="auth.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-    <script src="supabase.js" defer></script>
-    <script src="auth.js" defer></script>
     <script src="produto.js" defer></script>
+    <script src="site-chrome.js" defer></script>
+    <script src="busca-produtos.js" defer></script>
     <script src="script.js" defer></script>
    
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="desktop.css">
+<link rel="stylesheet" href="site-chrome.css">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
 
 <script>document.addEventListener("DOMContentLoaded", () => window.AOS?.init());</script>
-<script src="https://sdk.mercadopago.com/js/v2"></script>
 <link rel="shortcut icon" href="fivecon.png" type="image/x-icon">
 
 
@@ -31,43 +29,7 @@
 </head>
 <body>
 
-<header class="header-loja">
-
-    
-    <img class="logo1" src="logoaçai.png" alt="açaidobom">
-
-    
-  
-  <div class="menu-hamburger" onclick="this.classList.toggle('active')">
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
-  </div>
-
-  <nav class="navegacao">
-     
-    <ul class="lista">
-        <div class="input-container">
-        <div class="input">
-     <img class="icon" src="icon-pesquisar.png" alt="pesquisar">   
-<input class="campo" type="text" id="campo-pesquisa" placeholder="Pesquisar Açaí" autocomplete="off"> 
- </div> 
-    </div>
-
-
-      <li><a href="mais-pedidos.html">Mais pedidos</a></li>
-      <li><a href="combos.html">Combos</a></li>
-      <li><a href="epocas.html">Épocas</a></li>
-       <li><a href="carrinho.html">
-    <img src="carrinho-icon.png" alt="adicionar-ao-carrinho" class="carrinho-icon">
-</a></li>
-    </ul>
-    
-  </nav>
-  
-
- 
-</header>
+<div data-store-header></div>
 
 
 
@@ -599,165 +561,9 @@ O Clássico Refrescante</h1>
   <img src="" alt="">
 </section> -->
 
-<section id="frame5"> 
-
-  <!-- Informações -->
-
-  <!-- <h1 class="descricao"><mark class="destacar">Informações</mark></h1> -->
-  <div class="area">
-
-
-    <div class="conteudo">
-        
-    <h1 class="descricao"> <mark class="destacar">Informações</mark></h1>
-    <ul class="list">
-    <li>Termos de Uso / Privacidade</li>
-    <li>Políticas de Entrega & Reembolso</li>
-    <li> Razão Social & CNPJ</li>
-    <li>Formas De Pagamento</li>
-  </ul>
-
-</div>
-<div >
-  <!-- contato -->
-   <h1 class="descricao"> <mark class="destacar">Contato</mark></h1>
-
-   
-    <ul class="list">
-    <li><a href="https://wa.me/5511974665034">WhatsApp: 11 97466-5034</a></li>
-    <li><a href="https://www.instagram.com/acaizg/">Instagram: @Acaizerograus</a></li>
-    <!-- <li> Facebook: a definir</li> -->
-    <li>Email: <a href="mailto:acaizerograusoficial@gmail.com">acaizerograusoficial@gmail.com</a></li>
-    <li>TikTok: </li>
-  </ul>
-</div>
-     </div> 
-        
-
-<!-- 
-  <div class="googlemaps">
-
-    <h1 class="descricaoo">Venha nos Visitar</h1>
-    <iframe class="maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58492.25646367886!2d-46.45321713935922!3d-23.612722617130526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce6f10f342c2b3%3A0xf14fb542f19c2734!2sCidade%20Tiradentes%2C%20S%C3%A3o%20Paulo%20-%20State%20of%20S%C3%A3o%20Paulo!5e0!3m2!1sen!2sbr!4v1767534107825!5m2!1sen!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  </div>
-  <P class="descrimaps">Estamos Localizados Em São Paulo</P>
-  <P class="descrimaps2">RUA TAL TAL TAL - SÃO PAULO - NUMERO 199 A</P>
-
-  <h2 class="Notas">NOTA MÁXIMA NO GOOGLE</h2>
-  <div class="estrelas">★</div> <img class="iconeg" src="iconegoogle.png" alt="">
-   -->
-
-</section>
-
-<footer>Todos os direitos foram reservados - AÇAÍ ZERO GRAU</footer>
-
-<div id="resultados-pesquisa" role="listbox" aria-label="Resultados da pesquisa"></div>
+<div data-store-footer></div>
 
 <script>
-const inputPesquisa = document.getElementById("campo-pesquisa");
-const caixaResultados = document.getElementById("resultados-pesquisa");
-const campoPesquisa = document.querySelector(".input");
-const containerPesquisa = document.querySelector(".input-container");
-let temporizadorPesquisa;
-
-inputPesquisa.setAttribute("aria-controls", "resultados-pesquisa");
-inputPesquisa.setAttribute("aria-expanded", "false");
-inputPesquisa.setAttribute("role", "combobox");
-
-function fecharResultados() {
-  caixaResultados.classList.remove("mostrar-resultados");
-  caixaResultados.replaceChildren();
-  inputPesquisa.setAttribute("aria-expanded", "false");
-}
-
-function posicionarResultados() {
-  if (!caixaResultados.classList.contains("mostrar-resultados") || !campoPesquisa) {
-    return;
-  }
-
-  const posicao = campoPesquisa.getBoundingClientRect();
-  caixaResultados.style.top = `${posicao.bottom + 4}px`;
-  caixaResultados.style.left = `${posicao.left}px`;
-  caixaResultados.style.width = `${posicao.width}px`;
-}
-
-function normalizarBusca(texto) {
-  return texto
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLocaleLowerCase("pt-BR");
-}
-
-function mostrarResultados(consulta) {
-  const termo = normalizarBusca(consulta);
-  const produtos = Object.entries(window.CATALOGO_PRODUTOS || {}).filter(([, produto]) => {
-    const textoProduto = normalizarBusca(`${produto.nome} ${produto.descricao || ""}`);
-    return textoProduto.includes(termo);
-  });
-
-  caixaResultados.replaceChildren();
-
-  if (produtos.length === 0) {
-    const mensagem = document.createElement("div");
-    mensagem.className = "resultado-item resultado-vazio";
-    mensagem.textContent = "Nenhum produto encontrado.";
-    caixaResultados.appendChild(mensagem);
-  } else {
-    produtos.forEach(([slug, produto]) => {
-      const item = document.createElement("a");
-      item.className = "resultado-item";
-      item.href = `produtopage.html?produto=${encodeURIComponent(slug)}`;
-      item.textContent = produto.nome;
-      item.setAttribute("role", "option");
-      caixaResultados.appendChild(item);
-    });
-  }
-
-  caixaResultados.classList.add("mostrar-resultados");
-  inputPesquisa.setAttribute("aria-expanded", "true");
-  posicionarResultados();
-}
-
-inputPesquisa.addEventListener("input", () => {
-  window.clearTimeout(temporizadorPesquisa);
-
-  const consulta = inputPesquisa.value.trim();
-  if (!consulta) {
-    fecharResultados();
-    return;
-  }
-
-  fecharResultados();
-  temporizadorPesquisa = window.setTimeout(() => {
-    mostrarResultados(consulta);
-  }, 180);
-});
-
-inputPesquisa.addEventListener("focus", () => {
-  if (inputPesquisa.value.trim()) {
-    window.clearTimeout(temporizadorPesquisa);
-    mostrarResultados(inputPesquisa.value.trim());
-  }
-});
-
-document.addEventListener("click", (evento) => {
-  if (!containerPesquisa.contains(evento.target) && !caixaResultados.contains(evento.target)) {
-    window.clearTimeout(temporizadorPesquisa);
-    fecharResultados();
-  }
-});
-
-document.addEventListener("keydown", (evento) => {
-  if (evento.key === "Escape") {
-    window.clearTimeout(temporizadorPesquisa);
-    fecharResultados();
-    inputPesquisa.blur();
-  }
-});
-
-window.addEventListener("resize", posicionarResultados);
-window.addEventListener("scroll", posicionarResultados, true);
-
 /*BANNER ROTATIVO INDEX.HMTML*/
 
 // --- LÓGICA DO CARROSSEL DE DESLIZAMENTO SUAVE ---

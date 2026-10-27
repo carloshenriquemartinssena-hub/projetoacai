@@ -224,7 +224,7 @@ input {
 
 .lista li:hover {
   background-color: #7f038f;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 /* Item de Login com Ícone */
@@ -835,8 +835,9 @@ margin-bottom: 12px;
   left: 25vw;
 }
 
-li a {
-  color:white;
+/*la a */
+  .lista a {
+  color:rgb(0, 0, 0);
   text-decoration:none;
 }
 
@@ -844,6 +845,7 @@ li a {
   display:block !important;
  min-height: auto;
  max-height: 100px;
+
 }
 
 .input-container .input {

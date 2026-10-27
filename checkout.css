@@ -118,6 +118,26 @@ body.checkout-page {
     border-color: var(--checkout-purple);
 }
 
+.checkout-terms label {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.checkout-terms input {
+    width: auto;
+    min-height: 0;
+    flex: 0 0 auto;
+    margin-top: 4px;
+}
+
+.checkout-terms a {
+    color: var(--checkout-purple);
+    text-decoration: underline;
+}
+
 .checkout-products {
     display: grid;
     gap: 14px;

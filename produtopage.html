@@ -8,7 +8,7 @@
     <title>Produto | Açaí Zero Grau</title>
 
     <link rel="stylesheet" href="produtopage.css">
-    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="site-chrome.css">
 
     <!-- Fontes originais -->
     <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&display=swap" rel="stylesheet">
@@ -18,43 +18,7 @@
 
 <body>
 
-<header class="header-loja">
-
-    
-    <img class="logo1" src="logoaçai.png" alt="açaidobom"><a href="index.html"></a>
-
-    
-  
-  <div class="menu-hamburger" onclick="this.classList.toggle('active')">
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
-  </div>
-
-  <nav class="navegacao" id="navegacao-principal">
-     
-    <ul class="lista">
-        <div class="input-container">
-        <div class="input">
-     <img class="icon" src="icon-pesquisar.png" alt="pesquisar">   
-<input class="campo" type="text" id="campo-pesquisa" placeholder="Pesquisar Açaí" autocomplete="off"> 
- </div> 
-    </div>
-
-
-      <li><a href="mais-pedidos.html">Mais pedidos</a></li>
-      <li><a href="combos.html">Combos</a></li>
-      <li><a href="epocas.html">Épocas</a></li>
-       <li><a href="carrinho.html">
-    <img src="carrinho-icon.png" alt="adicionar-ao-carrinho" class="carrinho-icon">
-</a></li>
-    </ul>
-    
-  </nav>
-  
-
- 
-</header>
+<div data-store-header></div>
 
 
 <!-- Banner promocional -->
@@ -206,70 +170,10 @@
 </main>
 
 <!-- Rodapé -->
-<section id="frame5">
+<div data-store-footer></div>
 
-    <div class="area">
-
-        <div class="conteudo">
-
-            <h2 class="descricao">
-                <mark class="destacar">Informações</mark>
-            </h2>
-
-            <ul class="list">
-                <li><a href="privacidade.html">Termos de Uso / Privacidade</a></li>
-                <li><a href="entrega.html">Políticas de Entrega &amp; Reembolso</a></li>
-                <li>Razão Social &amp; CNPJ</li>
-                <li>Formas de Pagamento</li>
-            </ul>
-
-        </div>
-
-        <div>
-
-            <h2 class="descricao">
-                <mark class="destacar">Contato</mark>
-            </h2>
-
-            <ul class="list">
-                <li>
-                    <a href="https://wa.me/5511974665034" target="_blank" rel="noopener">
-                        WhatsApp: 11 97466-5034
-                    </a>
-                </li>
-
-                <li>
-                    <a href="https://www.instagram.com/acaizg/" target="_blank" rel="noopener">
-                        Instagram: @Acaizerograus
-                    </a>
-                </li>
-
-                <li>
-                    <a href="mailto:acaizerograuoficial@gmail.com">
-                        E-mail da loja
-                    </a>
-                </li>
-
-                <li>TikTok: a definir</li>
-            </ul>
-
-        </div>
-
-    </div>
-
-</section>
-
-<footer>
-    Todos os direitos reservados — AÇAÍ ZERO GRAU
-</footer>
-
-                <div id="resultados-pesquisa" role="listbox" aria-label="Resultados da pesquisa"></div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="supabase.js" defer></script>
-<script src="auth.js" defer></script>
 <script src="produto.js" defer></script>
+<script src="site-chrome.js" defer></script>
 <script src="busca-produtos.js" defer></script>
 <script src="produtopage.js" defer></script>
 

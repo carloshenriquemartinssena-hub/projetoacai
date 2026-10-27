@@ -9,30 +9,18 @@
 
     <link rel="stylesheet" href="produtopage.css">
     <link rel="stylesheet" href="carrinho.css">
-    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="vitrine.css">
+    <link rel="stylesheet" href="site-chrome.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-    <script src="supabase.js" defer></script>
-    <script src="auth.js" defer></script>
+    <script src="produto.js" defer></script>
+    <script src="site-chrome.js" defer></script>
+    <script src="busca-produtos.js" defer></script>
     <script src="carrinho.js" defer></script>
 </head>
 
 <body>
 
-    <header class="carrinho-cabecalho">
-        <a href="index.html" class="carrinho-logo">
-            <img src="logoaçai.png" alt="Açaí Zero Grau">
-        </a>
-
-        <nav class="carrinho-navegacao">
-            <a href="index.html">Início</a>
-            <a href="mais-pedidos.html">Produtos</a>
-            <a href="carrinho.html" aria-current="page">
-                Carrinho
-                <span id="contador-carrinho">0</span>
-            </a>
-        </nav>
-    </header>
+    <div data-store-header></div>
 
     <main class="pagina-carrinho">
 
@@ -131,9 +119,7 @@
 
     </main>
 
-    <footer class="carrinho-rodape">
-        <p>© Açaí Zero Grau — Todos os direitos reservados.</p>
-    </footer>
+    <div data-store-footer></div>
 
 </body>
 </html>

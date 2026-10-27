@@ -5,20 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Revise seu pedido antes de enviá-lo à Açaí Zero Grau.">
     <title>Revisar pedido | Açaí Zero Grau</title>
-    <link rel="stylesheet" href="auth.css">
     <link rel="stylesheet" href="checkout.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-    <script src="supabase.js" defer></script>
-    <script src="auth.js" defer></script>
+    <link rel="stylesheet" href="site-chrome.css">
+    <script src="produto.js" defer></script>
+    <script src="site-chrome.js" defer></script>
+    <script src="busca-produtos.js" defer></script>
+    <script src="payment-config.js" defer></script>
     <script src="checkout.js" defer></script>
 </head>
 <body class="checkout-page" data-checkout-page="confirmation">
-    <header class="checkout-header">
-        <a href="index.html" aria-label="Página inicial">
-            <img class="checkout-brand" src="logoaçai.png" alt="Açaí Zero Grau">
-        </a>
-        <a href="mais-pedidos.html">Continuar comprando</a>
-    </header>
+    <div data-store-header></div>
 
     <main class="checkout-main">
         <div class="checkout-heading">
@@ -42,12 +38,14 @@
                 <p class="checkout-muted">A entrega será combinada com a loja; o total acima considera os produtos.</p>
                 <p id="checkout-message" class="checkout-message" role="status" aria-live="polite"></p>
                 <div class="checkout-actions">
-                    <a class="checkout-back" href="cadastro.html">Corrigir dados</a>
-                    <button class="checkout-button" id="finalizar-pedido" type="button">Enviar pedido pelo WhatsApp</button>
+                    <a class="checkout-back" href="dados-entrega.html">Corrigir dados</a>
+                    <button class="checkout-button" id="pagar-asaas" type="button">Pagar com Pix ou cartão (Asaas)</button>
+                    <button class="checkout-back" id="finalizar-pedido" type="button">Finalizar pedido pelo WhatsApp</button>
                 </div>
-                <p class="checkout-muted">O pedido só será enviado após a confirmação pelo WhatsApp da loja.</p>
+                <p class="checkout-muted">O pedido só será confirmado após o Asaas notificar o pagamento ou a loja confirmar pelo WhatsApp. Dinheiro está disponível apenas pelo WhatsApp.</p>
             </aside>
         </div>
     </main>
+    <div data-store-footer></div>
 </body>
 </html>

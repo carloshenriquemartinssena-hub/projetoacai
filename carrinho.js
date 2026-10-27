@@ -37,6 +37,7 @@
     function salvarCarrinho(itens) {
         try {
             localStorage.setItem(CHAVE_CARRINHO, JSON.stringify(itens));
+            window.dispatchEvent(new Event("cart:updated"));
             return true;
         } catch (erro) {
             console.error("Erro ao salvar o carrinho:", erro);
@@ -322,21 +323,19 @@ function finalizarPedido() {
         return;
     }
 
-    window.AuthLoja.exigirLogin(() => {
-        try {
-            localStorage.setItem("produtoSessao", JSON.stringify({
-                itens,
-                valor: total
-            }));
-        } catch (error) {
-            console.error("Não foi possível preparar o pedido do carrinho.", error);
-            mostrarMensagem(
-                "Não foi possível preparar o pedido neste navegador."
-            );
-            return;
-        }
-        window.location.href = "cadastro.html";
-    });
+    try {
+        localStorage.setItem("produtoSessao", JSON.stringify({
+            itens,
+            valor: total
+        }));
+    } catch (error) {
+        console.error("Não foi possível preparar o pedido do carrinho.", error);
+        mostrarMensagem(
+            "Não foi possível preparar o pedido neste navegador."
+        );
+        return;
+    }
+    window.location.href = "dados-entrega.html";
 }
 
 

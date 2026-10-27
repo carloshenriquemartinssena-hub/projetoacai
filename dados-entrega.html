@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Informe seus dados para entrega do pedido.">
+    <title>Dados para entrega | Açaí Zero Grau</title>
+    <link rel="stylesheet" href="checkout.css">
+    <link rel="stylesheet" href="site-chrome.css">
+    <script src="produto.js" defer></script>
+    <script src="site-chrome.js" defer></script>
+    <script src="busca-produtos.js" defer></script>
+    <script src="checkout.js" defer></script>
+</head>
+<body class="checkout-page" data-checkout-page="customer">
+    <div data-store-header></div>
+
+    <main class="checkout-main">
+        <div class="checkout-heading">
+            <h1>Informações para entrega</h1>
+            <p>Revise ou complete seus dados. Eles ficam salvos apenas neste navegador para facilitar próximos pedidos.</p>
+        </div>
+
+        <section class="checkout-card">
+            <form class="checkout-form" id="form-cliente">
+                <div class="checkout-field checkout-field-wide">
+                    <label for="nome">Nome completo</label>
+                    <input id="nome" name="nome" autocomplete="name" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="email">E-mail</label>
+                    <input id="email" name="email" type="email" autocomplete="email" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="whatsapp">WhatsApp com DDD</label>
+                    <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="cpf">CPF</label>
+                    <input id="cpf" name="cpf" inputmode="numeric" autocomplete="off">
+                </div>
+                <div class="checkout-field">
+                    <label for="cep">CEP</label>
+                    <input id="cep" name="cep" inputmode="numeric" autocomplete="postal-code" required>
+                </div>
+                <div class="checkout-field checkout-field-wide">
+                    <label for="endereco">Endereço</label>
+                    <input id="endereco" name="endereco" autocomplete="street-address" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="numero">Número</label>
+                    <input id="numero" name="numero" autocomplete="address-line2" required>
+                </div>
+                <div class="checkout-field">
+                    <label for="complemento">Complemento (opcional)</label>
+                    <input id="complemento" name="complemento" autocomplete="off">
+                </div>
+                <div class="checkout-field checkout-field-wide">
+                    <label for="pagamento">Forma de pagamento</label>
+                    <select id="pagamento" name="pagamento" required>
+                        <option value="Pix">Pix</option>
+                        <option value="Cartão">Cartão</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                    </select>
+                </div>
+                <div class="checkout-field checkout-field-wide checkout-terms">
+                    <label>
+                        <input type="checkbox" name="aceiteTermos" required>
+                        Li e aceito os <a href="termos-privacidade.html" target="_blank" rel="noopener">Termos de Uso e a Política de Privacidade</a>.
+                    </label>
+                </div>
+                <p class="checkout-message checkout-field-wide" id="checkout-message" role="status" aria-live="polite"></p>
+                <div class="checkout-actions checkout-field-wide">
+                    <button class="checkout-button" type="submit">Revisar pedido</button>
+                </div>
+            </form>
+        </section>
+    </main>
+    <div data-store-footer></div>
+</body>
+</html>

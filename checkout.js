@@ -2,7 +2,6 @@
     "use strict";
 
     const ORDER_KEY = "produtoSessao";
-    const CART_KEY = "acaiZeroGrauCarrinho";
     const CUSTOMER_KEY = "dadosCliente";
     const WHATSAPP_LOJA = "5511974665034";
     const FALLBACK_IMAGE = "fotoexemplo.png";
@@ -48,21 +47,15 @@
         return element;
     }
 
-    function ensureAuthenticated(onReady) {
-        window.AuthLoja.exigirLogin(onReady);
-    }
-
-    function fillCustomerForm(user) {
+    function fillCustomerForm() {
         const form = document.getElementById("form-cliente");
         if (!form) return;
-        const profile = window.AuthLoja.carregarPerfil() || {};
+        const profile = readJson("aiz-perfil") || {};
         const saved = readJson(CUSTOMER_KEY);
-        const customer = saved?.userId === user.id ? saved : profile;
-        const fullName = user.user_metadata?.full_name ||
-            user.user_metadata?.name || "";
+        const customer = saved || profile;
         const values = {
-            nome: customer.nome || fullName,
-            email: customer.email || user.email || "",
+            nome: customer.nome || "",
+            email: customer.email || "",
             cpf: customer.cpf || "",
             cep: customer.cep || "",
             endereco: customer.endereco || "",
@@ -77,26 +70,24 @@
         });
     }
 
-    function startCustomerForm(user) {
+    function startCustomerForm() {
         const items = orderItems();
         const message = document.getElementById("checkout-message");
         if (!items.length) {
             message.textContent = "Seu pedido está vazio. Volte ao cardápio para escolher produtos.";
-            document.getElementById("form-cliente").hidden = true;
+            document.querySelector("#form-cliente button[type='submit']").disabled = true;
             return;
         }
-        fillCustomerForm(user);
+        fillCustomerForm();
         document.getElementById("form-cliente").addEventListener("submit", event => {
             event.preventDefault();
             const form = event.currentTarget;
             if (!form.reportValidity()) return;
             const customer = Object.fromEntries(new FormData(form).entries());
-            customer.userId = user.id;
+            delete customer.aceiteTermos;
             try {
                 localStorage.setItem(CUSTOMER_KEY, JSON.stringify(customer));
-                if (!window.AuthLoja.salvarPerfil(customer)) {
-                    throw new Error("Os dados do perfil não puderam ser salvos.");
-                }
+                localStorage.setItem("aiz-perfil", JSON.stringify(customer));
                 window.location.href = "confirmarpedidio.html";
             } catch (error) {
                 console.error("Não foi possível guardar os dados do cliente.", error);
@@ -145,7 +136,7 @@
         });
     }
 
-    function startConfirmation(user) {
+    function startConfirmation() {
         const items = orderItems();
         const customer = readJson(CUSTOMER_KEY);
         const message = document.getElementById("checkout-message");
@@ -154,8 +145,8 @@
             document.getElementById("finalizar-pedido").disabled = true;
             return;
         }
-        if (!customer || customer.userId !== user.id) {
-            window.location.replace("cadastro.html");
+        if (!customer || typeof customer !== "object") {
+            window.location.replace("dados-entrega.html");
             return;
         }
 
@@ -170,7 +161,7 @@
         const details = document.getElementById("dados-cliente");
         details.replaceChildren(
             node("p", "", customer.nome),
-            node("p", "", customer.email || user.email || ""),
+            node("p", "", customer.email || ""),
             node("p", "", `WhatsApp: ${customer.whatsapp}`),
             node("p", "", address),
             node("p", "", `CPF: ${customer.cpf}`),
@@ -200,7 +191,7 @@
                 `Total: ${money(total(items))}`,
                 "",
                 `Cliente: ${customer.nome}`,
-                `E-mail: ${customer.email || user.email || ""}`,
+                `E-mail: ${customer.email || ""}`,
                 `CPF: ${customer.cpf}`,
                 `WhatsApp: ${customer.whatsapp}`,
                 `Endereço: ${address}`,
@@ -216,13 +207,91 @@
             button.disabled = true;
             button.textContent = "Pedido preparado no WhatsApp";
         });
+
+        const asaasButton = document.getElementById("pagar-asaas");
+        const payment = document.getElementById("checkout-message");
+        const method = customer.pagamento;
+        if (method === "Dinheiro") {
+            asaasButton.disabled = true;
+            asaasButton.title = "Pagamento em dinheiro deve ser combinado pelo WhatsApp.";
+        }
+        asaasButton.addEventListener("click", async () => {
+            if (method === "Dinheiro") {
+                payment.textContent = "Dinheiro não está disponível no checkout online. Envie o pedido pelo WhatsApp.";
+                return;
+            }
+
+            asaasButton.disabled = true;
+            asaasButton.textContent = "Conectando ao Asaas...";
+            payment.textContent = "";
+            try {
+                const config = window.PAYMENT_BACKEND_CONFIG;
+                if (!config?.url || !config?.publishableKey) {
+                    throw new Error("O serviço de checkout não está configurado.");
+                }
+
+                const payload = {
+                    items: items.map(item => ({
+                        productId: item.slug || item.id,
+                        size: item.tamanho,
+                        quantity: Math.max(1, Number(item.quantidade) || 1),
+                        extras: Array.isArray(item.adicionais)
+                            ? item.adicionais.map(extra =>
+                                typeof extra === "string" ? extra : extra.nome
+                            ).filter(Boolean)
+                            : [],
+                        observation: item.observacao || ""
+                    })),
+                    customer: {
+                        name: customer.nome,
+                        email: customer.email,
+                        phone: customer.whatsapp,
+                        cpfCnpj: customer.cpf || undefined,
+                        address: customer.endereco,
+                        addressNumber: customer.numero,
+                        complement: customer.complemento,
+                        postalCode: customer.cep
+                    },
+                    paymentMethod: customer.pagamento
+                };
+                const response = await fetch(
+                    `${config.url}/functions/v1/create-asaas-checkout`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "apikey": config.publishableKey
+                        },
+                        body: JSON.stringify(payload)
+                    }
+                );
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.error || "Não foi possível iniciar o pagamento.");
+                }
+                const checkoutUrl = new URL(result.checkoutUrl);
+                if (
+                    checkoutUrl.protocol !== "https:" ||
+                    !["asaas.com", "www.asaas.com", "sandbox.asaas.com"]
+                        .includes(checkoutUrl.hostname)
+                ) {
+                    throw new Error("O link de pagamento recebido não é válido.");
+                }
+                window.location.assign(checkoutUrl.href);
+            } catch (error) {
+                console.error("Erro ao iniciar checkout Asaas.", error);
+                payment.textContent = error instanceof Error
+                    ? error.message
+                    : "Não foi possível iniciar o pagamento. Tente novamente.";
+                asaasButton.disabled = false;
+                asaasButton.textContent = "Pagar com Pix ou cartão (Asaas)";
+            }
+        });
     }
 
     document.addEventListener("DOMContentLoaded", () => {
         const page = document.body.dataset.checkoutPage;
-        ensureAuthenticated(user => {
-            if (page === "customer") startCustomerForm(user);
-            if (page === "confirmation") startConfirmation(user);
-        });
+        if (page === "customer") startCustomerForm();
+        if (page === "confirmation") startConfirmation();
     });
 })();

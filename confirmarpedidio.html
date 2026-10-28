@@ -11,6 +11,7 @@
     <script src="site-chrome.js" defer></script>
     <script src="busca-produtos.js" defer></script>
     <script src="payment-config.js" defer></script>
+    <script src="asaas-checkout.js" defer></script>
     <script src="checkout.js" defer></script>
 </head>
 <body class="checkout-page" data-checkout-page="confirmation">
@@ -35,11 +36,12 @@
                     <span>Total</span>
                     <strong id="resumo-total">R$ 0,00</strong>
                 </div>
-                <p class="checkout-muted">A entrega será combinada com a loja; o total acima considera os produtos.</p>
+                <p class="checkout-muted">Pagamento online de teste: retirada na loja, sem frete. O total será conferido com o banco. Entrega deve ser combinada pelo WhatsApp.</p>
                 <p id="checkout-message" class="checkout-message" role="status" aria-live="polite"></p>
                 <div class="checkout-actions">
                     <a class="checkout-back" href="dados-entrega.html">Corrigir dados</a>
-                    <button class="checkout-button" id="pagar-asaas" type="button">Pagar com Pix ou cartão (Asaas)</button>
+                    <button class="checkout-button" id="pagar-asaas" type="button">Preparar pagamento de teste</button>
+                    <a id="abrir-pagamento" class="checkout-button" hidden>Continuar para o pagamento</a>
                     <button class="checkout-back" id="finalizar-pedido" type="button">Finalizar pedido pelo WhatsApp</button>
                 </div>
                 <p class="checkout-muted">O pedido só será confirmado após o Asaas notificar o pagamento ou a loja confirmar pelo WhatsApp. Dinheiro está disponível apenas pelo WhatsApp.</p>

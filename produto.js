@@ -11,30 +11,15 @@
 
 window.CATALOGO_PRODUTOS = {
     "acai-teste-500ml": {
-    id: "8a4b37d4-eb90-4c40-b346-0bc5a9e4d097",
-    combo: false,
-    nome: "Açaí de teste",
-    descricao: "Açaí premium com morango fresco e leite em pó ou condensado.",
-    imagens: ["2fotoexemplo.png"],
-
-    tamanhos: [
-        { nome: "300ml", valor: 15.90 }, // PREÇO PROVISÓRIO
-        { nome: "500ml", valor: 25.90 },
-        { nome: "700ml", valor: 32.90 }  // PREÇO PROVISÓRIO
-    ],
-
-    adicionais: [{ nome: "Banana", valor: 2.00 },
-            { nome: "Morango", valor: 3.00 },
-            { nome: "Granola", valor: 2.00 },
-            { nome: "Leite em pó", valor: 2.50 },
-            { nome: "Leite condensado", valor: 2.00 }],
-
-    relacionados: [
-         "acai-nutella",
-            "cupuacu-cascata",
-            "barca-acai"
-    ]
-},
+        id: "7fba538e-2989-4b41-93fd-f957ffd083f6",
+        combo: false,
+        nome: "Açaí Teste 300ml",
+        descricao: "Produto de teste do checkout sandbox. Retirada na loja.",
+        imagens: ["2fotoexemplo.png"],
+        tamanhos: [{ nome: "300ml", valor: 1.00 }],
+        adicionais: [],
+        relacionados: []
+    },
 
     "acai-especial": {
         id: "acai-especial",

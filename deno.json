@@ -1,0 +1,7 @@
+{
+  "lock": true,
+  "tasks": {
+    "check": "deno check supabase/functions/create-checkout/index.ts supabase/functions/checkout-status/index.ts supabase/functions/asaas-webhook/index.ts",
+    "test": "deno test --allow-env --allow-read --allow-write=/tmp tests/checkout_test.ts tests/database_test.ts"
+  }
+}

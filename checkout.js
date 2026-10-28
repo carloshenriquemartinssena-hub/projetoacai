@@ -209,83 +209,25 @@
         });
 
         const asaasButton = document.getElementById("pagar-asaas");
-        const payment = document.getElementById("checkout-message");
-        const method = customer.pagamento;
-        if (method === "Dinheiro") {
+        if (customer.pagamento === "Dinheiro") {
             asaasButton.disabled = true;
-            asaasButton.title = "Pagamento em dinheiro deve ser combinado pelo WhatsApp.";
+            asaasButton.title = "Dinheiro está disponível somente pelo WhatsApp.";
         }
         asaasButton.addEventListener("click", async () => {
-            if (method === "Dinheiro") {
-                payment.textContent = "Dinheiro não está disponível no checkout online. Envie o pedido pelo WhatsApp.";
-                return;
-            }
-
             asaasButton.disabled = true;
-            asaasButton.textContent = "Conectando ao Asaas...";
-            payment.textContent = "";
+            message.textContent = "Preparando o pagamento de teste…";
             try {
-                const config = window.PAYMENT_BACKEND_CONFIG;
-                if (!config?.url || !config?.publishableKey) {
-                    throw new Error("O serviço de checkout não está configurado.");
-                }
-
-                const payload = {
-                    items: items.map(item => ({
-                        productId: item.slug || item.id,
-                        size: item.tamanho,
-                        quantity: Math.max(1, Number(item.quantidade) || 1),
-                        extras: Array.isArray(item.adicionais)
-                            ? item.adicionais.map(extra =>
-                                typeof extra === "string" ? extra : extra.nome
-                            ).filter(Boolean)
-                            : [],
-                        observation: item.observacao || ""
-                    })),
-                    customer: {
-                        name: customer.nome,
-                        email: customer.email,
-                        phone: customer.whatsapp,
-                        cpfCnpj: customer.cpf || undefined,
-                        address: customer.endereco,
-                        addressNumber: customer.numero,
-                        complement: customer.complemento,
-                        postalCode: customer.cep
-                    },
-                    paymentMethod: customer.pagamento
-                };
-                const response = await fetch(
-                    `${config.url}/functions/v1/create-asaas-checkout`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "apikey": config.publishableKey
-                        },
-                        body: JSON.stringify(payload)
-                    }
-                );
-                const result = await response.json();
-                if (!response.ok) {
-                    throw new Error(result.error || "Não foi possível iniciar o pagamento.");
-                }
-                const checkoutUrl = new URL(result.checkoutUrl);
-                if (
-                    checkoutUrl.protocol !== "https:" ||
-                    !["asaas.com", "www.asaas.com", "sandbox.asaas.com"]
-                        .includes(checkoutUrl.hostname)
-                ) {
-                    throw new Error("O link de pagamento recebido não é válido.");
-                }
-                window.location.assign(checkoutUrl.href);
+                const result = await window.AsaasCheckout.create(items, customer);
+                document.getElementById("resumo-total").textContent = money(result.totalCents / 100);
+                message.textContent = "Confira o total confirmado pela loja. Pagamento online com retirada, sem frete.";
+                const link = document.getElementById("abrir-pagamento");
+                link.href = result.paymentUrl;
+                link.textContent = `Pagar ${money(result.totalCents / 100)} no Asaas`;
+                link.hidden = false;
+                asaasButton.hidden = true;
             } catch (error) {
-                console.error("Erro ao iniciar checkout Asaas.", error);
-                payment.textContent = error instanceof Error
-                    ? error.message
-                    : "Não foi possível iniciar o pagamento. Tente novamente.";
-                asaasButton.disabled = false;
-                asaasButton.textContent = "Pagar com Pix ou cartão (Asaas)";
-            }
+                message.textContent = error.message || "Não foi possível preparar o pagamento.";
+            } finally { asaasButton.disabled = false; }
         });
     }
 

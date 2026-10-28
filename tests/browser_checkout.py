@@ -22,6 +22,8 @@ with sync_playwright() as p:
             if route.request.method == "OPTIONS":
                 route.fulfill(status=204, headers={"Access-Control-Allow-Origin": BASE[:-1], "Access-Control-Allow-Headers": "content-type,apikey"})
                 return
+            assert "wvwkdhlerzwixmarlupe.supabase.co" in url
+            assert "apikey" not in route.request.headers
             body = route.request.post_data_json
             payloads.append(body)
             assert body["items"][0]["productId"] == PRODUCT_ID

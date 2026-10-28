@@ -12,9 +12,9 @@
         const timer = setTimeout(() => controller.abort(), 50000);
         try {
             const config = window.PAYMENT_BACKEND_CONFIG;
-            if (!config?.url || !config?.publishableKey) throw new Error("O serviço de checkout não está configurado.");
+            if (!config?.url) throw new Error("O serviço de checkout não está configurado.");
             const response = await fetch(`${config.url}/functions/v1/${name}`, {
-                method: "POST", headers: { "Content-Type": "application/json", apikey: config.publishableKey },
+                method: "POST", headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body), signal: controller.signal
             });
             const data = await response.json();

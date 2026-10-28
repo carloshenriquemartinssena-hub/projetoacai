@@ -10,14 +10,14 @@
             help.textContent = "";
             try {
                 const config = window.PAYMENT_BACKEND_CONFIG;
-                if (!config?.url || !config?.publishableKey) throw new Error("Configuração pública do checkout ausente.");
+                if (!config?.url) throw new Error("Configuração pública do checkout ausente.");
                 async function probe(name, method) {
                     const controller = new AbortController();
                     const timer = setTimeout(() => controller.abort(), 15000);
                     try {
                         const response = await fetch(`${config.url}/functions/v1/${name}`, {
                             method,
-                            headers: method === "POST" ? { "Content-Type": "application/json", apikey: config.publishableKey } : {},
+                            headers: method === "POST" ? { "Content-Type": "application/json" } : {},
                             // Corpo inválido de propósito: a validação ocorre antes de acessar banco ou Asaas.
                             ...(method === "POST" ? { body: "{}" } : {}),
                             signal: controller.signal,

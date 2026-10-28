@@ -16,16 +16,16 @@ O retorno para `pagamento.html` apenas consulta o estado do pedido. Somente o we
 3. Na raiz do repositório, com a CLI Supabase autenticada para o projeto correto, publique:
 
    ```sh
-   supabase functions deploy create-checkout --project-ref rpupbfuglojzxbzcjkox --no-verify-jwt
-   supabase functions deploy checkout-status --project-ref rpupbfuglojzxbzcjkox --no-verify-jwt
-   supabase functions deploy asaas-webhook --project-ref rpupbfuglojzxbzcjkox --no-verify-jwt
+   supabase functions deploy create-checkout --project-ref wvwkdhlerzwixmarlupe --no-verify-jwt
+   supabase functions deploy checkout-status --project-ref wvwkdhlerzwixmarlupe --no-verify-jwt
+   supabase functions deploy asaas-webhook --project-ref wvwkdhlerzwixmarlupe --no-verify-jwt
    ```
 
-   O `config.toml` também declara `verify_jwt=false`. São endpoints para checkout de visitantes; o webhook autentica o cabeçalho `asaas-access-token`, e a consulta de pedido exige um token aleatório de capacidade guardado na mesma aba do navegador. O cabeçalho público `apikey` não é um segredo e não substitui essas proteções.
+   O `config.toml` também declara `verify_jwt=false`. São endpoints para checkout de visitantes; o webhook autentica o cabeçalho `asaas-access-token`, e a consulta de pedido exige um token aleatório de capacidade guardado na mesma aba do navegador. As chamadas às funções públicas não enviam chave Supabase. Não reative a verificação JWT sem adaptar a autenticação do checkout.
 4. No painel **sandbox** do Asaas, cadastre um webhook para:
 
    ```text
-   https://rpupbfuglojzxbzcjkox.supabase.co/functions/v1/asaas-webhook
+   https://wvwkdhlerzwixmarlupe.supabase.co/functions/v1/asaas-webhook
    ```
 
    Configure o token igual a `ASAAS_WEBHOOK_TOKEN`. Inscreva os eventos `PAYMENT_CREATED`, `PAYMENT_UPDATED`, `PAYMENT_CONFIRMED`, `PAYMENT_RECEIVED`, `PAYMENT_OVERDUE`, `PAYMENT_DELETED`, `PAYMENT_REFUNDED`, `PAYMENT_REFUND_IN_PROGRESS`, `PAYMENT_CREDIT_CARD_CAPTURE_REFUSED`, `PAYMENT_CHARGEBACK_REQUESTED`, `PAYMENT_CHARGEBACK_DISPUTE` e `PAYMENT_AWAITING_CHARGEBACK_REVERSAL`. Eventos ainda não tratados são registrados e ignorados. Não configure este endpoint para uma conta de produção.
@@ -87,3 +87,5 @@ https://carloshenriquemartinssena-hub.github.io/projetoacai/
 Aplicar o SQL no editor não publica Edge Functions. Os três deploys da seção inicial continuam necessários. A versão do GitHub anterior à compatibilização chamava `create-asaas-checkout`, mas esta implementação usa `create-checkout`; publique site e funções compatíveis. A versão sem login e o caminho `dados-entrega.html` foram preservados. O botão de pedido pelo WhatsApp permanece separado do pagamento online.
 
 Não basta trocar a chave para produção: tanto o backend (`ASAAS_BASE_URL`) quanto a validação de links no backend e no navegador aceitam somente sandbox. A migração para produção exige parametrizar e testar esse par de ambientes, configurar o webhook de produção e concluir a validação ponta a ponta.
+
+O projeto confirmado para as funções é `wvwkdhlerzwixmarlupe`. A migração SQL, os Secrets e o webhook devem estar nesse mesmo projeto. O arquivo legado `supabase.js` pertence à integração antiga e não é usado pelo checkout sem login.

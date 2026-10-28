@@ -10,7 +10,7 @@
     <script src="produto.js" defer></script>
     <script src="site-chrome.js" defer></script>
     <script src="busca-produtos.js" defer></script>
-    <script src="checkout.js" defer></script>
+    <script src="checkout.js?v=customer-validation" defer></script>
 </head>
 <body class="checkout-page" data-checkout-page="customer">
     <div data-store-header></div>
@@ -36,7 +36,7 @@
                     <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" required>
                 </div>
                 <div class="checkout-field">
-                    <label for="cpf">CPF</label>
+                    <label for="cpf">CPF/CNPJ (necessário para pagamento online)</label>
                     <input id="cpf" name="cpf" inputmode="numeric" autocomplete="off">
                 </div>
                 <div class="checkout-field">

@@ -7,6 +7,26 @@
         catch { return null; }
     }
 
+    function validateCustomer(customer) {
+        const text = (value, max = 200) => typeof value === "string" ? value.trim().slice(0, max) : "";
+        const digits = value => text(value).replace(/\D/g, "");
+        const errors = [];
+        let phone = digits(customer.phone);
+        // Aceita o código brasileiro sem remover um DDD 55 de um número nacional.
+        const hasCountryCode = /^55\d{10,11}$/.test(phone);
+        if (hasCountryCode) phone = phone.slice(2);
+        if (text(customer.name, 120).length < 3) errors.push("Nome: informe pelo menos 3 caracteres.");
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text(customer.email, 254))) errors.push("E-mail: confira o formato, como nome@exemplo.com.");
+        if (!/^\d{10,11}$/.test(phone)) errors.push("WhatsApp: informe DDD e número, com 10 ou 11 dígitos (o +55 é aceito).");
+        if (!/^(\d{11}|\d{14})$/.test(digits(customer.cpfCnpj))) errors.push("CPF/CNPJ: informe 11 dígitos para CPF ou 14 para CNPJ.");
+        if (!text(customer.address)) errors.push("Endereço: informe a rua ou avenida.");
+        if (!text(customer.number, 30)) errors.push("Número do endereço: preencha o campo Número; se não houver, informe s/n.");
+        if (!/^\d{8}$/.test(digits(customer.postalCode))) errors.push("CEP: informe os 8 dígitos.");
+        if (errors.length) throw new Error(errors.join(" "));
+        // Mantém o payload anterior para pedidos válidos e preserva a chave de repetição.
+        return hasCountryCode ? { ...customer, phone } : customer;
+    }
+
     async function invoke(name, body) {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), 50000);
@@ -38,6 +58,7 @@
                 address: customer.endereco, number: customer.numero, complement: customer.complemento || "", postalCode: customer.cep },
             billingType
         };
+        payload.customer = validateCustomer(payload.customer);
         const fingerprint = JSON.stringify(payload);
         let saved = read();
         if (!saved || saved.fingerprint !== fingerprint) {

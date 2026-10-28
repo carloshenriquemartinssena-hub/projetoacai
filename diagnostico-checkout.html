@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verificar conexão do checkout</title>
+    <link rel="stylesheet" href="checkout.css">
+    <script src="payment-config.js" defer></script>
+    <script src="diagnostico-checkout.js" defer></script>
+</head>
+<body class="checkout-page">
+    <main class="checkout-main">
+        <section class="checkout-card">
+            <h1>Verificar conexão do checkout</h1>
+            <p>Esta verificação não cria pedidos, clientes nem cobranças. Não altera o pagamento que você iniciou.</p>
+            <button id="check-connection" class="checkout-button" type="button">Verificar conexão</button>
+            <pre id="connection-results" role="status" aria-live="polite" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre>
+            <p id="connection-help"></p>
+            <a href="confirmarpedidio.html">Voltar ao pedido</a>
+        </section>
+    </main>
+</body>
+</html>

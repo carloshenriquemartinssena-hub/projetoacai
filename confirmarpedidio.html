@@ -12,7 +12,7 @@
     <script src="busca-produtos.js" defer></script>
     <script src="payment-config.js?v=wvwkdhlerzwixmarlupe" defer></script>
     <script src="asaas-checkout.js?v=customer-validation" defer></script>
-    <script src="checkout.js" defer></script>
+    <script src="checkout.js?v=hosted-payment-button" defer></script>
 </head>
 <body class="checkout-page" data-checkout-page="confirmation">
     <div data-store-header></div>
@@ -41,7 +41,6 @@
                 <div class="checkout-actions">
                     <a class="checkout-back" href="dados-entrega.html">Corrigir dados</a>
                     <button class="checkout-button" id="pagar-asaas" type="button">Preparar pagamento de teste</button>
-                    <a id="abrir-pagamento" class="checkout-button" hidden>Continuar para o pagamento</a>
                     <button class="checkout-back" id="finalizar-pedido" type="button">Finalizar pedido pelo WhatsApp</button>
                 </div>
                 <p class="checkout-muted">O pedido só será confirmado após o Asaas notificar o pagamento ou a loja confirmar pelo WhatsApp. Dinheiro está disponível apenas pelo WhatsApp.</p>

@@ -1,6 +1,6 @@
 """Smoke test local. Requer servidor na porta 8000 e Playwright/Chromium.
 
-Somente autenticação e serviços remotos são simulados; o JS do checkout é real.
+Somente serviços remotos são simulados; o JS do checkout é real.
 Não efetua pagamentos nem acessa o Supabase remoto.
 """
 import json
@@ -38,6 +38,8 @@ with sync_playwright() as p:
                 route.fulfill(status=204, headers={"Access-Control-Allow-Origin": BASE[:-1], "Access-Control-Allow-Headers": "content-type,apikey"})
                 return
             route.fulfill(body=json.dumps({"orderId": "11111111-1111-4111-8111-111111111111", "paymentStatus": state["payment"]}), content_type="application/json", headers={"Access-Control-Allow-Origin": BASE[:-1]})
+        elif url == "https://sandbox.asaas.com/i/test":
+            route.fulfill(body="<h1>Hosted payment test</h1>", content_type="text/html")
         elif url.startswith(BASE):
             route.continue_()
         else:
@@ -59,19 +61,23 @@ with sync_playwright() as p:
     page.get_by_role("button", name="Revisar pedido").click()
     page.wait_for_url("**/confirmarpedidio.html")
     button = page.locator("#pagar-asaas")
-    link = page.locator("#abrir-pagamento")
-    expect(link).to_be_hidden()
+    expect(button).to_be_visible()
     button.click()
     expect(page.locator("#checkout-message")).to_have_text("Falha temporária de teste")
     expect(button).to_be_enabled()
     button.click()
-    expect(link).to_be_visible()
-    expect(link).to_have_attribute("href", "https://sandbox.asaas.com/i/test")
-    expect(button).to_be_hidden()
+    expect(button).to_have_text("Pagar R$ 1,00 no Asaas")
+    expect(button).to_be_visible()
+    expect(button).to_be_enabled()
+    page.set_viewport_size({"width": 375, "height": 812})
+    expect(button).to_be_visible()
     assert payloads[0]["requestId"] == payloads[1]["requestId"]
     assert payloads[0]["token"] == payloads[1]["token"]
     expect(page.locator("#resumo-total")).to_contain_text("1,00")
 
+    button.click()
+    page.wait_for_url("https://sandbox.asaas.com/i/test")
+    assert len(payloads) == 2, "Opening payment must not create another checkout"
     page.goto(BASE + "pagamento.html?success=true")
     expect(page.locator("#payment-status")).to_contain_text("Aguardando confirmação")
     state["payment"] = "confirmed"
@@ -79,4 +85,4 @@ with sync_playwright() as p:
     expect(page.locator("#payment-status")).to_contain_text("Pagamento confirmado")
     assert not errors, errors
     browser.close()
-    print("PASS: criação, repetição segura, total do backend, retorno pendente e confirmação consultada")
+    print("PASS: criação, repetição segura, botão visível desktop/mobile, navegação Asaas sem nova cobrança e consulta de confirmação")

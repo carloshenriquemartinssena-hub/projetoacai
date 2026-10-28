@@ -209,22 +209,26 @@
         });
 
         const asaasButton = document.getElementById("pagar-asaas");
+        let readyPaymentUrl = null;
         if (customer.pagamento === "Dinheiro") {
             asaasButton.disabled = true;
             asaasButton.title = "Dinheiro está disponível somente pelo WhatsApp.";
         }
         asaasButton.addEventListener("click", async () => {
+            if (readyPaymentUrl) {
+                window.location.assign(readyPaymentUrl);
+                return;
+            }
             asaasButton.disabled = true;
             message.textContent = "Preparando o pagamento de teste…";
             try {
                 const result = await window.AsaasCheckout.create(items, customer);
                 document.getElementById("resumo-total").textContent = money(result.totalCents / 100);
                 message.textContent = "Confira o total confirmado pela loja. Pagamento online com retirada, sem frete.";
-                const link = document.getElementById("abrir-pagamento");
-                link.href = result.paymentUrl;
-                link.textContent = `Pagar ${money(result.totalCents / 100)} no Asaas`;
-                link.hidden = false;
-                asaasButton.hidden = true;
+                readyPaymentUrl = result.paymentUrl;
+                asaasButton.textContent = `Pagar ${money(result.totalCents / 100)} no Asaas`;
+                // Mantém o mesmo botão visível; não depende de trocar elementos ocultos.
+                asaasButton.hidden = false;
             } catch (error) {
                 message.textContent = error.message || "Não foi possível preparar o pagamento.";
             } finally { asaasButton.disabled = false; }

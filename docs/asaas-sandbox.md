@@ -89,3 +89,5 @@ Aplicar o SQL no editor não publica Edge Functions. Os três deploys da seção
 Não basta trocar a chave para produção: tanto o backend (`ASAAS_BASE_URL`) quanto a validação de links no backend e no navegador aceitam somente sandbox. A migração para produção exige parametrizar e testar esse par de ambientes, configurar o webhook de produção e concluir a validação ponta a ponta.
 
 O projeto confirmado para as funções é `wvwkdhlerzwixmarlupe`. A migração SQL, os Secrets e o webhook devem estar nesse mesmo projeto. O arquivo legado `supabase.js` pertence à integração antiga e não é usado pelo checkout sem login.
+
+`orders.total_cents` é uma coluna gerada pelo PostgreSQL (`subtotal_cents + delivery_fee_cents`). A Edge Function envia apenas subtotal e frete na inserção. Enviar um valor explícito para `total_cents` causa SQLSTATE `428C9`. Não remova a geração automática do banco para contornar esse erro.

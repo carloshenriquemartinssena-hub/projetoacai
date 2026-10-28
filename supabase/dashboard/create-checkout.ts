@@ -165,7 +165,7 @@ export async function handler(request: Request): Promise<Response> {
     const { data: order, error: insertError } = await db.from("orders").insert({
       customer_name: input.customer.name, customer_phone: input.customer.phone, customer_email: input.customer.email,
       fulfillment_type: "pickup", delivery_address: null,
-      items: priced.items, subtotal_cents: priced.total, delivery_fee_cents: 0, total_cents: priced.total,
+      items: priced.items, subtotal_cents: priced.total, delivery_fee_cents: 0,
       checkout_request_id: input.requestId, checkout_token_hash: tokenHash, checkout_request_hash: requestHash,
       checkout_billing_type: input.billingType, checkout_state: "creating",
     }).select("*").single();

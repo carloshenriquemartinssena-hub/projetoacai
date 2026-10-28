@@ -52,7 +52,7 @@ Deno.test("checkout cria cobrança com preço autoritativo; repetição reutiliz
     const reply = (data: any, status = 200) => Promise.resolve(new Response(JSON.stringify(data), { status, headers: { "Content-Type": "application/json" } }));
     if (url.pathname.endsWith("/products")) return reply([product]);
     if (url.pathname.endsWith("/orders")) {
-      if (options?.method === "POST") { order = { ...body, id: orderId, payment_status: "pending", status: "pending_payment" }; return reply(order, 201); }
+      if (options?.method === "POST") { assert(!("total_cents" in body), "Do not write the generated total_cents column"); order = { ...body, total_cents: body.subtotal_cents + body.delivery_fee_cents, id: orderId, payment_status: "pending", status: "pending_payment" }; return reply(order, 201); }
       if (options?.method === "PATCH") { Object.assign(order, body); return reply(null); }
       const expectedHash = url.searchParams.get("checkout_token_hash");
       return reply(order && (!expectedHash || expectedHash === `eq.${order.checkout_token_hash}`) ? order : null);

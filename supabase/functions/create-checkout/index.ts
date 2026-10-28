@@ -24,6 +24,9 @@ export async function handler(request: Request): Promise<Response> {
       .in("id", input.items.map((item: any) => item.productId));
     if (productError) throw new Error("Falha ao consultar produtos.");
     const priced = priceItems(input.items, products || []);
+    if (priced.total < 500) {
+      throw new CheckoutError(400, "O pagamento online exige um total mínimo de R$ 5,00. Ajuste a quantidade antes de continuar.");
+    }
     // Sem frete configurado, o fluxo online oferece retirada. Nenhuma taxa é aceita do navegador.
     const { data: order, error: insertError } = await db.from("orders").insert({
       customer_name: input.customer.name, customer_phone: input.customer.phone, customer_email: input.customer.email,

@@ -39,7 +39,7 @@ O item `acai-teste-500ml` mantém o slug antigo para preservar links, mas agora 
 
 O fluxo online oferece **retirada na loja**, com frete zero explícito. Entrega exige uma regra de cálculo validada no backend antes de ser habilitada. Adicionais são rejeitados até existir um catálogo de preços deles no banco. Não há parcelamento, assinaturas, pagamentos em dinheiro ou coleta direta de cartão nesta implementação.
 
-1. Abra `testepagamento.html` no site, escolha o produto, preencha dados válidos de teste aceitos pelo Asaas e selecione Pix ou cartão. O formulário atual é `dados-entrega.html` e não exige login.
+1. Abra `testepagamento.html` no site, escolha o produto com quantidade 5 (total de R$ 5,00), preencha dados válidos de teste aceitos pelo Asaas e selecione Pix ou cartão. O formulário atual é `dados-entrega.html` e não exige login.
 2. Clique em **Preparar pagamento de teste**. Confira o total confirmado pelo banco e abra **Pagar … no Asaas** na mesma aba. O pedido deve estar `pending_payment` / `pending`.
 3. Simule o pagamento na conta sandbox. Ao voltar para a loja, a página consulta o banco por até um minuto. Também é possível consultar novamente. Perder o armazenamento da aba exige consultar o pedido pela loja; nenhum token aparece na URL.
 4. Confira no banco com as consultas abaixo. Uma repetição da mesma solicitação deve devolver a mesma cobrança. A chave de repetição é salva antes do envio. Respostas incertas não disparam outro POST de cobrança: o pedido fica `needs_review` para conferência na loja.
@@ -91,3 +91,5 @@ Não basta trocar a chave para produção: tanto o backend (`ASAAS_BASE_URL`) qu
 O projeto confirmado para as funções é `wvwkdhlerzwixmarlupe`. A migração SQL, os Secrets e o webhook devem estar nesse mesmo projeto. O arquivo legado `supabase.js` pertence à integração antiga e não é usado pelo checkout sem login.
 
 `orders.total_cents` é uma coluna gerada pelo PostgreSQL (`subtotal_cents + delivery_fee_cents`). A Edge Function envia apenas subtotal e frete na inserção. Enviar um valor explícito para `total_cents` causa SQLSTATE `428C9`. Não remova a geração automática do banco para contornar esse erro.
+
+O Asaas confirmou nos logs desta conta o mínimo de R$ 5,00 por cobrança. O backend rejeita totais menores antes de criar pedido ou cliente externo. Para o produto unitário de R$ 1,00, teste com pelo menos cinco unidades.

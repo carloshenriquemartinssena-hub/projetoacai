@@ -44,6 +44,7 @@ Deno.test("checkout cria cobrança com preço autoritativo; repetição reutiliz
   Deno.env.set("SITE_URL", "https://loja.example.com/acai/");
   Deno.env.set("ASAAS_BASE_URL", "https://api-sandbox.asaas.com/v3");
   Deno.env.set("ASAAS_API_KEY", "fake-sandbox-key-for-test");
+  const checkoutInput = () => { const body = input(); body.items[0].quantity = 5; return body; };
   const original = globalThis.fetch;
   let order: any = null; let payments = 0;
   globalThis.fetch = (async (target: any, options?: RequestInit) => {
@@ -59,7 +60,7 @@ Deno.test("checkout cria cobrança com preço autoritativo; repetição reutiliz
     }
     if (url.pathname.endsWith("/customers")) return reply({ id: "cus_test" });
     if (url.pathname.endsWith("/payments")) {
-      payments++; assert(body.value === 2); assert(body.externalReference === orderId);
+      payments++; assert(body.value === 5); assert(body.externalReference === orderId);
       assert(body.callback.successUrl === "https://loja.example.com/acai/pagamento.html");
       assert(body.billingType === "PIX");
       return reply({ id: "pay_test", invoiceUrl: "https://sandbox.asaas.com/i/test" });
@@ -68,19 +69,23 @@ Deno.test("checkout cria cobrança com preço autoritativo; repetição reutiliz
   }) as typeof fetch;
   const request = (body: any) => new Request("https://functions.example.com", { method: "POST", headers: { origin: "https://loja.example.com", "Content-Type": "application/json" }, body: JSON.stringify(body) });
   try {
-    const response = await createCheckout(request(input()));
+    const tooSmall = await createCheckout(request(input()));
+    assert(tooSmall.status === 400);
+    assert((await tooSmall.json()).error.includes("R$ 5,00"));
+    assert(order === null && Number(payments) === 0, "Minimum must be checked before inserting order or contacting Asaas");
+    const response = await createCheckout(request(checkoutInput()));
     assert(response.status === 200, await response.clone().text());
-    const data = await response.json(); assert(data.totalCents === 200 && data.orderId === orderId);
-    assert(order.fulfillment_type === "pickup" && order.total_cents === 200 && !JSON.stringify(order).includes("12345678909"));
-    assert((await createCheckout(request(input()))).status === 200); assert(payments === 1);
-    const changed = input(); changed.items[0].quantity = 3;
+    const data = await response.json(); assert(data.totalCents === 500 && data.orderId === orderId);
+    assert(order.fulfillment_type === "pickup" && order.total_cents === 500 && !JSON.stringify(order).includes("12345678909"));
+    assert((await createCheckout(request(checkoutInput()))).status === 200); assert(payments === 1);
+    const changed = checkoutInput(); changed.items[0].quantity = 3;
     assert((await createCheckout(request(changed))).status === 409); assert(payments === 1);
     assert((await checkoutStatus(request({ orderId, token }))).status === 200);
     assert((await checkoutStatus(request({ orderId, token: requestId }))).status === 404);
-    const badOrigin = request(input()); badOrigin.headers.set("origin", "https://evil.example.com");
+    const badOrigin = request(checkoutInput()); badOrigin.headers.set("origin", "https://evil.example.com");
     assert((await createCheckout(badOrigin)).status === 403);
     order.payment_url = null;
-    assert((await createCheckout(request(input()))).status === 409); assert(payments === 1);
+    assert((await createCheckout(request(checkoutInput()))).status === 409); assert(payments === 1);
     assert(order.checkout_token_hash === await hash(token));
   } finally { globalThis.fetch = original; }
 });

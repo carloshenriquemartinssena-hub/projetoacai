@@ -5,11 +5,24 @@
         const button = document.getElementById("refresh-payment");
         let timer;
         let attempts = 0;
+        let confirmedAnalyticsId = null;
+        function reportConfirmedPayment() {
+            try {
+                if (!confirmedAnalyticsId || !window.pentaliq?.visitorId()) return;
+                window.pentaliq.track('purchase', { event_id: confirmedAnalyticsId });
+                window.pentaliq.flush();
+            } catch (_) { /* A medição nunca deve interromper o pagamento. */ }
+        }
+        window.addEventListener('pentaliq:consent', reportConfirmedPayment);
         async function refresh() {
             clearTimeout(timer);
             button.disabled = true;
             try {
                 const result = await window.AsaasCheckout.status();
+                if (result.paymentStatus === 'confirmed' && result.orderId) {
+                    confirmedAnalyticsId = 'purchase_' + String(result.orderId).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 60);
+                    reportConfirmedPayment();
+                }
                 document.getElementById("payment-order").textContent = `Pedido: ${result.orderId}`;
                 const messages = {
                     pending: "Aguardando confirmação do Asaas. Voltar para esta página não confirma o pagamento.",

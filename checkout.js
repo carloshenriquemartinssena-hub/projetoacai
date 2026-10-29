@@ -88,6 +88,11 @@
             try {
                 localStorage.setItem(CUSTOMER_KEY, JSON.stringify(customer));
                 localStorage.setItem("aiz-perfil", JSON.stringify(customer));
+                // Só registra a conclusão quando a validação e o armazenamento tiveram sucesso.
+                try {
+                    window.pentaliq?.track('form_submit', { object_id: 'checkout-customer' });
+                    window.pentaliq?.flush();
+                } catch (_) { /* Analytics não interfere no fluxo do pedido. */ }
                 window.location.href = "confirmarpedidio.html";
             } catch (error) {
                 console.error("Não foi possível guardar os dados do cliente.", error);

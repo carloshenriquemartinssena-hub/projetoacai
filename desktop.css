@@ -301,12 +301,13 @@ h1 {
 }
 
 .font1 { 
-    margin-bottom: 2vh;
-    font-size: 120%;
- color:purple;
-    align-items: center;
-    justify-content: center;
-    display: flex;
+ display: flex;
+ align-items: end;
+ justify-content: end;
+ margin-right: 5vw;
+ padding: 0;
+ height: auto;
+ 
 }
 
 .logo1 { 
@@ -594,7 +595,21 @@ position: relative;
 
 #frame3 { 
   margin-top: 10vh;
-  max-height: auto;
+  max-height: 100%;
+   
+    
+}
+
+.grid { 
+ display: grid;
+ grid-template-columns:  2fr 1fr;
+ margin-bottom: 30px;
+
+}
+
+.imgilustrativa {
+  width: 100%;
+  height: auto;
 }
 
 .fotoorigem  { display: flex;
@@ -608,12 +623,12 @@ margin-bottom: 15px;
 
 
 .historia { 
-  padding: 15px 20px;
-  align-items: center;
-  justify-content: center;
-  display: block;  
-
-
+   display: block;
+   flex-direction: column;
+   justify-content: start;
+   align-items: start;
+   padding: 20px;
+   margin: 0;
   overflow-wrap: break-word; 
   font-family: ' homenage', sans-serif;
 }

@@ -272,5 +272,3 @@ body.checkout-page {
         height: 72px;
     }
 }
-
-.checkout-page [hidden] { display: none !important; }

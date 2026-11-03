@@ -109,11 +109,11 @@ main { display: none;}
 .descricao001 {display: none;}  .imagem-produto { display: none;}
 .font1 { 
    margin: auto;
-    padding: 0;
+    padding: 12px;
     font-size: 120%;
-  
-    justify-content: space-between;
+    justify-content: center;
     display: flex;
+    align-items: center;
 }
 
 .logo1 { 
@@ -610,27 +610,30 @@ font-size: 25px;}
 #frame3 { 
 width: auto;
 max-height: 100%;
+margin-bottom: 10px;
 }
 
-.fotoorigem  { display: flex;
+.imgilustrativa  { display: flex;
   justify-content: center;
   align-items: center;
 margin-left: auto;
   max-width: 95%;
   right: 2vw;
   position: relative;
+  border-radius: 8px;
 }
 
 
 
 .historia { 
-  margin-top: 4vh;
+  margin: 4vh 4vh;
  display: block;
+ flex-direction:row;
  justify-content: center; 
  align-items: center;
  word-wrap: break-word;
-  align-items: center;
   font-family: ' homenage', sans-serif;
+  width: 89%;
 }
 
 .marcatexto { 

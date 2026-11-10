@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Painel administrativo de pedidos da Açaí Zero Grau.">
+    <title>Painel de pedidos | Açaí Zero Grau</title>
+    <link rel="stylesheet" href="site-chrome.css">
+    <link rel="stylesheet" href="painel-pedidos.css">
+    <script src="produto.js" defer></script>
+    <script src="site-chrome.js" defer></script>
+    <script src="payment-config.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="painel-pedidos.js" defer></script>
+</head>
+<body class="orders-page">
+    <div data-store-header></div>
+    <main class="orders-main">
+        <section class="orders-login" id="orders-login" aria-labelledby="login-title">
+            <p class="orders-eyebrow">ACESSO RESTRITO</p>
+            <h1 id="login-title">Painel de pedidos</h1>
+            <p>Entre com a conta autorizada da equipe para consultar os pedidos.</p>
+            <form id="orders-login-form">
+                <label for="orders-email">E-mail</label>
+                <input id="orders-email" name="email" type="email"
+                    autocomplete="username" required>
+                <label for="orders-password">Senha</label>
+                <input id="orders-password" name="password" type="password"
+                    autocomplete="current-password" required>
+                <button class="orders-primary-button" type="submit">Entrar</button>
+            </form>
+            <p class="orders-message" id="orders-login-message"
+                role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="orders-dashboard" id="orders-dashboard" hidden
+            aria-labelledby="orders-title">
+            <header class="orders-dashboard-header">
+                <div>
+                    <p class="orders-eyebrow">ÁREA DA EQUIPE</p>
+                    <h1 id="orders-title">Pedidos recebidos</h1>
+                    <p>Pedidos do Asaas e solicitações enviadas pelo WhatsApp.</p>
+                </div>
+                <div class="orders-toolbar">
+                    <button class="orders-secondary-button" id="orders-refresh" type="button">
+                        Atualizar pedidos
+                    </button>
+                    <button class="orders-secondary-button" id="orders-sign-out" type="button">
+                        Sair
+                    </button>
+                </div>
+            </header>
+
+            <section class="orders-summary" aria-label="Resumo dos pedidos">
+                <article><span>Carregados</span><strong id="orders-count">0</strong></article>
+                <article><span>Aguardando</span><strong id="orders-waiting-count">0</strong></article>
+                <article><span>Em preparo</span><strong id="orders-preparing-count">0</strong></article>
+                <article><span>Em entrega</span><strong id="orders-delivery-count">0</strong></article>
+            </section>
+
+            <div class="orders-list-heading">
+                <h2>Histórico de pedidos</h2>
+                <label for="orders-filter">Filtrar status</label>
+                <select id="orders-filter">
+                    <option value="all">Todos</option>
+                    <option value="waiting">Aguardando</option>
+                    <option value="preparing">Em preparo</option>
+                    <option value="delivery">Em entrega</option>
+                    <option value="delivered">Entregues</option>
+                    <option value="canceled">Cancelados</option>
+                </select>
+            </div>
+
+            <p class="orders-message" id="orders-message"
+                role="status" aria-live="polite"></p>
+            <div class="orders-list" id="orders-list" aria-live="polite"></div>
+            <button class="orders-secondary-button orders-load-more" id="orders-load-more"
+                type="button" hidden>Carregar mais pedidos</button>
+        </section>
+    </main>
+    <div data-store-footer></div>
+</body>
+</html>

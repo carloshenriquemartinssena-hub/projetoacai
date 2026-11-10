@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Confira as ofertas especiais de Açaí Zero Grau.">
+    <title>Promoções | Açaí Zero Grau</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site-chrome.css">
+    <link rel="stylesheet" href="promocoes.css">
+    <script src="produto.js" defer></script>
+    <script src="site-chrome.js" defer></script>
+    <script src="busca-produtos.js" defer></script>
+    <script src="promocoes.js" defer></script>
+</head>
+<body>
+    <div data-store-header></div>
+    <main class="promotions-main">
+        <section class="promo-showcase" aria-label="Ofertas em destaque">
+            <div class="promo-copy" id="promo-copy" aria-live="polite">
+                <p class="promo-eyebrow">OFERTA ESPECIAL</p>
+                <p class="promo-discount" id="promo-discount"></p>
+                <h1 id="promo-title"></h1>
+                <p class="promo-description" id="promo-description"></p>
+                <div class="promo-prices" aria-label="Preço promocional">
+                    <s class="promo-original" id="promo-original"></s>
+                    <strong class="promo-price" id="promo-price"></strong>
+                </div>
+                <a class="promo-buy" id="promo-buy" href="produtopage.html">
+                    Aproveitar promoção
+                </a>
+            </div>
+            <figure class="promo-visual">
+                <img id="promo-image" class="promo-hero-image" src="" alt="">
+            </figure>
+        </section>
+
+        <section class="promo-products" aria-labelledby="promo-products-title">
+            <div class="promo-products-heading">
+                <div>
+                    <p class="promo-eyebrow">ESCOLHA A SUA</p>
+                    <h2 id="promo-products-title">Mais ofertas para aproveitar</h2>
+                </div>
+                <div class="promo-controls" aria-label="Navegar pelas promoções">
+                    <button class="promo-arrow" id="promo-previous" type="button"
+                        aria-label="Ver promoção anterior">‹</button>
+                    <button class="promo-arrow" id="promo-next" type="button"
+                        aria-label="Ver próxima promoção">›</button>
+                </div>
+            </div>
+            <div class="promo-thumbnails" id="promo-thumbnails"
+                role="group" aria-label="Selecionar uma promoção"></div>
+        </section>
+    </main>
+    <div data-store-footer></div>
+</body>
+</html>

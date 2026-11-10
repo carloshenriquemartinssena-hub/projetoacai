@@ -15,8 +15,8 @@
 
 .site-logo img {
     display: block;
-    width: 88px;
-    max-height: 58px;
+    width: 102px;
+    max-height: 600px;
     object-fit: contain;
 }
 
@@ -189,19 +189,19 @@
     display: grid;
     width: min(1200px, 100%);
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
+    gap: 18px;
     margin: 0 auto;
 }
 
 .site-footer h2 {
-    margin: 0 0 10px;
+    margin: 0 0 6px;
     color: #ffd18c;
     font-size: 1rem;
 }
 
 .site-footer ul {
     display: grid;
-    gap: 7px;
+    gap: 4px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -215,8 +215,8 @@
 
 .site-footer-copy {
     width: min(1200px, 100%);
-    margin: 22px auto 0;
-    padding-top: 14px;
+    margin: 14px auto 0;
+    padding-top: 10px;
     border-top: 1px solid rgb(255 255 255 / 25%);
     text-align: center;
     font-size: .88rem;

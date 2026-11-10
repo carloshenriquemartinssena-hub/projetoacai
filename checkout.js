@@ -168,44 +168,105 @@
             node("p", "", `Pagamento: ${customer.pagamento}`)
         );
 
-        document.getElementById("finalizar-pedido").addEventListener("click", () => {
+        document.getElementById("finalizar-pedido").addEventListener("click", async () => {
             const button = document.getElementById("finalizar-pedido");
-            const lines = [
-                "Olá! Gostaria de confirmar este pedido:",
-                "",
-                ...items.flatMap(item => {
-                    const quantity = Math.max(1, Number(item.quantidade) || 1);
-                    const extras = Array.isArray(item.adicionais)
-                        ? item.adicionais.map(extra =>
-                            typeof extra === "string" ? extra : extra.nome
-                        ).filter(Boolean).join(", ")
-                        : "";
-                    return [
-                        `${quantity}x ${item.nome || "Produto"} (${item.tamanho || "tamanho não informado"})`,
-                        extras ? `Adicionais: ${extras}` : "",
-                        item.observacao ? `Observação: ${item.observacao}` : "",
-                        `Subtotal: ${money(subtotal(item))}`,
-                        ""
-                    ].filter(line => line !== "");
-                }),
-                `Total: ${money(total(items))}`,
-                "",
-                `Cliente: ${customer.nome}`,
-                `E-mail: ${customer.email || ""}`,
-                `CPF: ${customer.cpf}`,
-                `WhatsApp: ${customer.whatsapp}`,
-                `Endereço: ${address}`,
-                `Forma de pagamento: ${customer.pagamento}`
-            ];
-            const url = `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(lines.join("\n"))}`;
-            const whatsapp = window.open(url, "_blank");
-            if (!whatsapp) {
-                message.textContent = "Permita a abertura de janelas para enviar seu pedido pelo WhatsApp.";
+            const config = window.PAYMENT_BACKEND_CONFIG;
+            if (!config?.url || !config?.publishableKey) {
+                message.textContent =
+                    "O registro seguro do pedido não está configurado. Tente novamente mais tarde.";
                 return;
             }
-            whatsapp.opener = null;
+
+            const whatsapp = window.open("about:blank", "_blank");
+            if (!whatsapp) {
+                message.textContent =
+                    "Permita a abertura de janelas para enviar seu pedido pelo WhatsApp.";
+                return;
+            }
+
             button.disabled = true;
-            button.textContent = "Pedido preparado no WhatsApp";
+            button.textContent = "Registrando pedido...";
+            message.textContent = "";
+            try {
+                const response = await fetch(
+                    `${config.url}/functions/v1/store-whatsapp-order`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "apikey": config.publishableKey
+                        },
+                        body: JSON.stringify({
+                            items: items.map(item => ({
+                                productId: item.slug || item.id,
+                                size: item.tamanho,
+                                quantity: Math.max(1, Number(item.quantidade) || 1),
+                                extras: Array.isArray(item.adicionais)
+                                    ? item.adicionais.map(extra =>
+                                        typeof extra === "string" ? extra : extra.nome
+                                    ).filter(Boolean)
+                                    : [],
+                                observation: item.observacao || ""
+                            })),
+                            customer: {
+                                name: customer.nome,
+                                email: customer.email,
+                                phone: customer.whatsapp,
+                                cpfCnpj: customer.cpf || undefined,
+                                address: customer.endereco,
+                                addressNumber: customer.numero,
+                                complement: customer.complemento,
+                                postalCode: customer.cep
+                            },
+                            paymentMethod: customer.pagamento
+                        })
+                    }
+                );
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.error || "Não foi possível registrar seu pedido.");
+                }
+
+                const lines = [
+                    "Olá! Gostaria de confirmar este pedido:",
+                    "",
+                    ...items.flatMap(item => {
+                        const quantity = Math.max(1, Number(item.quantidade) || 1);
+                        const extras = Array.isArray(item.adicionais)
+                            ? item.adicionais.map(extra =>
+                                typeof extra === "string" ? extra : extra.nome
+                            ).filter(Boolean).join(", ")
+                            : "";
+                        return [
+                            `${quantity}x ${item.nome || "Produto"} (${item.tamanho || "tamanho não informado"})`,
+                            extras ? `Adicionais: ${extras}` : "",
+                            item.observacao ? `Observação: ${item.observacao}` : "",
+                            `Subtotal: ${money(subtotal(item))}`,
+                            ""
+                        ].filter(line => line !== "");
+                    }),
+                    `Total: ${money(total(items))}`,
+                    "",
+                    `Cliente: ${customer.nome}`,
+                    `E-mail: ${customer.email || ""}`,
+                    `CPF: ${customer.cpf}`,
+                    `WhatsApp: ${customer.whatsapp}`,
+                    `Endereço: ${address}`,
+                    `Forma de pagamento: ${customer.pagamento}`
+                ];
+                const url = `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(lines.join("\n"))}`;
+                whatsapp.opener = null;
+                whatsapp.location.replace(url);
+                button.textContent = "Pedido preparado no WhatsApp";
+            } catch (error) {
+                console.error("Erro ao registrar pedido pelo WhatsApp.", error);
+                whatsapp.close();
+                message.textContent = error instanceof Error
+                    ? error.message
+                    : "Não foi possível registrar o pedido. Tente novamente.";
+                button.disabled = false;
+                button.textContent = "Finalizar pedido pelo WhatsApp";
+            }
         });
 
         const asaasButton = document.getElementById("pagar-asaas");

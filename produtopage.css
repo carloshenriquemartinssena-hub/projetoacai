@@ -1243,6 +1243,17 @@ body {
   font-weight: 700;
 }
 
+.produto-preco-original {
+  margin-right: 10px;
+  color: #777;
+  font-size: .95rem;
+  text-decoration: line-through;
+}
+
+.produto-preco-atual {
+  color: #c32449;
+}
+
 .produto-descricao {
   color: #555;
   font-size: 1rem;

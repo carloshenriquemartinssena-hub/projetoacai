@@ -21,6 +21,7 @@
                 <a href="mais-pedidos.html">Mais pedidos</a>
                 <a href="combos.html">Combos</a>
                 <a href="epocas.html">Épocas</a>
+                <a href="promocoes.html">Promoções</a>
                 <a class="site-cart-link" href="carrinho.html" aria-label="Carrinho">
                     <img class="site-cart-icon" src="carrinho-icon.png" alt="">
                     <span>Carrinho</span>
@@ -53,6 +54,7 @@
                 <section>
                     <h2>Açaí Zero Grau</h2>
                     <p>Cardápio e pedidos de açaí preparados sob encomenda. Consulte a disponibilidade e a área de entrega antes de concluir.</p>
+                    <p><a href="painel-pedidos.html">Acesso da equipe</a></p>
                 </section>
             </div>
             <p class="site-footer-copy">© Açaí Zero Grau — Todos os direitos reservados.</p>

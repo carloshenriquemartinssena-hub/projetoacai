@@ -20,7 +20,9 @@
 
     function menorPreco(produto) {
         const precos = (produto.tamanhos || [])
-            .map(tamanho => Number(tamanho.valor))
+            .map(tamanho => window.precoPromocional
+                ? window.precoPromocional(produto, Number(tamanho.valor))
+                : Number(tamanho.valor))
             .filter(Number.isFinite);
         return precos.length ? Math.min(...precos) : null;
     }
@@ -55,6 +57,13 @@
         preco.textContent = valor === null
             ? "Consulte o preço"
             : `A partir de ${moeda(valor)}`;
+        if (produto.promocao?.ativa === true) {
+            const desconto = document.createElement("span");
+            desconto.className = "tile-discount";
+            desconto.textContent =
+                `${Number(produto.promocao.descontoPercentual)}% OFF`;
+            preco.append(" ", desconto);
+        }
 
         const botao = document.createElement("a");
         botao.className = "tile-link";
@@ -84,9 +93,40 @@
         const todosProdutos = Object.entries(catalogo);
         const modo = document.body.dataset.vitrine;
 
+        if (modo === "destaques") {
+            const novidades = todosProdutos.filter(([, produto]) => produto.novo === true);
+            const destaques = embaralhar(novidades).slice(0, 3);
+            const produtosDaPaginaInicial = embaralhar(novidades);
+            document.querySelectorAll("[data-featured-products]").forEach(container => {
+                renderizarLista(
+                    container,
+                    destaques,
+                    "Novos produtos em breve."
+                );
+            });
+            document.querySelectorAll("[data-home-products]").forEach(container => {
+                const produtos = container.dataset.homeProducts === "weekly"
+                    ? produtosDaPaginaInicial.slice(0, 3)
+                    : produtosDaPaginaInicial.slice(3, 6);
+                renderizarLista(
+                    container,
+                    produtos,
+                    "Novos produtos em breve."
+                );
+            });
+            return;
+        }
+
         if (modo === "epocas") {
             document.querySelectorAll("[data-estacao]").forEach(secao => {
-                const produtosAleatorios = embaralhar(todosProdutos).slice(0, 15);
+                const estacao = secao.dataset.estacao;
+                const produtosDaEstacao = todosProdutos.filter(([, produto]) =>
+                    produto.estacoes?.includes(estacao)
+                );
+                const produtosDisponiveis = produtosDaEstacao.length
+                    ? produtosDaEstacao
+                    : todosProdutos;
+                const produtosAleatorios = embaralhar(produtosDisponiveis).slice(0, 15);
                 renderizarLista(
                     secao.querySelector(".product-grid"),
                     produtosAleatorios,
@@ -99,8 +139,10 @@
         const produtos = modo === "combos"
             ? todosProdutos.filter(([, produto]) => produto.combo === true)
             : todosProdutos;
+        const listaProdutos = document.getElementById("lista-produtos");
+        if (!listaProdutos) return;
         renderizarLista(
-            document.getElementById("lista-produtos"),
+            listaProdutos,
             produtos,
             modo === "combos"
                 ? "Nenhum produto foi marcado como Combo. Marque combo: true no produto.js para incluí-lo automaticamente."

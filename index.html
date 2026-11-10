@@ -11,6 +11,7 @@
     <script src="site-chrome.js" defer></script>
     <script src="busca-produtos.js" defer></script>
     <script src="script.js" defer></script>
+    <script src="vitrine.js" defer></script>
    
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="desktop.css">
@@ -27,7 +28,7 @@
 
     <title>Açaí Zero Grau</title>
 </head>
-<body>
+<body data-vitrine="destaques">
 
 <div data-store-header></div>
 
@@ -69,72 +70,19 @@
 </section>
 
 
-    <section id="descktopp">
-      <!-- Produtos em destaques rotativos-->
-<div class="divisao">
-
-    <div class="dktitu">
-
-
-   <ul class="dkversion">
-        <li>
-            <h1 class="dktitu1">Açaí com Morango:<br> 
-O Clássico Refrescante</h1>
-<img class="" src="Taça de Açaí com Frutas e Granola.png" alt="Produto">
-
-    <h2 class="descricao01">Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão , quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino , oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</h2>
-
-</li>
-
-</ul>
-
-        </div>
-
-        
-  <div class="videodestaque">
-    <video autoplay muted loop>
-            <source src="videoapresentacao.mp4" type="video/mp4">
-        </video>
-</div>
-
-    
- </div>
-</section>
+    <section id="descktopp" class="featured-products">
+      <h1 class="queridinhos">Novidades em destaque</h1>
+      <div class="product-grid featured-grid" data-featured-products
+        aria-label="Produtos em destaque"></div>
+    </section>
 
 
 <div class="acao">
   </div>
-<section id="destaquemb">
-<div class="imagem-produtos"> 
-  
-  
-    <ul aria-label="Produtos em destaque">
-        <li>
-          <h1 class="mbtitu">Açaí com Morango:<br>O Clássico Refrescante</h1>
-          <div class="produto-info">
-            <img class="espaço" src="fotoexemplo.png" alt="Açaí com Morango">
-            <p class="receita">Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão, quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino, oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
-            <button class="enfeitebotao" type="button">COMPRAR</button>
-          </div>
-        </li>
-        <li>
-          <h1 class="mbtitu">NOVIDADE NO CARDÁPIO:<br>Conheça a 7 maravilha da terra</h1>
-          <div class="produto-info">
-            <img class="espaço" src="fotoexemplo.png" alt="Açaí com Morango">
-            <p class="receita">Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão, quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino, oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
-            <button class="enfeitebotao" type="button">COMPRAR</button>
-          </div>
-        </li>
-        <li>
-          <h1 class="mbtitu">COMBINHO PERFEITO:<br>Estilo Ultravioleta</h1>
-          <div class="produto-info">
-            <img class="espaço" src="fotoexemplo.png" alt="Açaí com Morango">
-            <p class="receita">Nosso Açaí com Morango combina a cremosidade do açaí premium com o frescor de fatias suculentas de morango, criando um equilíbrio perfeito de sabor e energia. Servido com acompanhamentos clássicos como leite em pó ou leite condensado, ele é o favorito absoluto dos dias quentes de primavera e verão, quando a fruta está no auge. É a escolha ideal para um lanche da tarde refrescante ou para repassar as energias após o treino, oferecendo uma experiência leve e nutritiva que agrada a todos os paladares.</p>
-            <button class="enfeitebotao" type="button">COMPRAR</button>
-          </div>
-        </li>
-    </ul>
-  </div>
+<section id="destaquemb" class="featured-products">
+  <h1 class="queridinhos">Novidades em destaque</h1>
+  <div class="product-grid featured-grid" data-featured-products
+    aria-label="Produtos em destaque"></div>
 </section>
 
      
@@ -168,377 +116,19 @@ O Clássico Refrescante</h1>
 </section>
 
 <section id="frame2">
-
-<h1 class="queridinhos">Queridinhos Da Semana:</h1>
-
-<div class="slider-wrapper">
-</section>
-      
-        
-<section>
-        <!-- produto 1 -->
-        <div class="product-slider" id="productSlider" >
-            <div class="product-card" 
-            data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
-             data-product-slug="acai-teste-500ml">
-                <div class="discount-badge">15% OFF</div>
-                <img class="aprender" src="2fotoexemplo.png" alt="Açaí Completo" ><a href="produtopage.html?produto=acai-teste-500ml">
-                <div class="product-info" id="produto-titulo">
-                    <h4>Açaí de teste 500ml</h4>
-                    <p class="descricao" id="produto-descricao">Açaí premium com morango fresco e leite em pó ou condensado: energia gelada e porcelana.</p>
-                    <p class="price" id="produto-preco">R$ 25,90</a></p>
-                  <button class="buy-btn" type="button">Comprar Agora</button>
-                </div>
-            </div>
-
-             <!-- produto 2 -->
-
-           <div
-    class="product-card"
-    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
->
-
-    <div class="discount-badge">
-        15% OFF
-    </div>
-
-    <img
-        class="aprender"
-        src="2fotoexemplo.png"
-        alt="Açaí Completo"
-    ><a href=produtopage.html>
-
-    <div class="product-info">
-
-        <h4>
-            Açaí de teste 500ml
-        </h4>
-
-        <p class="descricao">
-            Açaí premium com morango fresco e leite em pó ou condensado.
-        </p>
-
-        <p class="price">
-            R$ 25,90
-        </a></p>
-
-        <button
-            class="buy-btn"
-            type="button"
-        >
-            Comprar Agora
-        </button>
-
-    </div>
-
-</div>
-             <!-- produto 3 -->
-
-               <div
-    class="product-card"
-    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
->
-
-    <div class="discount-badge">
-        15% OFF
-    </div>
-
-    <img
-        class="aprender"
-        src="2fotoexemplo.png"
-        alt="Açaí Completo"
-    ><a href=produtopage.html>
-
-    <div class="product-info">
-
-        <h4>
-            Açaí de teste 500ml
-        </h4>
-
-        <p class="descricao">
-            Açaí premium com morango fresco e leite em pó ou condensado.
-        </p>
-
-        <p class="price">
-            R$ 25,90
-        </a></p>
-
-        <button
-            class="buy-btn"
-            type="button"
-        >
-            Comprar Agora
-        </button>
-
-    </div>
-
-</div>
-
-             <!-- produto 5 -->
-
-             <div
-    class="product-card"
-    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
->
-
-    <div class="discount-badge">
-        15% OFF
-    </div>
-
-    <img
-        class="aprender"
-        src="2fotoexemplo.png"
-        alt="Açaí Completo"
-    ><a href=produtopage.html>
-
-    <div class="product-info">
-
-        <h4>
-            Açaí de teste 500ml
-        </h4>
-
-        <p class="descricao">
-            Açaí premium com morango fresco e leite em pó ou condensado.
-        </p>
-
-        <p class="price">
-            R$ 25,90
-        </a></p>
-
-        <button
-            class="buy-btn"
-            type="button"
-        >
-            Comprar Agora
-        </button>
-
-    </div>
-
-</div>
-
-            <!-- Carrossell 2 - Primeiro Pedido? Comece com Estes: -->
-
-        
-    </div>
-
-    <h1 class="queridinhos">Primeiro Pedido? Comece Com Estes:</h1>
-
-    <div class="slider-wrapper">
-        
-        
-        <div class="product-slider" id="productSlider">
-
-           <!-- produto 1 -->
-            <div
-    class="product-card"
-    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
->
-
-    <div class="discount-badge">
-        15% OFF
-    </div>
-
-    <img
-        class="aprender"
-        src="2fotoexemplo.png"
-        alt="Açaí Completo"
-    ><a href=produtopage.html>
-
-    <div class="product-info">
-
-        <h4>
-            Açaí de teste 500ml
-        </h4>
-
-        <p class="descricao">
-            Açaí premium com morango fresco e leite em pó ou condensado.
-        </p>
-
-        <p class="price">
-            R$ 25,90
-        </a></p>
-
-        <button
-            class="buy-btn"
-            type="button"
-        >
-            Comprar Agora
-        </button>
-
-    </div>
-
-</div>
-             <!-- produto 2 -->
-
-           <div
-    class="product-card"
-    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
->
-
-    <div class="discount-badge">
-        15% OFF
-    </div>
-
-    <img
-        class="aprender"
-        src="2fotoexemplo.png"
-        alt="Açaí Completo"
-    ><a href=produtopage.html>
-
-    <div class="product-info">
-
-        <h4>
-            Açaí de teste 500ml
-        </h4>
-
-        <p class="descricao">
-            Açaí premium com morango fresco e leite em pó ou condensado.
-        </p>
-
-        <p class="price">
-            R$ 25,90
-        </a></p>
-
-        <button
-            class="buy-btn"
-            type="button"
-        >
-            Comprar Agora
-        </button>
-
-    </div>
-
-</div>
-
-             <!-- produto 3 -->
-
-               <div
-    class="product-card"
-    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
->
-
-    <div class="discount-badge">
-        15% OFF
-    </div>
-
-    <img
-        class="aprender"
-        src="2fotoexemplo.png"
-        alt="Açaí Completo"
-    ><a href=produtopage.html>
-
-    <div class="product-info">
-
-        <h4>
-            Açaí de teste 500ml
-        </h4>
-
-        <p class="descricao">
-            Açaí premium com morango fresco e leite em pó ou condensado.
-        </p>
-
-        <p class="price">
-            R$ 25,90
-        </a></p>
-
-        <button
-            class="buy-btn"
-            type="button"
-        >
-            Comprar Agora
-        </button>
-
-    </div>
-
-</div>
-
-             <!-- produto 4 -->
-<div
-    class="product-card"
-    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
->
-
-    <div class="discount-badge">
-        15% OFF
-    </div>
-
-    <img
-        class="aprender"
-        src="2fotoexemplo.png"
-        alt="Açaí Completo"
-    ><a href=produtopage.html>
-
-    <div class="product-info">
-
-        <h4>
-            Açaí de teste 500ml
-        </h4>
-
-        <p class="descricao">
-            Açaí premium com morango fresco e leite em pó ou condensado.
-        </p>
-
-        <p class="price">
-            R$ 25,90
-       </a> </p>
-
-        <button
-            class="buy-btn"
-            type="button"
-        >
-            Comprar Agora
-        </button>
-
-    </div>
-
-</div>
-             <!-- produto 5 -->
-
-               <div
-    class="product-card"
-    data-product-id="8a4b37d4-eb90-4c40-b346-0bc5a9e4d097"
->
-
-    <div class="discount-badge">
-        15% OFF
-    </div>
-
-    <img
-        class="aprender"
-        src="2fotoexemplo.png"
-        alt="Açaí Completo"
-    ><a href=produtopage.html>
-
-    <div class="product-info">
-
-        <h4>
-            Açaí de teste 500ml
-        </h4>
-
-        <p class="descricao">
-            Açaí premium com morango fresco e leite em pó ou condensado.
-        </p>
-
-        <p class="price">
-            R$ 25,90
-        </a></p>
-
-        <button
-            class="buy-btn"
-            type="button"
-        >
-            Comprar Agora
-        </button>
-
-    </div>
-
-</div>
-
-            </div>
-
-      
-    </div>
-
+  <h1 class="queridinhos">Queridinhos Da Semana:</h1>
+  <div class="slider-wrapper">
+    <div class="product-slider featured-products featured-grid catalog-product-slider"
+      id="productSlider" data-home-products="weekly"
+      aria-label="Queridinhos da semana"></div>
+  </div>
+
+  <h1 class="queridinhos">Primeiro Pedido? Comece Com Estes:</h1>
+  <div class="slider-wrapper">
+    <div class="product-slider featured-products featured-grid catalog-product-slider"
+      id="productSliderFirstOrder" data-home-products="first-order"
+      aria-label="Sugest?es para o primeiro pedido"></div>
+  </div>
 </section>
 <section id="frame3">
     <h1 class="font1"> você sabe como nascemos?</h1>

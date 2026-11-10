@@ -227,23 +227,50 @@
         const precoBase = tamanhoSelecionado
             ? Number(tamanhoSelecionado.dataset.preco)
             : produto.tamanhos[0].valor;
+        const precoBaseAtual = window.precoPromocional
+            ? window.precoPromocional(produto, precoBase)
+            : precoBase;
 
-        const precoAdicionais = [
+        return precoBaseAtual + precoAdicionaisSelecionados();
+    }
+
+    function precoAdicionaisSelecionados() {
+        return [
             ...document.querySelectorAll(
                 'input[name="adicional"]:checked'
             )
         ].reduce((total, adicional) => {
             return total + Number(adicional.dataset.preco);
         }, 0);
-
-        return precoBase + precoAdicionais;
     }
 
 
     // Atualiza o preço exibido
     function atualizarPreco(produto) {
-        elemento("produto-preco").textContent =
-            dinheiro(precoSelecionado(produto));
+        const container = elemento("produto-preco");
+        container.replaceChildren();
+        const selecionado = document.querySelector(
+            'input[name="tamanho"]:checked'
+        );
+        const tamanho = produto.tamanhos.find(item =>
+            item.nome === selecionado?.value
+        ) || produto.tamanhos[0];
+        const promocaoAtiva = produto.promocao?.ativa === true &&
+            typeof window.precoPromocional === "function";
+
+        if (promocaoAtiva) {
+            const extras = precoAdicionaisSelecionados();
+            const original = document.createElement("span");
+            original.className = "produto-preco-original";
+            original.textContent = dinheiro(Number(tamanho.valor) + extras);
+            const atual = document.createElement("span");
+            atual.className = "produto-preco-atual";
+            atual.textContent = dinheiro(precoSelecionado(produto));
+            container.append(original, atual);
+            return;
+        }
+
+        container.textContent = dinheiro(precoSelecionado(produto));
     }
 
 

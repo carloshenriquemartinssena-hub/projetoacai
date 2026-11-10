@@ -1,0 +1,10 @@
+project_id = "rpupbfuglojzxbzcjkox"
+
+[functions.create-asaas-checkout]
+verify_jwt = false
+
+[functions.asaas-webhook]
+verify_jwt = false
+
+[functions.store-whatsapp-order]
+verify_jwt = false

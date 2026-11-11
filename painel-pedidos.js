@@ -38,6 +38,7 @@
     let hasMoreOrders = false;
     let loadingOrders = false;
     let refreshTimer;
+    let recoveringPassword = false;
     const orders = new Map();
     const histories = new Map();
 
@@ -56,6 +57,32 @@
         const message = element(id);
         message.textContent = text;
         message.classList.toggle("orders-message-success", !isError && Boolean(text));
+    }
+
+    function loginErrorMessage(error) {
+        const code = error?.code || error?.name;
+        if (error?.message?.includes("não está autorizado")) {
+            return error.message;
+        }
+        if (code === "email_not_confirmed") {
+            return "Confirme o endereço de e-mail pelo link enviado pelo Supabase e tente novamente.";
+        }
+        if (code === "invalid_credentials" || code === "user_not_found") {
+            return "E-mail ou senha não conferem. Use “Esqueci minha senha” para criar uma nova senha; se a conta ainda não existir, crie-a em Authentication → Users.";
+        }
+        if (code === "over_request_rate_limit" || code === "over_email_send_rate_limit") {
+            return "Muitas tentativas em pouco tempo. Aguarde alguns minutos e tente novamente.";
+        }
+        if (error?.message?.includes("validar seu acesso")) {
+            return error.message;
+        }
+        if (/redirect|redirect_to|url.*(allow|permit)/i.test(error?.message || "")) {
+            return "O link de recuperação não foi autorizado. Em Supabase > Authentication > URL Configuration, inclua o endereço completo de painel-pedidos.html em Redirect URLs.";
+        }
+        if (error instanceof TypeError || /fetch|network/i.test(error?.message || "")) {
+            return "Não foi possível conectar ao Supabase. Confira a conexão e se o painel está usando o projeto correto.";
+        }
+        return "Não foi possível entrar. Confira o usuário em Authentication → Users, confirme o e-mail, redefina a senha e verifique se o e-mail está autorizado em public.store_admins.";
     }
 
     function displayStatus(status) {
@@ -357,6 +384,77 @@
         }
 
         client = window.supabase.createClient(config.url, config.publishableKey);
+        client.auth.onAuthStateChange(event => {
+            if (event !== "PASSWORD_RECOVERY") return;
+            recoveringPassword = true;
+            element("orders-login").hidden = true;
+            element("orders-dashboard").hidden = true;
+            element("orders-password-reset").hidden = false;
+            element("orders-new-password").focus();
+            setMessage("orders-password-reset-message", "");
+        });
+
+        element("orders-forgot-password").addEventListener("click", async () => {
+            const email = element("orders-email").value.trim().toLowerCase();
+            if (!email || !element("orders-email").reportValidity()) {
+                setMessage("orders-login-message", "Informe seu e-mail para receber o link de recuperação.");
+                element("orders-email").focus();
+                return;
+            }
+            const button = element("orders-forgot-password");
+            button.disabled = true;
+            setMessage("orders-login-message", "Solicitando link de recuperação...", false);
+            try {
+                const redirectTo = new URL("painel-pedidos.html", window.location.href).href;
+                const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
+                if (error) throw error;
+                setMessage(
+                    "orders-login-message",
+                    "Se este e-mail estiver cadastrado, o Supabase enviará um link de recuperação. Confira também o spam.",
+                    false
+                );
+            } catch (error) {
+                console.error("Não foi possível solicitar a recuperação da senha.", error);
+                setMessage("orders-login-message", loginErrorMessage(error));
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        element("orders-password-reset-form").addEventListener("submit", async event => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            const values = new FormData(form);
+            const password = String(values.get("password") || "");
+            const confirmation = String(values.get("confirmPassword") || "");
+            const button = form.querySelector("button[type='submit']");
+            if (password !== confirmation) {
+                setMessage("orders-password-reset-message", "As senhas não são iguais.");
+                return;
+            }
+            button.disabled = true;
+            setMessage("orders-password-reset-message", "Atualizando senha...", false);
+            try {
+                const { error } = await client.auth.updateUser({ password });
+                if (error) throw error;
+                recoveringPassword = false;
+                element("orders-password-reset").hidden = true;
+                element("orders-password-reset-form").reset();
+                await verifyAdminAndLoad();
+                setMessage("orders-message", "Senha atualizada. Use uma senha longa e exclusiva.", false);
+            } catch (error) {
+                console.error("Não foi possível atualizar a senha da equipe.", error);
+                setMessage(
+                    "orders-password-reset-message",
+                    error?.code === "weak_password"
+                        ? "O Supabase rejeitou a senha conforme a política do projeto. Use pelo menos 8 caracteres e confira Authentication > Settings > Password Security."
+                        : "Não foi possível atualizar a senha. Solicite um novo link e tente novamente."
+                );
+            } finally {
+                button.disabled = false;
+            }
+        });
+
         element("orders-login-form").addEventListener("submit", async event => {
             event.preventDefault();
             const button = event.currentTarget.querySelector("button[type='submit']");
@@ -365,7 +463,7 @@
             try {
                 const formData = new FormData(event.currentTarget);
                 const { error } = await client.auth.signInWithPassword({
-                    email: String(formData.get("email") || "").trim(),
+                    email: String(formData.get("email") || "").trim().toLowerCase(),
                     password: String(formData.get("password") || "")
                 });
                 if (error) throw error;
@@ -373,12 +471,7 @@
                 setMessage("orders-login-message", "");
             } catch (error) {
                 console.error("Falha no acesso ao painel.", error);
-                setMessage(
-                    "orders-login-message",
-                    error instanceof Error && error.message.includes("autorizado")
-                        ? error.message
-                        : "Não foi possível entrar. Verifique o e-mail, a senha e a configuração do painel."
-                );
+                setMessage("orders-login-message", loginErrorMessage(error));
             } finally {
                 button.disabled = false;
             }
@@ -413,12 +506,13 @@
             setMessage("orders-login-message", "Não foi possível recuperar a sessão. Entre novamente.");
             return;
         }
+        if (recoveringPassword) return;
         if (session) {
             try {
                 await verifyAdminAndLoad();
             } catch (sessionError) {
                 console.error("A sessão existente não tem acesso ao painel.", sessionError);
-                setMessage("orders-login-message", "Entre com uma conta de administrador autorizada.");
+                setMessage("orders-login-message", loginErrorMessage(sessionError));
             }
         }
     }

@@ -2,7 +2,8 @@
    1. CARROSSEL DO CABEÇALHO
    ========================================================= */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await (window.STORE_PUBLICATION_READY || Promise.resolve(null));
 
     const items = document.querySelectorAll('.carousel-item');
     const carousel = document.getElementById('carousel');

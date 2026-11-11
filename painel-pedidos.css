@@ -102,6 +102,24 @@
     background: #4b0082;
 }
 
+.orders-link-button {
+    padding: 4px 0;
+    border: 0;
+    background: transparent;
+    color: #5e2470;
+    cursor: pointer;
+    font: inherit;
+    font-size: .9rem;
+    font-weight: 700;
+    text-align: left;
+    text-decoration: underline;
+}
+
+.orders-link-button:disabled {
+    cursor: wait;
+    opacity: .6;
+}
+
 .orders-primary-button:disabled,
 .orders-secondary-button:disabled,
 .order-status-select:disabled {

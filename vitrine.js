@@ -1,7 +1,6 @@
 (() => {
     "use strict";
 
-    const catalogo = window.CATALOGO_PRODUTOS || {};
     const imagemReserva = "fotoexemplo.png";
     const moeda = valor => Number(valor).toLocaleString("pt-BR", {
         style: "currency",
@@ -89,7 +88,9 @@
         });
     }
 
-    function iniciar() {
+    async function iniciar() {
+        await (window.STORE_PUBLICATION_READY || Promise.resolve(null));
+        const catalogo = window.CATALOGO_PRODUTOS || {};
         const todosProdutos = Object.entries(catalogo);
         const modo = document.body.dataset.vitrine;
 

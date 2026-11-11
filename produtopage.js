@@ -459,7 +459,8 @@
 
 
     // Inicializa os eventos e a página
-    function iniciar() {
+    async function iniciar() {
+        await (window.STORE_PUBLICATION_READY || Promise.resolve(null));
         const itemAtual = produtoAtual();
 
         if (!itemAtual) {

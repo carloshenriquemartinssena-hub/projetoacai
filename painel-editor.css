@@ -100,6 +100,29 @@
     color: #9c2841;
 }
 
+.editor-history {
+    margin: 16px 0;
+    padding: 17px;
+    border: 1px solid #e8dfeb;
+    border-radius: 12px;
+    background: white;
+}
+
+.editor-history h3 {
+    margin: 0 0 9px;
+    color: #4b0082;
+    font-size: 1rem;
+}
+
+.editor-history ol {
+    display: grid;
+    gap: 7px;
+    margin: 0;
+    padding-left: 20px;
+    color: #625968;
+    font-size: .87rem;
+}
+
 .site-editor-actions button:disabled {
     cursor: not-allowed;
     opacity: .58;

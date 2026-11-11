@@ -1,0 +1,73 @@
+.published-page-main {
+    width: min(1120px, calc(100% - 32px));
+    min-height: 60vh;
+    margin: 0 auto;
+    padding: 38px 0 56px;
+}
+
+.published-page-main h1 {
+    margin: 0 0 12px;
+    color: var(--published-primary, #4b0082);
+    font-family: "Holtwood One SC", Georgia, serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+}
+
+.published-page-main > p:not(.orders-eyebrow) {
+    color: #665c6b;
+}
+
+.published-page-banners,
+.published-page-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.published-page-banner,
+.published-page-product {
+    overflow: hidden;
+    border: 1px solid #eee6f0;
+    border-radius: 14px;
+    background: white;
+    color: #302833;
+    text-decoration: none;
+}
+
+.published-page-banner img,
+.published-page-product img {
+    display: block;
+    width: 100%;
+    height: 190px;
+    background: #f4eff5;
+    object-fit: cover;
+}
+
+.published-page-banner div,
+.published-page-product div {
+    display: grid;
+    gap: 7px;
+    padding: 14px;
+}
+
+.published-page-banner strong,
+.published-page-product strong {
+    color: var(--published-primary, #4b0082);
+}
+
+.published-page-product span {
+    color: var(--published-accent, #a53d9c);
+    font-weight: 800;
+}
+
+@media (max-width: 600px) {
+    .published-page-main {
+        width: min(calc(100% - 22px), 560px);
+        padding: 24px 0 38px;
+    }
+
+    .published-page-banner img,
+    .published-page-product img {
+        height: 150px;
+    }
+}

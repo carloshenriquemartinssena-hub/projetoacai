@@ -32,7 +32,28 @@
                     autocomplete="current-password" required>
                 <button class="orders-primary-button" type="submit">Entrar</button>
             </form>
+            <button class="orders-link-button" id="orders-forgot-password" type="button">
+                Esqueci minha senha
+            </button>
             <p class="orders-message" id="orders-login-message"
+                role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="orders-login" id="orders-password-reset" hidden
+            aria-labelledby="password-reset-title">
+            <p class="orders-eyebrow">RECUPERAÇÃO SEGURA</p>
+            <h1 id="password-reset-title">Redefinir senha</h1>
+            <p>Use uma senha exclusiva com pelo menos 8 caracteres. Uma frase-senha é mais segura que uma sequência numérica curta.</p>
+            <form id="orders-password-reset-form">
+                <label for="orders-new-password">Nova senha</label>
+                <input id="orders-new-password" name="password" type="password"
+                    autocomplete="new-password" minlength="8" required>
+                <label for="orders-confirm-password">Confirme a nova senha</label>
+                <input id="orders-confirm-password" name="confirmPassword" type="password"
+                    autocomplete="new-password" minlength="8" required>
+                <button class="orders-primary-button" type="submit">Salvar nova senha</button>
+            </form>
+            <p class="orders-message" id="orders-password-reset-message"
                 role="status" aria-live="polite"></p>
         </section>
 
@@ -111,11 +132,17 @@
                 </header>
 
                 <div class="editor-notice">
-                    <strong>A loja atual não será alterada.</strong>
-                    <span>Publicar grava uma versão separada no Supabase. Para mostrá-la em um endereço público, será necessário conectar/deployar uma página da nova versão; isso não substitui a loja atual.</span>
+                    <strong>O rascunho só vira oficial quando você publicar.</strong>
+                    <span>Ao publicar, a loja pública consulta a nova versão automaticamente. Produtos removidos ou pausados deixam de aparecer; novas alterações ficam visíveis para quem acessar ou atualizar o site.</span>
                 </div>
                 <p class="editor-publication-state" id="editor-publication-state" role="status"
                     aria-live="polite">Ainda não há uma versão publicada.</p>
+                <section class="editor-history" aria-labelledby="editor-history-title">
+                    <h3 id="editor-history-title">Histórico de publicações</h3>
+                    <ol id="editor-publication-history">
+                        <li>Nenhuma publicação registrada.</li>
+                    </ol>
+                </section>
 
                 <div class="editor-layout">
                     <nav class="editor-nav" aria-label="Ferramentas de edição">

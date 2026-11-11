@@ -7,7 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Holtwood+One+SC&family=Homenaje&display=swap" rel="stylesheet">
+    <script src="payment-config.js" defer></script>
     <script src="produto.js" defer></script>
+    <script src="store-publication.js" defer></script>
     <script src="site-chrome.js" defer></script>
     <script src="busca-produtos.js" defer></script>
     <script src="script.js" defer></script>
@@ -16,6 +18,7 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="desktop.css">
 <link rel="stylesheet" href="site-chrome.css">
+<link rel="stylesheet" href="store-publication.css">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
@@ -160,7 +163,7 @@
 
 // --- LÓGICA DO CARROSSEL DE DESLIZAMENTO SUAVE ---
 const track = document.querySelector('.carousel-track');
-const slides = document.querySelectorAll('.carousel-item');
+let slides = document.querySelectorAll('.carousel-item');
 let indexAtual = 0;
 let tempoTroca = 4000; // 4 segundos
 let carrosselIntervalo;
@@ -176,17 +179,27 @@ function atualizarPosicao() {
 }
 
 function iniciarAutomato() {
+  clearInterval(carrosselIntervalo);
+  slides = document.querySelectorAll('.carousel-item');
+  if (!slides.length) return;
   carrosselIntervalo = setInterval(() => {
     indexAtual++;
     if (indexAtual >= slides.length) {
       indexAtual = 0;
     }
+
     atualizarPosicao();
   }, tempoTroca);
 }
 
 // Inicia o carrossel automático
 iniciarAutomato();
+window.STORE_PUBLICATION_READY?.then(() => {
+  slides = document.querySelectorAll('.carousel-item');
+  indexAtual = 0;
+  atualizarPosicao();
+  iniciarAutomato();
+});
 
 // --- EVENTOS PARA ARRASTAR MANUALMENTE ---
 

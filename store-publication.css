@@ -1,0 +1,64 @@
+:root {
+    --published-primary: #4b0082;
+    --published-accent: #a53d9c;
+}
+
+.published-video-section {
+    width: min(1050px, calc(100% - 32px));
+    margin: 36px auto;
+    padding: 22px;
+    border: 1px solid #eee6f0;
+    border-radius: 16px;
+    background: white;
+}
+
+.published-video-section h2 {
+    margin: 0 0 16px;
+    color: var(--published-primary);
+}
+
+.published-video-section iframe,
+.published-video-section video {
+    display: block;
+    width: min(100%, 800px);
+    aspect-ratio: 16 / 9;
+    margin: 0 auto;
+    border: 0;
+    border-radius: 12px;
+    background: #1b1420;
+}
+
+.published-contact-button {
+    position: fixed;
+    z-index: 20;
+    right: max(18px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom));
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: var(--published-accent);
+    box-shadow: 0 6px 20px rgb(34 16 41 / 24%);
+    color: white;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.published-contact-button:hover {
+    filter: brightness(.92);
+}
+
+.product-tile,
+.preview-product-card {
+    border-radius: 12px;
+}
+
+:root[data-published-card-style="rounded"] .product-tile {
+    border-radius: 22px;
+}
+
+:root[data-published-card-style="simple"] .product-tile {
+    border-radius: 3px;
+}

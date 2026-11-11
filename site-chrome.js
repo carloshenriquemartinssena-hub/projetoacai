@@ -61,6 +61,38 @@
         </footer>
     `;
 
+    function applyPublishedPages() {
+        const pages = window.STORE_PUBLICATION?.content?.pages;
+        const menu = document.getElementById("menu-principal");
+        if (!Array.isArray(pages) || !menu) return;
+
+        const knownPages = {
+            promotions: "promocoes.html",
+            "our-story": "empresa.html"
+        };
+        pages.filter(page => page.id === "promotions" || page.id === "our-story")
+            .forEach(page => {
+                const href = knownPages[page.id];
+                const link = menu.querySelector(`a[href="${href}"]`);
+                if (!link) return;
+                link.textContent = page.title;
+                link.hidden = page.active === false;
+            });
+
+        pages.filter(page =>
+            page.active !== false &&
+            !["home", "promotions", "our-story"].includes(page.id)
+        ).forEach(page => {
+            const href = `pagina-personalizada.html?pagina=${encodeURIComponent(page.id)}`;
+            if ([...menu.querySelectorAll("a[href]")]
+                .some(link => link.getAttribute("href") === href)) return;
+            const link = document.createElement("a");
+            link.href = href;
+            link.textContent = page.title;
+            menu.appendChild(link);
+        });
+    }
+
     function renderizar() {
         const headerMount = document.querySelector("[data-store-header]");
         const footerMount = document.querySelector("[data-store-footer]");
@@ -72,6 +104,7 @@
         else if (!document.querySelector(".site-footer")) {
             document.body.insertAdjacentHTML("beforeend", footer);
         }
+        window.STORE_PUBLICATION_READY?.then(applyPublishedPages);
 
         if (!document.getElementById("resultados-pesquisa")) {
             document.body.insertAdjacentHTML(

@@ -1,16 +1,7 @@
 (() => {
     "use strict";
 
-    const catalogo = window.CATALOGO_PRODUTOS || {};
-    const promocoes = Object.entries(catalogo)
-        .filter(([, produto]) =>
-            produto.promocao?.ativa === true &&
-            Number.isFinite(Number(produto.promocao.descontoPercentual))
-        )
-        .sort(([, produtoA], [, produtoB]) =>
-            Number(produtoB.promocao.descontoPercentual) -
-            Number(produtoA.promocao.descontoPercentual)
-        );
+    let promocoes = [];
     const money = value => Number(value).toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL"
@@ -90,7 +81,17 @@
         }, 120);
     }
 
-    function initialize() {
+    async function initialize() {
+        await (window.STORE_PUBLICATION_READY || Promise.resolve(null));
+        promocoes = Object.entries(window.CATALOGO_PRODUTOS || {})
+            .filter(([, product]) =>
+                product.promocao?.ativa === true &&
+                Number.isFinite(Number(product.promocao.descontoPercentual))
+            )
+            .sort(([, productA], [, productB]) =>
+                Number(productB.promocao.descontoPercentual) -
+                Number(productA.promocao.descontoPercentual)
+            );
         if (!promocoes.length) {
             document.querySelector(".promo-showcase").textContent =
                 "Novas promoções estarão disponíveis em breve.";

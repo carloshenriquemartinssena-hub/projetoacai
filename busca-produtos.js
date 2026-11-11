@@ -32,7 +32,8 @@
             .toLocaleLowerCase("pt-BR");
     }
 
-    function pesquisar(consulta) {
+    async function pesquisar(consulta) {
+        await (window.STORE_PUBLICATION_READY || Promise.resolve(null));
         const termo = normalizar(consulta);
         const produtos = Object.entries(window.CATALOGO_PRODUTOS || {})
             .filter(([, produto]) =>

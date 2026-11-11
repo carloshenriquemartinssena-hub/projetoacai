@@ -3,6 +3,7 @@
 
     const TABLE = "website_editor_drafts";
     const PUBLICATIONS_TABLE = "website_editor_publications";
+    const HISTORY_TABLE = "website_editor_publication_history";
     const DRAFT_ID = "main";
     const TEMPLATE_LABELS = {
         showcase: "Vitrine de produtos",
@@ -89,13 +90,32 @@
     function updatePublishButton() {
         const button = byId("editor-publish");
         if (button) button.disabled =
-            !state.canSave || state.dirty || state.saving || state.publishing;
+            !state.canSave || state.saving || state.publishing;
     }
 
     function setPublicationState(message, isError = false) {
         const status = byId("editor-publication-state");
         status.textContent = message;
         status.classList.toggle("is-error", isError);
+    }
+
+    function renderPublicationHistory(entries) {
+        const list = byId("editor-publication-history");
+        list.replaceChildren();
+        if (!entries.length) {
+            list.appendChild(element("li", "", "Nenhuma publicação registrada."));
+            return;
+        }
+        entries.forEach(entry => {
+            const publishedAt = new Date(entry.published_at);
+            list.appendChild(element(
+                "li",
+                "",
+                `${Number.isNaN(publishedAt.getTime())
+                    ? "Data não informada"
+                    : publishedAt.toLocaleString("pt-BR")} · Publicada pelo painel`
+            ));
+        });
     }
 
     function cleanText(value) {
@@ -612,28 +632,47 @@
         setPublicationState(state.publishedAt
             ? `Última versão publicada no Supabase em ${new Date(state.publishedAt).toLocaleString("pt-BR")}.`
             : "Ainda não há uma versão publicada.");
+
+        const { data: history, error: historyError } = await state.client
+            .from(HISTORY_TABLE)
+            .select("published_at")
+            .eq("draft_id", DRAFT_ID)
+            .order("published_at", { ascending: false })
+            .limit(10);
+        if (historyError) throw historyError;
+        renderPublicationHistory(history || []);
     }
 
     async function publishDraft() {
-        if (!state.canSave || state.dirty || !state.client) {
-            setPublicationState("Salve o rascunho antes de publicar.", true);
+        if (!state.canSave || !state.client) {
+            setPublicationState("A publicação não está disponível. Confira a configuração do Supabase.", true);
             return;
         }
         if (!window.confirm(
-            "Publicar uma cópia deste rascunho no Supabase? Isso não altera nem substitui o site atual."
+            "Publicar agora as alterações do editor para os clientes? A loja atual será atualizada pelo Supabase."
         )) return;
 
         const button = byId("editor-publish");
         state.publishing = true;
         button.disabled = true;
-        setPublicationState("Publicando uma cópia da nova versão...");
+        setPublicationState(state.dirty
+            ? "Salvando as alterações e publicando a nova versão..."
+            : "Publicando a nova versão...");
         try {
+            if (state.dirty) {
+                await saveDraft();
+                if (state.dirty) {
+                    setPublicationState("Não foi possível salvar as alterações; a versão anterior continua publicada.", true);
+                    return;
+                }
+            }
             const { data, error } = await state.client.rpc("publish_website_draft");
             if (error) throw error;
             state.publishedAt = data || new Date().toISOString();
             setPublicationState(
                 `Versão publicada no Supabase em ${new Date(state.publishedAt).toLocaleString("pt-BR")}.`
             );
+            await loadPublication();
         } catch (error) {
             console.error("Não foi possível publicar o rascunho do site.", error);
             setPublicationState(

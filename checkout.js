@@ -227,37 +227,37 @@
                     throw new Error(result.error || "Não foi possível registrar seu pedido.");
                 }
 
-                const lines = [
-                    "Olá! Gostaria de confirmar este pedido:",
-                    "",
-                    ...items.flatMap(item => {
-                        const quantity = Math.max(1, Number(item.quantidade) || 1);
-                        const extras = Array.isArray(item.adicionais)
-                            ? item.adicionais.map(extra =>
-                                typeof extra === "string" ? extra : extra.nome
-                            ).filter(Boolean).join(", ")
-                            : "";
-                        return [
-                            `${quantity}x ${item.nome || "Produto"} (${item.tamanho || "tamanho não informado"})`,
-                            extras ? `Adicionais: ${extras}` : "",
-                            item.observacao ? `Observação: ${item.observacao}` : "",
-                            `Subtotal: ${money(subtotal(item))}`,
-                            ""
-                        ].filter(line => line !== "");
-                    }),
-                    `Total: ${money(total(items))}`,
-                    "",
-                    `Cliente: ${customer.nome}`,
-                    `E-mail: ${customer.email || ""}`,
-                    `CPF: ${customer.cpf}`,
-                    `WhatsApp: ${customer.whatsapp}`,
-                    `Endereço: ${address}`,
-                    `Forma de pagamento: ${customer.pagamento}`
-                ];
-                const url = `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(lines.join("\n"))}`;
-                whatsapp.opener = null;
-                whatsapp.location.replace(url);
-                button.textContent = "Pedido preparado no WhatsApp";
+            const lines = [
+                "Olá! Gostaria de confirmar este pedido:",
+                "",
+                ...items.flatMap(item => {
+                    const quantity = Math.max(1, Number(item.quantidade) || 1);
+                    const extras = Array.isArray(item.adicionais)
+                        ? item.adicionais.map(extra =>
+                            typeof extra === "string" ? extra : extra.nome
+                        ).filter(Boolean).join(", ")
+                        : "";
+                    return [
+                        `${quantity}x ${item.nome || "Produto"} (${item.tamanho || "tamanho não informado"})`,
+                        extras ? `Adicionais: ${extras}` : "",
+                        item.observacao ? `Observação: ${item.observacao}` : "",
+                        `Subtotal: ${money(subtotal(item))}`,
+                        ""
+                    ].filter(line => line !== "");
+                }),
+                `Total: ${money(total(items))}`,
+                "",
+                `Cliente: ${customer.nome}`,
+                `E-mail: ${customer.email || ""}`,
+                `CPF: ${customer.cpf}`,
+                `WhatsApp: ${customer.whatsapp}`,
+                `Endereço: ${address}`,
+                `Forma de pagamento: ${customer.pagamento}`
+            ];
+            const url = `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(lines.join("\n"))}`;
+            whatsapp.opener = null;
+            whatsapp.location.replace(url);
+            button.textContent = "Pedido preparado no WhatsApp";
             } catch (error) {
                 console.error("Erro ao registrar pedido pelo WhatsApp.", error);
                 whatsapp.close();

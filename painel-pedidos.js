@@ -340,6 +340,10 @@
 
         element("orders-login").hidden = true;
         element("orders-dashboard").hidden = false;
+        if (window.initializeStoreEditor) {
+            await window.initializeStoreEditor(client);
+        }
+        element("show-orders").click();
         await loadOrders();
         window.clearInterval(refreshTimer);
         refreshTimer = window.setInterval(() => loadOrders(), 30_000);
@@ -394,6 +398,8 @@
             hasMoreOrders = false;
             element("orders-dashboard").hidden = true;
             element("orders-login").hidden = false;
+            element("orders-view").hidden = false;
+            element("site-editor-view").hidden = true;
             setMessage("orders-login-message", "Sessão encerrada.", false);
         });
 

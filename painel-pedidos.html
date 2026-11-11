@@ -8,10 +8,12 @@
     <title>Painel de pedidos | Açaí Zero Grau</title>
     <link rel="stylesheet" href="site-chrome.css">
     <link rel="stylesheet" href="painel-pedidos.css">
+    <link rel="stylesheet" href="painel-editor.css">
     <script src="produto.js" defer></script>
     <script src="site-chrome.js" defer></script>
     <script src="payment-config.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="painel-editor.js" defer></script>
     <script src="painel-pedidos.js" defer></script>
 </head>
 <body class="orders-page">
@@ -40,7 +42,7 @@
                 <div>
                     <p class="orders-eyebrow">ÁREA DA EQUIPE</p>
                     <h1 id="orders-title">Pedidos recebidos</h1>
-                    <p>Pedidos do Asaas e solicitações enviadas pelo WhatsApp.</p>
+                    <p id="orders-title-description">Pedidos do Asaas e solicitações enviadas pelo WhatsApp.</p>
                 </div>
                 <div class="orders-toolbar">
                     <button class="orders-secondary-button" id="orders-refresh" type="button">
@@ -52,6 +54,15 @@
                 </div>
             </header>
 
+            <nav class="panel-sections" aria-label="Seções do painel">
+                <button class="panel-section-button is-active" id="show-orders" type="button"
+                    aria-current="page">Pedidos</button>
+                <button class="panel-section-button" id="show-site-editor" type="button">
+                    Editor do site
+                </button>
+            </nav>
+
+            <div id="orders-view">
             <section class="orders-summary" aria-label="Resumo dos pedidos">
                 <article><span>Carregados</span><strong id="orders-count">0</strong></article>
                 <article><span>Aguardando</span><strong id="orders-waiting-count">0</strong></article>
@@ -77,6 +88,186 @@
             <div class="orders-list" id="orders-list" aria-live="polite"></div>
             <button class="orders-secondary-button orders-load-more" id="orders-load-more"
                 type="button" hidden>Carregar mais pedidos</button>
+            </div>
+
+            <section class="site-editor" id="site-editor-view" hidden
+                aria-labelledby="site-editor-title">
+                <header class="site-editor-header">
+                    <div>
+                        <p class="orders-eyebrow">MODO SEM CÓDIGO</p>
+                        <h2 id="site-editor-title">Editor da nova versão</h2>
+                        <p>Edite um rascunho independente. O site atual continua como está.</p>
+                    </div>
+                    <div class="site-editor-actions">
+                        <span class="editor-save-state" id="editor-save-state" role="status"
+                            aria-live="polite">Carregando configurações...</span>
+                        <button class="orders-primary-button" id="editor-save" type="button">
+                            Salvar rascunho
+                        </button>
+                        <button class="orders-secondary-button" id="editor-publish" type="button" disabled>
+                            Publicar nova versão
+                        </button>
+                    </div>
+                </header>
+
+                <div class="editor-notice">
+                    <strong>A loja atual não será alterada.</strong>
+                    <span>Publicar grava uma versão separada no Supabase. Para mostrá-la em um endereço público, será necessário conectar/deployar uma página da nova versão; isso não substitui a loja atual.</span>
+                </div>
+                <p class="editor-publication-state" id="editor-publication-state" role="status"
+                    aria-live="polite">Ainda não há uma versão publicada.</p>
+
+                <div class="editor-layout">
+                    <nav class="editor-nav" aria-label="Ferramentas de edição">
+                        <button class="editor-nav-button is-active" type="button" data-editor-tab="overview">Visão geral</button>
+                        <button class="editor-nav-button" type="button" data-editor-tab="products">Produtos e ofertas</button>
+                        <button class="editor-nav-button" type="button" data-editor-tab="banners">Banners</button>
+                        <button class="editor-nav-button" type="button" data-editor-tab="pages">Páginas e modelos</button>
+                        <button class="editor-nav-button" type="button" data-editor-tab="content">Vídeos e botões</button>
+                        <button class="editor-nav-button" type="button" data-editor-tab="appearance">Aparência</button>
+                    </nav>
+
+                    <div class="editor-workspace">
+                        <section class="editor-panel" data-editor-panel="overview">
+                            <h3>O que você pode editar</h3>
+                            <p>Use as seções ao lado para organizar a nova versão da loja. As mudanças ficam salvas na conta administrativa e podem ser acessadas por outros administradores autorizados.</p>
+                            <div class="editor-overview-grid">
+                                <article><span>Produtos no rascunho</span><strong id="editor-product-count">0</strong></article>
+                                <article><span>Banners</span><strong id="editor-banner-count">0</strong></article>
+                                <article><span>Páginas</span><strong id="editor-page-count">0</strong></article>
+                            </div>
+                            <div class="editor-help">
+                                <h4>Como funciona</h4>
+                                <ol>
+                                    <li>Escolha uma seção no menu ao lado e faça as alterações nos formulários.</li>
+                                    <li>Clique em <strong>Salvar rascunho</strong> para guardar as mudanças.</li>
+                                    <li>Confira a prévia abaixo. Ela não publica no site atual.</li>
+                                </ol>
+                            </div>
+                            <div class="editor-preview-wrap">
+                                <div class="editor-preview-heading">
+                                    <div><span class="editor-preview-dot"></span><span>Prévia da nova versão</span></div>
+                                    <span>Somente visualização</span>
+                                </div>
+                                <div id="editor-preview" class="editor-preview"></div>
+                            </div>
+                        </section>
+
+                        <section class="editor-panel" data-editor-panel="products" hidden>
+                            <div class="editor-panel-heading">
+                                <div><h3>Produtos e ofertas</h3><p>Adicione produtos ao rascunho, ajuste preços e programe a disponibilidade.</p></div>
+                                <button class="orders-secondary-button" id="editor-new-product" type="button">+ Novo produto</button>
+                            </div>
+                            <form class="editor-form" id="editor-product-form" hidden>
+                                <h4 id="editor-product-form-title">Novo produto</h4>
+                                <input name="id" type="hidden">
+                                <label>Nome do produto<input name="name" required maxlength="100"></label>
+                                <label>Descrição<textarea name="description" rows="3" maxlength="500"></textarea></label>
+                                <label>Imagem (link ou nome do arquivo)<input name="image" placeholder="ex.: acai-morango.png"></label>
+                                <fieldset class="editor-sizes">
+                                    <legend>Tamanhos e preços</legend>
+                                    <div id="editor-product-sizes"></div>
+                                    <button class="orders-secondary-button" id="editor-add-size" type="button">+ Adicionar tamanho</button>
+                                </fieldset>
+                                <label>Desconto da oferta (%)<input name="discount" type="number" min="0" max="99" step="1" value="0"></label>
+                                <div class="editor-form-row">
+                                    <label>Disponível a partir de<input name="startsAt" type="datetime-local"></label>
+                                    <label>Disponível até<input name="endsAt" type="datetime-local"></label>
+                                </div>
+                                <label class="editor-checkbox"><input name="active" type="checkbox" checked> Produto ativo na nova versão</label>
+                                <div class="editor-form-actions">
+                                    <button class="orders-primary-button" type="submit">Guardar produto</button>
+                                    <button class="orders-secondary-button" id="editor-cancel-product" type="button">Cancelar</button>
+                                </div>
+                            </form>
+                            <div class="editor-item-list" id="editor-product-list"></div>
+                        </section>
+
+                        <section class="editor-panel" data-editor-panel="banners" hidden>
+                            <div class="editor-panel-heading">
+                                <div><h3>Banners da nova versão</h3><p>Crie chamadas promocionais, escolha a imagem e defina para onde o botão leva.</p></div>
+                                <button class="orders-secondary-button" id="editor-new-banner" type="button">+ Novo banner</button>
+                            </div>
+                            <form class="editor-form" id="editor-banner-form" hidden>
+                                <h4 id="editor-banner-form-title">Novo banner</h4>
+                                <input name="id" type="hidden">
+                                <label>Título<input name="title" required maxlength="100"></label>
+                                <label>Texto de apoio<input name="subtitle" maxlength="180"></label>
+                                <label>Imagem (link ou nome do arquivo)<input name="image" required placeholder="ex.: banner.DK.png"></label>
+                                <label>Link do botão (opcional)<input name="link" placeholder="ex.: produtopage.html?produto=..."></label>
+                                <label class="editor-checkbox"><input name="active" type="checkbox" checked> Exibir na nova versão</label>
+                                <div class="editor-form-actions">
+                                    <button class="orders-primary-button" type="submit">Guardar banner</button>
+                                    <button class="orders-secondary-button" id="editor-cancel-banner" type="button">Cancelar</button>
+                                </div>
+                            </form>
+                            <div class="editor-item-list" id="editor-banner-list"></div>
+                        </section>
+
+                        <section class="editor-panel" data-editor-panel="pages" hidden>
+                            <div class="editor-panel-heading">
+                                <div><h3>Páginas e modelos</h3><p>Crie páginas e escolha um modelo visual para cada uma.</p></div>
+                                <button class="orders-secondary-button" id="editor-new-page" type="button">+ Nova página</button>
+                            </div>
+                            <form class="editor-form" id="editor-page-form" hidden>
+                                <h4 id="editor-page-form-title">Nova página</h4>
+                                <input name="id" type="hidden">
+                                <label>Nome da página<input name="title" required maxlength="80"></label>
+                                <label>Modelo
+                                    <select name="template">
+                                        <option value="showcase">Vitrine de produtos</option>
+                                        <option value="promotional">Página promocional</option>
+                                        <option value="story">Nossa história</option>
+                                        <option value="blank">Página em branco</option>
+                                    </select>
+                                </label>
+                                <label class="editor-checkbox"><input name="active" type="checkbox" checked> Página ativa na nova versão</label>
+                                <div class="editor-form-actions">
+                                    <button class="orders-primary-button" type="submit">Guardar página</button>
+                                    <button class="orders-secondary-button" id="editor-cancel-page" type="button">Cancelar</button>
+                                </div>
+                            </form>
+                            <div class="editor-item-list" id="editor-page-list"></div>
+                        </section>
+
+                        <section class="editor-panel" data-editor-panel="content" hidden>
+                            <h3>Vídeos e botões de contato</h3>
+                            <p>Adicione um vídeo e configure um atalho de atendimento na nova versão.</p>
+                            <form class="editor-form editor-settings-form" id="editor-content-form">
+                                <label>Link de vídeo (YouTube ou arquivo de vídeo)<input name="videoUrl" type="url" placeholder="https://..."></label>
+                                <label class="editor-checkbox"><input name="videoEnabled" type="checkbox"> Mostrar seção de vídeo</label>
+                                <label>Tipo de botão de contato
+                                    <select name="contactType">
+                                        <option value="whatsapp">WhatsApp</option>
+                                        <option value="chat">Chat</option>
+                                    </select>
+                                </label>
+                                <label>Número do WhatsApp ou link do chat<input name="contactValue" placeholder="Ex.: 5511999999999 ou https://..."></label>
+                                <label>Texto do botão<input name="contactLabel" maxlength="40" placeholder="Fale com a gente"></label>
+                                <label class="editor-checkbox"><input name="contactEnabled" type="checkbox"> Mostrar botão de contato</label>
+                                <button class="orders-primary-button" type="submit">Guardar conteúdo</button>
+                            </form>
+                        </section>
+
+                        <section class="editor-panel" data-editor-panel="appearance" hidden>
+                            <h3>Aparência da nova versão</h3>
+                            <p>Escolha cores para experimentar no rascunho. Isso não altera o tema do site atual.</p>
+                            <form class="editor-form editor-settings-form" id="editor-appearance-form">
+                                <label>Cor principal<input name="primaryColor" type="color" value="#4b0082"></label>
+                                <label>Cor de destaque<input name="accentColor" type="color" value="#a53d9c"></label>
+                                <label>Estilo dos cartões
+                                    <select name="cardStyle">
+                                        <option value="soft">Suave</option>
+                                        <option value="rounded">Arredondado</option>
+                                        <option value="simple">Simples</option>
+                                    </select>
+                                </label>
+                                <button class="orders-primary-button" type="submit">Guardar aparência</button>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </section>
         </section>
     </main>
     <div data-store-footer></div>
